@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9857,7 +9857,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 8}
+  m_Size: {x: 1, y: 6}
   m_EdgeRadius: 0
 --- !u!114 &2052107746
 MonoBehaviour:
@@ -9875,8 +9875,6 @@ MonoBehaviour:
   maxHealth: 0
   healthBar: {fileID: 0}
   AGEnemy: {fileID: 1678835917072868219, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
-  timePassed: 0
-  timeInt: 0
   isBeingAttacked: 0
 --- !u!1 &2124301222
 GameObject:
