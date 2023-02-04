@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class Digging : MonoBehaviour
@@ -13,7 +14,9 @@ public class Digging : MonoBehaviour
 
     public Animator animator;
 
-    private Vector3Int toMine;
+    private Vector3Int clickedBlock;
+
+    public TileBase myceliumTile;
 
 
     // Start is called before the first frame update
@@ -33,16 +36,22 @@ public class Digging : MonoBehaviour
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1.41f && animator.speed <= 1)
+        if (Input.GetButton("Fire1") && distance <= 1.41f)
         {
             // clicked on
 
             Debug.Log("MINE BLOCK");
-            toMine = tilemap.WorldToCell(selectedPoint);
+            clickedBlock = tilemap.WorldToCell(selectedPoint);
             
             animator.SetBool("Mining", true);
-            
-            
+
+        }
+
+        if (Input.GetButton("Fire2") && distance <= 1.41f)
+        {
+            Debug.Log("PLACE BLOCK");
+            clickedBlock = tilemap.WorldToCell(selectedPoint);
+            tilemap.SetTile(clickedBlock, myceliumTile);
             
         }
 
@@ -51,7 +60,7 @@ public class Digging : MonoBehaviour
 
     public void DeleteBlock()
     {
-        tilemap.SetTile(toMine, null);
+        tilemap.SetTile(clickedBlock, null);
             
         animator.SetBool("Mining", false);
     }
