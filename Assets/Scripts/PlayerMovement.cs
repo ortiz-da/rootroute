@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     private bool jump = false;
     public Animator animator;
+    
+
+    public BoxCollider2D wallClimbCollider;
 
     public float runSpeed = 40f;
     // Start is called before the first frame update
