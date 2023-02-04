@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TreeHealth : MonoBehaviour
 {
-    private TreeManager tree;
+    public TreeManager tree;
     private GameObject[] leafs;
     private int leafNum;
     // Start is called before the first frame update
@@ -19,12 +19,13 @@ public class TreeHealth : MonoBehaviour
     void Update()
     {
         int curHealth = (int)tree.health / 10;
+        Debug.Log("curhealth: " + curHealth);
         for(int i = 0; i < leafs.Length; i++)
         {
-            if (i < curHealth)
-                leafs[i].SetActive(false);
-            else
+            if (i >= leafs.Length - curHealth)
                 leafs[i].SetActive(true);
+            else
+                leafs[i].SetActive(false);
         }
         leafNum = curHealth;
     }
