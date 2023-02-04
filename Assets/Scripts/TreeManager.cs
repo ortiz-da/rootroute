@@ -22,7 +22,6 @@ public class TreeManager : MonoBehaviour
         {
             StartCoroutine(AGAttacking());
         }
-        Debug.Log(health);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
