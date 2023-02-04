@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Variables : MonoBehaviour
+public class VariableSetup : MonoBehaviour
 {
-
-
     public float treeLife = 100f;
     public float biomass = 100f;
 
+    //rates in seconds, i.e. seconds between events
     public float wormSpawnRate = 120f;
 
     public float beetleSpawnRate = 60f;
@@ -30,7 +29,7 @@ public class Variables : MonoBehaviour
     public float playerAtkDmg = 1f;
 
     public float wormAttackRate = 3f;
-    
+    public float beetleAttackRate = 2f;
     // Start is called before the first frame update
     void Start()
     {
