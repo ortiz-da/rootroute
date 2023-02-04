@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TreeHealth : MonoBehaviour
 {
-    public TreeManager tree;
+    private TreeManager tree;
     private GameObject[] leafs;
     private int leafNum;
     // Start is called before the first frame update

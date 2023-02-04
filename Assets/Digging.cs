@@ -36,7 +36,7 @@ public class Digging : MonoBehaviour
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1.41f)
+        if (Input.GetButton("Fire1") && distance <= 1.41f )
         {
             // clicked on
 
@@ -51,7 +51,6 @@ public class Digging : MonoBehaviour
         {
             Debug.Log("PLACE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
-            //Debug.Log("placed block: "+ clickedBlock.ToString());
             tilemap.SetTile(clickedBlock, myceliumTile);
             
         }
@@ -61,11 +60,12 @@ public class Digging : MonoBehaviour
 
     public void DeleteBlock()
     {
+        animator.SetBool("Mining", false);
+
         if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
         {
             tilemap.SetTile(clickedBlock, null);
         }
-        animator.SetBool("Mining", false);
     }
     
 }
