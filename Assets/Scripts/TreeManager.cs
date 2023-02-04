@@ -8,8 +8,6 @@ public class TreeManager : MonoBehaviour
     public float maxHealth;
     public TreeHealth healthBar;
     [SerializeField] private AGEnemyMovement AGEnemy;
-    [SerializeField] private float timePassed = 0f;
-    [SerializeField] private int timeInt = 0;
     [SerializeField] private bool isBeingAttacked = false;
     void Start()
     {
@@ -20,18 +18,14 @@ public class TreeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timePassed = timePassed + Time.deltaTime;
-        timeInt = (int)timePassed;
-        //Debug.Log((int)timePassed);
-
-        if (isBeingAttacked && ((timeInt % VariableSetup.beetleAttackRate) == 0))
+        if (isBeingAttacked)
         {
-            AGAttacking();
+            StartCoroutine(AGAttacking());
         }
         Debug.Log(health);
     }
 
-    private void OnCollisionStay2D(Collision2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("AGEnemy"))
         {
@@ -39,8 +33,11 @@ public class TreeManager : MonoBehaviour
         }
     }
 
-    void AGAttacking()
+    IEnumerator AGAttacking()
     {
-            health --;
+        health --;
+        isBeingAttacked = false;
+        yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
+        isBeingAttacked = true;
     }
 }
