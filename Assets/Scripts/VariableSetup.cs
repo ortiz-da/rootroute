@@ -29,7 +29,7 @@ public class VariableSetup : MonoBehaviour
     public float playerAtkDmg = 1f;
 
     public float wormAttackRate = 3f;
-    public float beetleAttackRate = 2f;
+    public int beetleAttackRate = 2;
     // Start is called before the first frame update
     void Start()
     {

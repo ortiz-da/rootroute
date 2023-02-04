@@ -7,6 +7,8 @@ public class TreeHealth : MonoBehaviour
 {
     public Image healthImage;
     private TreeManager tree;
+
+
     // Start is called before the first frame update
     void Start()
     {
