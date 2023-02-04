@@ -342,9 +342,9 @@ RectTransform:
   m_LocalScale: {x: 1.4175, y: 0.25188723, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5531974016950451668}
   - {fileID: 242292699792748450}
   - {fileID: 7672533721258416986}
-  - {fileID: 5531974016950451668}
   - {fileID: 6308229678239754853}
   - {fileID: 1228732342554840791}
   - {fileID: 5821040621625534940}
@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0b3a56e0ac41c4ead19b69767d4ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tree: {fileID: 0}
 --- !u!1 &7478181075171061788
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,7 +657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -860,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1268,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7755029995268276667, guid: a532a80aec243c247925a566dc403ae4, type: 3}
       propertyPath: m_AnchorMax.x
