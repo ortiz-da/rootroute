@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class VariableSetup : MonoBehaviour
 {
-    public float treeLife = 100f;
-    public float biomass = 100f;
+    static public float treeLife = 100f;
+    static public float biomass = 100f;
 
     //rates in seconds, i.e. seconds between events
-    public float wormSpawnRate = 120f;
+    static public float wormSpawnRate = 120f;
 
-    public float beetleSpawnRate = 60f;
+    static public float beetleSpawnRate = 60f;
 
-    public static float countdownTimerLength = 180f;
+    static public float countdownTimerLength = 180f;
 
-    public float beetleHealth = 10f;
+    static public float beetleHealth = 10f;
 
-    public float tower1Cost = 50f;
-    public float tower1Dmg = 5f;
-    public float tower1Health = 20f;
-    public float tower1BiomassPerShot = 1f;
+    static public float tower1Cost = 50f;
+    static public float tower1Dmg = 5f;
+    static public float tower1Health = 20f;
+    static public float tower1BiomassPerShot = 1f;
 
 
-    public float myceliumHP = 10f;
+    static public float myceliumHP = 10f;
 
-    public float wormHP = 10f;
+    static public float wormHP = 10f;
 
-    public float playerAtkDmg = 1f;
+    static public float playerAtkDmg = 1f;
 
-    public float wormAttackRate = 3f;
-    public int beetleAttackRate = 2;
+    static public float wormAttackRate = 3f;
+    static public int beetleAttackRate = 2;
     // Start is called before the first frame update
     void Start()
     {
