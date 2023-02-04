@@ -10,13 +10,14 @@ public class Digging : MonoBehaviour
 
     public Tilemap tilemap;
 
-    public Camera camera;
+    public Camera camera1;
 
     public Animator animator;
 
     private Vector3Int clickedBlock;
 
     public TileBase myceliumTile;
+
 
 
     // Start is called before the first frame update
@@ -30,13 +31,13 @@ public class Digging : MonoBehaviour
     {
         // https://gamedevbeginner.com/how-to-convert-the-mouse-position-to-world-space-in-unity-2d-3d/
         // https://stackoverflow.com/a/56519572
-        Vector3 selectedPoint = camera.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 selectedPoint = camera1.ScreenToWorldPoint(Input.mousePosition);
         selectedPoint = new Vector3(selectedPoint.x, selectedPoint.y, 0);
 
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1.41f )
+        if (Input.GetButton("Fire1") && distance <= 1f )
         {
             // clicked on
 
@@ -47,7 +48,7 @@ public class Digging : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Fire2") && distance <= 1.41f)
+        if (Input.GetButton("Fire2") && distance <= 1f)
         {
             Debug.Log("PLACE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
@@ -62,10 +63,14 @@ public class Digging : MonoBehaviour
     {
         animator.SetBool("Mining", false);
 
-        if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
+        if (tilemap.GetTile(clickedBlock) != null)
         {
-            tilemap.SetTile(clickedBlock, null);
+            if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
+            {
+                tilemap.SetTile(clickedBlock, null);
+            }
         }
+
     }
     
 }

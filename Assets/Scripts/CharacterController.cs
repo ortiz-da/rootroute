@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
 
 
 	
-	const float k_GroundedRadius = .5f; // Radius of the overlap circle to determine if grounded (larger to allow for wall jump)
+	const float k_GroundedRadius = .4f; // Radius of the overlap circle to determine if grounded (larger to allow for wall jump)
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
