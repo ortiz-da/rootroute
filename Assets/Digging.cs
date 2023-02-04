@@ -11,6 +11,11 @@ public class Digging : MonoBehaviour
 
     public Camera camera;
 
+    public Animator animator;
+
+    private Vector3Int toMine;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,17 +33,27 @@ public class Digging : MonoBehaviour
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1.41f)
+        if (Input.GetButton("Fire1") && distance <= 1.41f && animator.speed <= 1)
         {
-
             // clicked on
 
-            Vector3Int toMine = tilemap.WorldToCell(selectedPoint);
-
-
-            tilemap.SetTile(toMine, null);
+            Debug.Log("MINE BLOCK");
+            toMine = tilemap.WorldToCell(selectedPoint);
+            
+            animator.SetBool("Mining", true);
+            
+            
+            
         }
 
+    }
+
+
+    public void DeleteBlock()
+    {
+        tilemap.SetTile(toMine, null);
+            
+        animator.SetBool("Mining", false);
     }
     
 }
