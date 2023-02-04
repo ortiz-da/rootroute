@@ -51,6 +51,7 @@ public class Digging : MonoBehaviour
         {
             Debug.Log("PLACE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
+            //Debug.Log("placed block: "+ clickedBlock.ToString());
             tilemap.SetTile(clickedBlock, myceliumTile);
             
         }
