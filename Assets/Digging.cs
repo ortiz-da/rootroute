@@ -28,7 +28,7 @@ public class Digging : MonoBehaviour
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1.1f)
+        if (Input.GetButton("Fire1") && distance <= 1.41f)
         {
 
             // clicked on
