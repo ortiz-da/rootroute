@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9844,8 +9844,6 @@ MonoBehaviour:
   maxHealth: 0
   healthBar: {fileID: 0}
   AGEnemy: {fileID: 1678835917072868219, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
-  timePassed: 0
-  timeInt: 0
   isBeingAttacked: 0
 --- !u!1 &2124301222
 GameObject:
@@ -9922,6 +9920,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102501772}
     m_Modifications:
+    - target: {fileID: 2625207914505250189, guid: 2ecad219f9586d844b39558f7196f446, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 2052107746}
     - target: {fileID: 6381676814877407371, guid: 2ecad219f9586d844b39558f7196f446, type: 3}
       propertyPath: m_Name
       value: HUD
