@@ -9815,7 +9815,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.52868223}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -9826,7 +9826,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 8}
+  m_Size: {x: 1, y: 6.9426355}
   m_EdgeRadius: 0
 --- !u!114 &2052107746
 MonoBehaviour:
@@ -9844,8 +9844,6 @@ MonoBehaviour:
   maxHealth: 0
   healthBar: {fileID: 0}
   AGEnemy: {fileID: 1678835917072868219, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
-  timePassed: 0
-  timeInt: 0
   isBeingAttacked: 0
 --- !u!1 &2124301222
 GameObject:
