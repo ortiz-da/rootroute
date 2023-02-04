@@ -1,8 +1,10 @@
 fileFormatVersion: 2
 guid: 16544e3cbb23ea84ca5e8cf945fa487e
+labels:
+- Breakable
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000
   userData: 
-  assetBundleName: 
+  assetBundleName: dirt
   assetBundleVariant: 
