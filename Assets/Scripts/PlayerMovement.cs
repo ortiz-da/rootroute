@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     private float vertical;
     public CharacterController controller;
     private bool jump = false;
+    public Animator animator;
+    
+
+    public BoxCollider2D wallClimbCollider;
 
     public float runSpeed = 40f;
     // Start is called before the first frame update
@@ -25,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     {
 
         horizontal = Input.GetAxisRaw("Horizontal") * runSpeed;
+        animator.SetFloat("Speed", Math.Abs(horizontal));
+
         if (Input.GetButtonDown("Jump"))
         {
             jump = true;
