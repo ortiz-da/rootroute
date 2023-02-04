@@ -5,17 +5,27 @@ using UnityEngine.UI;
 
 public class TreeHealth : MonoBehaviour
 {
-    public Image healthImage;
     private TreeManager tree;
+    private GameObject[] leafs;
+    private int leafNum;
     // Start is called before the first frame update
     void Start()
     {
-        
+        leafs = GameObject.FindGameObjectsWithTag("leaf");
+        leafNum = leafs.Length;
     }
 
     // Update is called once per frame
     void Update()
     {
-        healthImage.fillAmount = Mathf.Clamp(tree.health / tree.maxHealth, 0f, 1f);
+        int curHealth = (int)tree.health / 10;
+        for(int i = 0; i < leafs.Length; i++)
+        {
+            if (i < curHealth)
+                leafs[i].SetActive(false);
+            else
+                leafs[i].SetActive(true);
+        }
+        leafNum = curHealth;
     }
 }
