@@ -35,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = true;
         }
+
+        if(Input.GetKeyDown(KeyCode.Space)) 
+        {
+            jump = true;
+        }
     }
 
     private void FixedUpdate()
