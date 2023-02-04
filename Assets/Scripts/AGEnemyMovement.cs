@@ -7,17 +7,17 @@ using UnityEngine;
 public class AGEnemyMovement : MonoBehaviour
 {
     [SerializeField] private float beetleSpeed = 0.1f;
-    [SerializeField] private float treeOffset = 1f;
-    [SerializeField] private bool beetleAttacking = false;
     [SerializeField] private float timePassed = 0f;
-    public GameObject character;
-    public GameObject tree;
-    [SerializeField] private VariableSetup masterVariables;
+    [SerializeField] private GameObject character;
+    [SerializeField] private GameObject tree;
+    [SerializeField] private GameObject AGPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        tree = GameObject.FindGameObjectWithTag("tree");
+        character = GameObject.FindGameObjectWithTag("character");
+        AGPrefab = GameObject.FindGameObjectWithTag("AGEnemy");
     }
 
     // Update is called once per frame
@@ -27,31 +27,17 @@ public class AGEnemyMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        if(transform.position.x >= (tree.transform.position.x - treeOffset))
-        {
-            beetleSpeed = 0f;
-            beetleAttacking = true;
-        }
-
+    { 
         transform.position += new Vector3(beetleSpeed, 0, 0);
         Physics2D.IgnoreCollision(character.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-        /*
-        if (beetleAttacking)
-        {
-            beetleAttack();
-        }
-        */
+        Physics2D.IgnoreCollision(AGPrefab.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
-    /*
-    void beetleAttack()
+    void OnCollisionStay2D(Collision2D col)
     {
-        if((timePassed % masterVariables.beetleAttackRate) == 1)
+        if (col.gameObject.CompareTag("tree"))
         {
-            masterVariables.treeLife = masterVariables.treeLife - 1;
+            beetleSpeed = 0f;
         }
     }
-    */
 }

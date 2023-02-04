@@ -6,6 +6,7 @@ TagManager:
   tags:
   - tree
   - AGEnemy
+  - character
   layers:
   - Default
   - TransparentFX
