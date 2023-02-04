@@ -18,7 +18,7 @@ public class TowerPlacing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Instantiate(tower1, this.transform.position, Quaternion.identity, null);
         }
