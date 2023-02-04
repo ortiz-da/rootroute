@@ -21,9 +21,9 @@ public class MinimapScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 newPosition = player.position;
-        newPosition.z = -1;
+        // Vector3 newPosition = player.position;
+        // newPosition.z = -1;
 
-        transform.position = newPosition;
+        // transform.position = newPosition;
     }
 }
