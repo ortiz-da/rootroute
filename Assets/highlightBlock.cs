@@ -18,8 +18,7 @@ public class highlightBlock : MonoBehaviour
     {
         // http://answers.unity.com/answers/993502/view.html
 
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        blockColor = gameObject.GetComponent<SpriteRenderer>().color;
+
 
     }
 
@@ -32,9 +31,12 @@ public class highlightBlock : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-
         if (other.CompareTag("character") && !hasTower)
         {
+            Debug.Log("ENTER");
+
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, .5f);
             
         }
@@ -50,15 +52,20 @@ public class highlightBlock : MonoBehaviour
             Instantiate(tower1, towerPos, Quaternion.identity, null);
             Debug.Log("PLACE TOWER");
             hasTower = true;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);        
 
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+
         if (other.CompareTag("character"))
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
-        }
+            Debug.Log("LEAVE");
+
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);        }
     }
 }
