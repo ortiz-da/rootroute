@@ -61,8 +61,10 @@ public class Digging : MonoBehaviour
 
     public void DeleteBlock()
     {
-        tilemap.SetTile(clickedBlock, null);
-            
+        if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
+        {
+            tilemap.SetTile(clickedBlock, null);
+        }
         animator.SetBool("Mining", false);
     }
     
