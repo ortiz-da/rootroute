@@ -148,7 +148,11 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator biomassCounterUpdate()
     {
-        biomass += biomassRate;
-        yield return new WaitForSeconds(VariableSetup.rate);
+        while (true)
+        {
+            Debug.Log("adding " + biomassRate);
+            biomass += biomassRate;
+            yield return new WaitForSeconds(VariableSetup.rate);
+        }
     }
 }
