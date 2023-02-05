@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OpeningSceneSpaceToContinue : MonoBehaviour
+public class OpeningSceneOnClick : MonoBehaviour
 {
-    void UpdateLoadScene() {
+    void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
             //Save stuff
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("LoadingScene");
             Debug.Log("This is a log message.");
         }
     }
