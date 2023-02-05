@@ -33,10 +33,6 @@ public class TreeHealth : MonoBehaviour
                 leafs[i].SetActive(false);
         }
         leafNum = curHealth;
-        if(!soundPlayed && tree.health <= 15)
-        {
-            AudioSource.PlayClipAtPoint(lowHealthSFX, character.transform.position);
-            soundPlayed = true;
-        }
+        
     }
 }

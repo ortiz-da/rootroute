@@ -71,10 +71,15 @@ public class ResourceManager : MonoBehaviour
     public void towerPlaced(GameObject tower)
     {
         biomass -= VariableSetup.tower1Cost;
+
+        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack>().position.ToString());
         Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
         tower.GetComponent<TowerAttack>().correctedPosition = corrected;
-        myceliumMap[corrected.x, corrected.y] = true;
         Debug.Log("Tower at: " + corrected.ToString());
+
+        towers.Add(tower);
+
+        myceliumMap[corrected.x, corrected.y] = true;
         grid.UpdateGrid(myceliumMap);
         trace();
     }
@@ -91,10 +96,6 @@ public class ResourceManager : MonoBehaviour
 
     private void trace()
     {
-        if(Pathfinding.FindPath(grid, new Point(13, 5), origin).Count != 0)
-        {
-            //Debug.Log("Made a path!");
-        }
         foreach(GameObject resource in resources)
         {
             bioResource bio = resource.GetComponent<bioResource>();
@@ -118,6 +119,7 @@ public class ResourceManager : MonoBehaviour
 
         foreach(GameObject tower in towers)
         {
+            Debug.Log("enters tower search");
             TowerAttack towerAttack= tower.GetComponent<TowerAttack>();
             Point pos = makePoint(towerAttack.position);
             if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
