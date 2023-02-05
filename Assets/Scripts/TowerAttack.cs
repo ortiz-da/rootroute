@@ -1,4 +1,4 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +9,8 @@ public class TowerAttack : MonoBehaviour
     public GameObject bullet;
     [SerializeField] private float distanceToBeetle;
 
+    private bool attacking = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,24 @@ public class TowerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceToBeetle = Vector3.Distance(transform.position, beetle.transform.position);
-        Debug.Log(distanceToBeetle);
+        if(attacking)
+        {
+
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        attacking = false;
+    }
+
+    IEnumerator attack()
+    {
+
     }
 }

@@ -21,6 +21,7 @@ public class VariableSetup : MonoBehaviour
     static public float tower1Health = 20f;
     static public float tower1BiomassPerShot = 1f;
 
+    static public float rate = 1f;
 
     static public float myceliumHP = 10f;
 
