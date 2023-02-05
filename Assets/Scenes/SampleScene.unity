@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2662,7 +2662,7 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.4554048, y: -2.7081265}
+    - - {x: 1.9878709, y: -3.5652728}
       - {x: 2, y: -1.6875}
       - {x: 1.8125, y: 0.25}
       - {x: 2.875, y: 0.75}
@@ -2701,10 +2701,10 @@ PolygonCollider2D:
       - {x: -3.6875, y: -4.125}
       - {x: -4, y: -4.375}
       - {x: -4, y: -4.5}
-      - {x: -2.1788952, y: -3.946455}
-      - {x: -0.66625667, y: -1.8394766}
-      - {x: 1.1173071, y: -2.4417782}
-      - {x: 2.0377128, y: -3.7117705}
+      - {x: -1.5295419, y: -4.4399633}
+      - {x: -1.4714546, y: -2.566752}
+      - {x: 1.4549707, y: -2.4937263}
+      - {x: 1.4662821, y: -4.4909945}
       - {x: 4, y: -4.5}
       - {x: 4, y: -4.375}
       - {x: 3.75, y: -4.0625}

@@ -20,6 +20,8 @@ public class Digging : MonoBehaviour
 
     public TileBase mineshaftWithMyceliumTile;
 
+    public ResourceManager resourceManager;
+
     private float mineDistance = 1.2f;
 
 
@@ -71,6 +73,11 @@ public class Digging : MonoBehaviour
             if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")) && !(tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1")))
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
+                if(tilemap.GetTile(clickedBlock).name.Equals("MyceliumRuleTile"))
+                {
+                    resourceManager.myceliumDeleted(tilemap.WorldToCell(clickedBlock));
+                    Debug.Log("Successfully deleted mycelium");
+                }
             }
         }
 
@@ -92,7 +99,7 @@ public class Digging : MonoBehaviour
         {
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
 
-
+            Debug.Log(tilemap.GetTile(clickedBlock).name);
         }
 
     }

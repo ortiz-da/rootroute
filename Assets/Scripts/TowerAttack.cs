@@ -16,7 +16,7 @@ public class TowerAttack : MonoBehaviour
 
     private int attackersInTrigger = 0;
 
-    private Collider2D hitbox;
+    public Collider2D hitbox;
 
     // Start is called before the first frame update
     void Start()
