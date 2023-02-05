@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
             bioResource bio = resource.GetComponent<bioResource>();
             Vector2Int corrected = correctPosition(bio.position);
             bio.correctedPosition = corrected;
-            //Debug.Log(corrected.ToString());
+            Debug.Log(corrected.ToString());
             myceliumMap[corrected.x, corrected.y] = true;
         }
     }
@@ -109,9 +109,9 @@ public class ResourceManager : MonoBehaviour
                     //we will need to call the users attention to the break
                 }
             }
-            else
+            else if(!bio.connected)
             {
-                Debug.Log("Path found to " + resource.name);
+                Debug.Log("bio is connected");
                 bio.connected = true;
                 biomassRate += bio.resourceRate;
             }
@@ -135,7 +135,7 @@ public class ResourceManager : MonoBehaviour
             {
                 Debug.Log("Tower is connected");
                 towerAttack.connected = true;
-                biomassRate -= VariableSetup.tower1BiomassPerShot;
+                //biomassRate -= VariableSetup.tower1BiomassPerShot;
             }
         }
     }
@@ -147,7 +147,11 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator biomassCounterUpdate()
     {
-        biomass += biomassRate;
-        yield return new WaitForSeconds(VariableSetup.rate);
+        while (true)
+        {
+            //Debug.Log("Goes into biomass update");
+            biomass += biomassRate;
+            yield return new WaitForSeconds(VariableSetup.rate);
+        }
     }
 }
