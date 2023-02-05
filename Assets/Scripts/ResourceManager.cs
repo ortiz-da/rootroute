@@ -72,9 +72,9 @@ public class ResourceManager : MonoBehaviour
     {
         biomass -= VariableSetup.tower1Cost;
 
-        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack>().position.ToString());
-        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
-        tower.GetComponent<TowerAttack>().correctedPosition = corrected;
+        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack2>().position.ToString());
+        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack2>().position);
+        tower.GetComponent<TowerAttack2>().correctedPosition = corrected;
         Debug.Log("Tower at: " + corrected.ToString());
 
         towers.Add(tower);
@@ -109,7 +109,8 @@ public class ResourceManager : MonoBehaviour
                     //we will need to call the users attention to the break
                 }
             }
-            else
+            // Only connect once
+            else if(!bio.connected)
             {
                 Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
@@ -119,23 +120,23 @@ public class ResourceManager : MonoBehaviour
 
         foreach(GameObject tower in towers)
         {
-            TowerAttack towerAttack= tower.GetComponent<TowerAttack>();
-            Point pos = makePoint(towerAttack.position);
+            TowerAttack2 towerAttack2= tower.GetComponent<TowerAttack2>();
+            Point pos = makePoint(towerAttack2.position);
             if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
             {
-                if (towerAttack.connected)
+                if (towerAttack2.connected)
                 {
-                    towerAttack.connected = false;
+                    towerAttack2.connected = false;
                     Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
             }
-            else
+            // Only connect once
+            else if(!towerAttack2.connected)
             {
                 Debug.Log("Tower is connected");
-                towerAttack.connected = true;
-                biomassRate -= VariableSetup.tower1BiomassPerShot;
+                towerAttack2.connected = true;
             }
         }
     }

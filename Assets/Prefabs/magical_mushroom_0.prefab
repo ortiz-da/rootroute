@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3216797403401275221}
   - component: {fileID: 3216797403401275220}
   - component: {fileID: 3216797403401275227}
-  - component: {fileID: 3216797403401275222}
   - component: {fileID: 3216797403401275223}
   - component: {fileID: 1787703572659144826}
+  - component: {fileID: -8530042371734406282}
   m_Layer: 0
   m_Name: magical_mushroom_0
   m_TagString: Untagged
@@ -109,26 +109,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &3216797403401275222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3216797403401275226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b6bfad810ca5cf4e9c4f381d18c77a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToBeetle: 0
-  particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
-  position: {x: 0, y: 0, z: 0}
-  correctedPosition: {x: 0, y: 0}
-  resourceManager: {fileID: 0}
-  hitbox: {fileID: 5329886849048207099}
-  connected: 0
-  attackSound: {fileID: 8300000, guid: 99f7e536d47e3c542af8e3f74b9f0a87, type: 3}
 --- !u!61 &3216797403401275223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -251,6 +231,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8530042371734406282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216797403401275226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8ea10e3c42bd3643b3da11fc3fa79d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
+  connected: 1
+  attackSound: {fileID: 8300000, guid: 99f7e536d47e3c542af8e3f74b9f0a87, type: 3}
+  collidedEnemies: []
+  position: {x: 0, y: 0, z: 0}
+  correctedPosition: {x: 0, y: 0}
 --- !u!1 &8397408112169376961
 GameObject:
   m_ObjectHideFlags: 0

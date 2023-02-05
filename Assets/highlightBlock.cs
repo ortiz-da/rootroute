@@ -42,7 +42,7 @@ public class highlightBlock : MonoBehaviour
 
         if (other.CompareTag("character") && !hasTower)
         {
-            Debug.Log("ENTER");
+            // Debug.Log("ENTER");
 
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             blockColor = gameObject.GetComponent<SpriteRenderer>().color;
@@ -55,7 +55,7 @@ public class highlightBlock : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         
-        if (Input.GetKeyDown(KeyCode.F) && !hasTower && resourceManager.biomass > VariableSetup.tower1Cost)
+        if (Input.GetKeyDown(KeyCode.F) && !hasTower && resourceManager.biomass >= VariableSetup.tower1Cost)
         {
             Vector3 towerPos = new Vector3(this.transform.position.x, this.transform.position.y + 1.5f);
             Instantiate(tower1, towerPos, Quaternion.identity, null);

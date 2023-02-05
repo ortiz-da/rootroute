@@ -31,7 +31,7 @@ public class SpawnBeetles : MonoBehaviour
 
             SpawnWave();
             
-            yield return new WaitForSeconds(20);
+            yield return new WaitForSeconds(5);
             waveNumber++;
         }
 

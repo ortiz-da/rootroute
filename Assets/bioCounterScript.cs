@@ -16,13 +16,11 @@ public class bioCounterScript : MonoBehaviour
     void Start()
     {
         bioText = GameObject.Find("bioCounter").GetComponent<TextMeshProUGUI>();
-        rateImage = GameObject.Find("rate").GetComponent<Image>();
-        rateText = GameObject.Find("rate#").GetComponent<TextMeshProUGUI>();
+        // rateImage = GameObject.Find("rate").GetComponent<Image>();
+            //rateText = GameObject.Find("rate#").GetComponent<TextMeshProUGUI>();
 
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         updateBio();
-        updateRate();
-
     }
 
     // Update is called once per frame
@@ -32,41 +30,14 @@ public class bioCounterScript : MonoBehaviour
         {
             updateBio();
         }
-        if(resourceManager.biomassRate!= currate)
-        {
-            updateRate();
-        }
     }
 
-    Color colorDetermine(float rate)
-    {
-        if(rate < 1 && rate > -1)
-        {
-            return Color.yellow;
-        }
-        else if(rate > 1) 
-        { 
-            return Color.green;
-        }
-        else
-        {
-            return Color.red;
-        }
-    }
+
 
     private void updateBio()
     {
         curbio = resourceManager.biomass;
         bioText.text = "Biomatter: " + curbio;
     }
-
-    private void updateRate()
-    {
-        currate = resourceManager.biomassRate;
-        if(currate > 0)
-            rateText.text = "+" + currate;
-        else
-            rateText.text = currate.ToString();
-        rateImage.color = colorDetermine(currate);
-    }
+    
 }

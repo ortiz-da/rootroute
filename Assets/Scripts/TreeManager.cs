@@ -30,8 +30,8 @@ public class TreeManager : MonoBehaviour
         {
             StartCoroutine(AGAttacking());
         }
-        Debug.Log(health);
-        Debug.Log(isBeingAttacked);
+         // Debug.Log(health);
+        // Debug.Log(isBeingAttacked);
     }
 
     private void OnCollisionEnter2D(Collision2D col)

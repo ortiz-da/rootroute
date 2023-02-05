@@ -8,7 +8,7 @@ public class BeetleHealth : MonoBehaviour
     float health = VariableSetup.beetleHealth;
     void Start()
     {
-        Debug.Log("beetle start");
+        // Debug.Log("beetle start");
         //Debug.Log(name+ ": " + health); 
     }
 
@@ -18,6 +18,7 @@ public class BeetleHealth : MonoBehaviour
 
     }
 
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("attackBox"))
@@ -29,6 +30,22 @@ public class BeetleHealth : MonoBehaviour
             {
                 Destroy(gameObject);
             }
+        }
+    }
+    */
+
+    // NEW VERSION
+    public void DecreaseHealth()
+    {
+        health -= VariableSetup.tower1Dmg;
+
+    }
+
+    public void KillBeetle()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
