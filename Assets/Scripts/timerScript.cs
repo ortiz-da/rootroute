@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class timerScript : MonoBehaviour
 {
-    float countdown;
+    public float countdown;
     public TextMeshProUGUI timerText;
     void Start()
     {
