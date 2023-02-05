@@ -43,7 +43,7 @@ public class Digging : MonoBehaviour
 
             Debug.Log("MINE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
-            
+            Debug.Log(clickedBlock.ToString());
             animator.SetBool("Mining", true);
 
         }

@@ -1,3 +1,4 @@
+using NesScripts.Controls.PathFind;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,15 +7,19 @@ public class ResourceManager : MonoBehaviour
 {
     public float biomass;
 
-    float biomassRate = 0f;
+    NesScripts.Controls.PathFind.Point origin = new Point(-1, -1);
 
+    float biomassRate = 0f;
+   
     GameObject[] resources;
     GameObject[] towers;
     bool[,] myceliumMap = new bool[31, 25];
+    NesScripts.Controls.PathFind.Grid grid;
     void Start()
     {
         biomass = VariableSetup.biomass;
-        //read in all biomatter in the scene and add them to the resources array
+        resources = GameObject.FindGameObjectsWithTag("biomatter");
+        grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
     }
 
     // Update is called once per frame
@@ -27,12 +32,14 @@ public class ResourceManager : MonoBehaviour
     {
         Vector2Int corrected = correctPosition(spot);
         myceliumMap[corrected.x, corrected.y] = true;
+        grid.UpdateGrid(myceliumMap);
         trace();
     }
 
     public void towerPlaced(Vector3Int spot)
     {
         Vector2Int corrected = correctPosition(spot);
+        //add tower to towers array
         trace();
     }
 
@@ -41,13 +48,30 @@ public class ResourceManager : MonoBehaviour
         return new Vector2Int(spot.x + 16, spot.y - 3);
     }
 
+    private Point makePoint(Vector3Int spot)
+    {
+        return new Point(spot.x + 16, spot.y - 3);
+    }
+
     private void trace()
     {
         foreach(GameObject resource in resources)
         {
-            //find path from origin to position of resource
-            //if there's a valid path, set "Found" variable in resource to true
-            //if there's a valid path, add providing rate to biomatter increase rate
+            bioResource bio = resource.GetComponent<bioResource>();
+            Point pos = makePoint(bio.position);
+            if(Pathfinding.FindPath(grid, pos, origin).Count == 0)
+            {
+                if(bio.connected)
+                {
+                    //if it was already connected and now isn't, something has broken the chain
+                    //we will need to call the users attention to the break
+                }
+            }
+            else
+            {
+                bio.connected = true;
+                biomassRate += bio.resourceRate;
+            }
         }
 
         foreach(GameObject tower in towers)
