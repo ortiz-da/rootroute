@@ -19,6 +19,12 @@ public class ResourceManager : MonoBehaviour
     {
         biomass = VariableSetup.biomass;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
+        foreach(GameObject resource in resources)
+        {
+            bioResource bio = resource.GetComponent<bioResource>();
+            Point pos = makePoint(bio.position);
+            myceliumMap[pos.x, pos.y] = true;
+        }
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
     }
 
@@ -32,6 +38,14 @@ public class ResourceManager : MonoBehaviour
     {
         Vector2Int corrected = correctPosition(spot);
         myceliumMap[corrected.x, corrected.y] = true;
+        grid.UpdateGrid(myceliumMap);
+        trace();
+    }
+
+    public void myceliumDeleted(Vector3Int spot)
+    {
+        Vector2Int corrected = correctPosition(spot);
+        myceliumMap[corrected.x, corrected.y] = false;
         grid.UpdateGrid(myceliumMap);
         trace();
     }
