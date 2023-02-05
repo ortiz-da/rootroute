@@ -63,7 +63,10 @@ public class bioCounterScript : MonoBehaviour
     private void updateRate()
     {
         currate = resourceManager.biomassRate;
-        rateText.text = "+" + currate;
+        if(currate > 0)
+            rateText.text = "+" + currate;
+        else
+            rateText.text = currate.ToString();
         rateImage.color = colorDetermine(currate);
     }
 }
