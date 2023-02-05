@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
 
+	public ParticleSystem runParticles;
 
 	
 	const float k_GroundedRadius = .4f; // Radius of the overlap circle to determine if grounded (larger to allow for wall jump)
@@ -115,6 +116,14 @@ public class CharacterController : MonoBehaviour
 			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 			// And then smoothing it out and applying it to the character
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
+
+			if (Mathf.Abs(m_Velocity.x )> .2 && m_Grounded )
+			{
+				Vector3 particlePos = new Vector3(this.transform.position.x, this.transform.position.y - .55f,
+					this.transform.position.z);
+				Instantiate(runParticles, particlePos, Quaternion.identity);
+			}
+
 
 			// If the input is moving the player right and the player is facing left...
 			if (move > 0 && !m_FacingRight)

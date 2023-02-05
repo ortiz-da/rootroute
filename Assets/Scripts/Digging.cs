@@ -88,7 +88,7 @@ public class Digging : MonoBehaviour
         Tile tile = tilemap.GetTile<Tile>(clickedBlock);
 
         Debug.Log(tile);
-        if (tile == null)
+        if (tile == null && !(tilemap.GetTile(clickedBlock).name.Equals("grass")))
         {
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
 
