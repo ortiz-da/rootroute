@@ -10,10 +10,14 @@ public class AGEnemyMovement : MonoBehaviour
     [SerializeField] private float timePassed = 0f;
     [SerializeField] private GameObject tree;
 
+    private Animator animator;
+    private static readonly int IsAttackingTree = Animator.StringToHash("IsAttackingTree");
+
     // Start is called before the first frame update
     void Start()
     {
         tree = GameObject.FindGameObjectWithTag("tree");
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -32,6 +36,8 @@ public class AGEnemyMovement : MonoBehaviour
         if (col.gameObject.CompareTag("tree"))
         {
             beetleSpeed = 0f;
+            animator.SetBool(IsAttackingTree, true);
+            
         }
         else
         {
