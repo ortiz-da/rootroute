@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
+
 
 public class Digging : MonoBehaviour
 {
@@ -22,11 +20,15 @@ public class Digging : MonoBehaviour
 
     private float mineDistance = 1.2f;
 
+    public AudioClip digSound;
+
+    private AudioSource audioSource;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -71,6 +73,9 @@ public class Digging : MonoBehaviour
             if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")) && !(tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1")))
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
+                audioSource.clip = digSound;
+                audioSource.pitch = Random.Range(.5f, .75f);
+                audioSource.Play();
             }
         }
 
