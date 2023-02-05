@@ -22,12 +22,12 @@ public class SpawnBeetles : MonoBehaviour
 
     IEnumerator SpawnBeetle()
     {
-        while (waveNumber < 5)
+        while (waveNumber < 15)
         {
 
             SpawnWave();
             
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(20);
             waveNumber++;
         }
 
