@@ -16,11 +16,17 @@ public class TowerAttack : MonoBehaviour
 
     private int attackersInTrigger = 0;
 
+    private Collider2D hitbox;
+
     // Start is called before the first frame update
     void Start()
     {
         beetle = GameObject.FindGameObjectWithTag("AGEnemy");
         animator = GetComponent<Animator>();
+
+        GameObject hit = transform.GetChild(0).gameObject;
+        hitbox = hit.GetComponent<Collider2D>();
+        hitbox.enabled= false;
     }
 
     // Update is called once per frame
@@ -31,6 +37,7 @@ public class TowerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        animator.SetBool("attacking", true);
         attackersInTrigger++;
         isAttacking= true;
     }
@@ -41,6 +48,7 @@ public class TowerAttack : MonoBehaviour
         if (attackersInTrigger == 0)
         {
             isAttacking= false;
+            animator.SetBool("attacking", false);
         }
     }
 
@@ -54,9 +62,11 @@ public class TowerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
-        animator.SetBool("attacking", true);
         Instantiate(particles, transform.position, Quaternion.identity);
-        animator.SetBool("attacking", false);
+        hitbox.enabled= true;
+        isAttacking = false;
         yield return new WaitForSeconds(VariableSetup.rate);
+        hitbox.enabled= false;
+        isAttacking = true;
     }
 }

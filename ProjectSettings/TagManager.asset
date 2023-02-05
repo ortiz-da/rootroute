@@ -9,6 +9,7 @@ TagManager:
   - character
   - leaf
   - biomatter
+  - attackBox
   layers:
   - Default
   - TransparentFX
