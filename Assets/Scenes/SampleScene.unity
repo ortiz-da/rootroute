@@ -1793,7 +1793,8 @@ MonoBehaviour:
   tilemap: {fileID: 1862250059}
   camera1: {fileID: 963194227}
   animator: {fileID: 1020308542}
-  myceliumTile: {fileID: 11400000, guid: 3b0ea47de875acd4ea8d4c66c06d20b5, type: 2}
+  myceliumBlock: {fileID: 0}
+  mineshaftTile: {fileID: 0}
 --- !u!95 &1020308542
 Animator:
   serializedVersion: 5
