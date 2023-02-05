@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class TreeHealth : MonoBehaviour
 {
     public TreeManager tree;
+    public AudioClip lowHealthSFX;
+    public GameObject character;
+
     private GameObject[] leafs;
     private int leafNum;
+    private bool soundPlayed = false;
     // Start is called before the first frame update
     void Start()
     {
+        character = GameObject.Find("character");
         leafs = GameObject.FindGameObjectsWithTag("leaf");
         leafNum = leafs.Length;
     }
@@ -28,5 +33,9 @@ public class TreeHealth : MonoBehaviour
                 leafs[i].SetActive(false);
         }
         leafNum = curHealth;
+        if(!soundPlayed && tree.health <= 15)
+        {
+            AudioSource.PlayClipAtPoint(lowHealthSFX, character.transform.position);
+        }
     }
 }

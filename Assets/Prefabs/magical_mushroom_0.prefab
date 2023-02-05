@@ -120,11 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6bfad810ca5cf4e9c4f381d18c77a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beetle: {fileID: 0}
-  bullet: {fileID: 0}
   distanceToBeetle: 0
   particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
   hitbox: {fileID: 5329886849048207099}
+  towerAttackSFX: {fileID: 8300000, guid: 5707a9fd8e787406c83956015d34e2c1, type: 3}
 --- !u!61 &3216797403401275223
 BoxCollider2D:
   m_ObjectHideFlags: 0
