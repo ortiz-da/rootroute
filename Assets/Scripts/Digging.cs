@@ -115,7 +115,7 @@ public class Digging : MonoBehaviour
             audioSource.Play();
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
             resourceManager.myceliumPlaced(clickedBlock);
-            Debug.Log(tilemap.GetTile(clickedBlock).name);
+            //Debug.Log(tilemap.GetTile(clickedBlock).name);
         }
 
     }

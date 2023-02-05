@@ -68,7 +68,7 @@ public class highlightBlock : MonoBehaviour
              // Debug.Log("PLACE TOWER");
             hasTower = true;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
-            resourceManager.biomassUpdate(VariableSetup.tower1Cost);
+            
         }
     }
 

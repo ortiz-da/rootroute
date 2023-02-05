@@ -39,10 +39,11 @@ public class TowerAttack : MonoBehaviour
         GameObject hit = transform.GetChild(0).gameObject;
         hitbox = hit.GetComponent<Collider2D>();
         hitbox.enabled= false;
-        resourceManager.towerPlaced(gameObject);
 
         position = tilemap.WorldToCell(transform.position);
         position.y -= 2; //2 or 3 here?
+
+        resourceManager.towerPlaced(gameObject);
 
         correctedPosition = new Vector2Int();
         //Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
@@ -84,6 +85,8 @@ public class TowerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
+        if (!animator.GetBool("attacking"))
+            animator.SetBool("attacking", true);
         Debug.Log("TOWER ATTACK");
         audioSource.clip = attackSound;
         audioSource.pitch = Random.Range(.5f, 1f);

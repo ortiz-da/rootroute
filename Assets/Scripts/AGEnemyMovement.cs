@@ -52,6 +52,7 @@ public class AGEnemyMovement : MonoBehaviour
     // Used with animation event 
     public void PlayCrunchSound()
     {
+        //Debug.Log("PLAY CRUNCH");
         audioSource.clip = crunchSound;
         audioSource.pitch = Random.Range(.5f, 1f);
         audioSource.Play();
