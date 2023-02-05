@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1816,6 +1816,7 @@ MonoBehaviour:
   animator: {fileID: 1020308542}
   mineshaftTile: {fileID: 11400000, guid: 83b89e1faa912457e90e4089cb2b0e7f, type: 2}
   mineshaftWithMyceliumTile: {fileID: 11400000, guid: aa6090d860730404b9b8cb9e21d09076, type: 2}
+  resourceManager: {fileID: 0}
 --- !u!95 &1020308542
 Animator:
   serializedVersion: 5
@@ -2613,8 +2614,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 0
-  healthBar: {fileID: 0}
-  AGEnemy: {fileID: 0}
+  healthBar: {fileID: 2076153673}
+  AGEnemy: {fileID: 1678835917072868219, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
   isBeingAttacked: 0
 --- !u!50 &1269568586
 Rigidbody2D:
@@ -12319,6 +12320,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0408d96e5bc3b7f49a6dd0a9106c95ee, type: 3}
+--- !u!114 &2076153673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2625207914505250189, guid: 2ecad219f9586d844b39558f7196f446, type: 3}
+  m_PrefabInstance: {fileID: 1924094055}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0b3a56e0ac41c4ead19b69767d4ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2084047381 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3329099254225457179, guid: 0408d96e5bc3b7f49a6dd0a9106c95ee, type: 3}
