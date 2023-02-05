@@ -1,6 +1,8 @@
-
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 public class Digging : MonoBehaviour
@@ -22,16 +24,11 @@ public class Digging : MonoBehaviour
 
     private float mineDistance = 1.2f;
 
-    private AudioSource audioSource;
-
-    public AudioClip digSound;
-    public AudioClip placeSound;
-
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
     }
 
     // Update is called once per frame
@@ -76,15 +73,10 @@ public class Digging : MonoBehaviour
             if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")) && !(tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1")))
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
-                // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
-                audioSource.clip = digSound;
-                audioSource.pitch = Random.Range(.5f, 1f);
-                audioSource.Play();
                 if(tilemap.GetTile(clickedBlock).name.Equals("MyceliumRuleTile"))
                 {
                     resourceManager.myceliumDeleted(tilemap.WorldToCell(clickedBlock));
                     Debug.Log("Successfully deleted mycelium");
-
                 }
             }
         }
@@ -102,14 +94,12 @@ public class Digging : MonoBehaviour
             
         Tile tile = tilemap.GetTile<Tile>(clickedBlock);
 
-        Debug.Log(tile);
+        //Debug.Log(tile);
         if (tile == null && !(tilemap.GetTile(clickedBlock).name.Equals("grass")))
         {
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
-            audioSource.clip = placeSound;
-            audioSource.pitch = Random.Range(.5f, 1f);
-            audioSource.Play();
-            // Debug.Log(tilemap.GetTile(clickedBlock).name);
+            resourceManager.myceliumPlaced(clickedBlock);
+            Debug.Log(tilemap.GetTile(clickedBlock).name);
         }
 
     }

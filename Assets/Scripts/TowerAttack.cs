@@ -11,6 +11,9 @@ public class TowerAttack : MonoBehaviour
 
     public GameObject particles;
 
+    public Vector3Int position;
+    public Vector2Int correctedPosition;
+
     private bool isAttacking = false;
 
     private int attackersInTrigger = 0;
@@ -21,6 +24,8 @@ public class TowerAttack : MonoBehaviour
     public Collider2D hitbox;
 
     public AudioClip towerAttackSFX; //add this to any script that needs to play a clip
+
+    public bool connected;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +38,12 @@ public class TowerAttack : MonoBehaviour
         hitbox = hit.GetComponent<Collider2D>();
         hitbox.enabled= false;
         resourceManager.towerPlaced(gameObject);
-        Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
+
+        position = tilemap.WorldToCell(transform.position);
+        position.y -= 2; //2 or 3 here?
+
+        correctedPosition = new Vector2Int();
+        //Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
     }
 
     // Update is called once per frame
@@ -61,7 +71,7 @@ public class TowerAttack : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isAttacking)
+        if (isAttacking && connected)
         {
             StartCoroutine(attack());
         }

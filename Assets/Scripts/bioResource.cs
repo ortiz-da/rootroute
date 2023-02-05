@@ -8,6 +8,7 @@ public class bioResource : MonoBehaviour
     public float resourceRate = 2f;
     public float resourceProviding = 1f;
     public Vector3Int position;
+    public Vector2Int correctedPosition;
     public Tilemap tilemap;
 
     private ResourceManager resourceManager;
@@ -19,6 +20,7 @@ public class bioResource : MonoBehaviour
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         position = tilemap.WorldToCell(transform.position);
+        correctedPosition = new Vector2Int();
     }
 
     // Update is called once per frame
