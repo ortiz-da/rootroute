@@ -16,7 +16,11 @@ public class Digging : MonoBehaviour
 
     private Vector3Int clickedBlock;
 
-    public TileBase myceliumTile;
+    public GameObject myceliumBlock;
+
+    public TileBase mineshaftTile;
+
+    public TileBase mineshaftWithMyceliumTile;
 
 
 
@@ -51,8 +55,21 @@ public class Digging : MonoBehaviour
         if (Input.GetButton("Fire2") && distance <= 1f)
         {
             Debug.Log("PLACE BLOCK");
-            clickedBlock = tilemap.WorldToCell(selectedPoint);
-            tilemap.SetTile(clickedBlock, myceliumTile);
+            // https://www.reddit.com/r/Unity2D/comments/d3mx3e/how_to_get_clicked_tile_in_a_tilemap/
+            
+            Vector3Int tilemapPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            
+            Tile tile = tilemap.GetTile<Tile>(tilemapPos);
+
+            if (tile.sprite.texture.name.Equals("mineshaft"))
+            {
+                // center it + .5
+
+                Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
+                tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+
+            }
+            
             
         }
 
@@ -67,7 +84,7 @@ public class Digging : MonoBehaviour
         {
             if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
             {
-                tilemap.SetTile(clickedBlock, null);
+                tilemap.SetTile(clickedBlock, mineshaftTile);
             }
         }
 
