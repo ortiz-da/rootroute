@@ -15,9 +15,7 @@ public class Digging : MonoBehaviour
     public Animator animator;
 
     private Vector3Int clickedBlock;
-
-    public GameObject myceliumBlock;
-
+    
     public TileBase mineshaftTile;
 
     public TileBase mineshaftWithMyceliumTile;
@@ -55,20 +53,10 @@ public class Digging : MonoBehaviour
         if (Input.GetButton("Fire2") && distance <= 1f)
         {
             Debug.Log("PLACE BLOCK");
-            // https://www.reddit.com/r/Unity2D/comments/d3mx3e/how_to_get_clicked_tile_in_a_tilemap/
+            animator.SetBool("Building", true);
+
             
-            Vector3Int tilemapPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             
-            Tile tile = tilemap.GetTile<Tile>(tilemapPos);
-
-            if (tile.sprite.texture.name.Equals("mineshaft"))
-            {
-                // center it + .5
-
-                Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
-                tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
-
-            }
             
             
         }
@@ -86,6 +74,28 @@ public class Digging : MonoBehaviour
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
             }
+        }
+
+    }
+    
+    
+    public void BuildMycelium()
+    {
+        animator.SetBool("Building", false);
+
+// https://www.reddit.com/r/Unity2D/comments/d3mx3e/how_to_get_clicked_tile_in_a_tilemap/
+            
+        Vector3Int tilemapPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            
+        Tile tile = tilemap.GetTile<Tile>(tilemapPos);
+
+        if (tile.sprite.texture.name.Equals("mineshaft"))
+        {
+            // center it + .5
+
+            Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
+            tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+
         }
 
     }
