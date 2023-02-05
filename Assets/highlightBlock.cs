@@ -14,6 +14,8 @@ public class highlightBlock : MonoBehaviour
     
     public GameObject tower1;
 
+    public ResourceManager resourceManager;
+
     void Start()
     {
         // http://answers.unity.com/answers/993502/view.html
@@ -46,14 +48,14 @@ public class highlightBlock : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !hasTower)
         {
             Vector3 towerPos = new Vector3(this.transform.position.x, this.transform.position.y + 1.5f);
             Instantiate(tower1, towerPos, Quaternion.identity, null);
             Debug.Log("PLACE TOWER");
             hasTower = true;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);        
-
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
+            resourceManager.biomassUpdate(VariableSetup.tower1Cost);
         }
     }
 
