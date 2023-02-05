@@ -1793,7 +1793,9 @@ MonoBehaviour:
   tilemap: {fileID: 1862250059}
   camera1: {fileID: 963194227}
   animator: {fileID: 1020308542}
-  myceliumTile: {fileID: 11400000, guid: 3b0ea47de875acd4ea8d4c66c06d20b5, type: 2}
+  myceliumBlock: {fileID: 0}
+  mineshaftTile: {fileID: 0}
+  mineshaftWithMyceliumTile: {fileID: 0}
 --- !u!95 &1020308542
 Animator:
   serializedVersion: 5
@@ -2443,6 +2445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1269568584}
   - component: {fileID: 1269568583}
+  - component: {fileID: 1269568585}
   m_Layer: 0
   m_Name: treeHouseFull
   m_TagString: Untagged
@@ -2517,6 +2520,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1269568585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269568582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a23315a6fb69d4b84e6d667babcd59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  healthBar: {fileID: 0}
+  AGEnemy: {fileID: 0}
+  isBeingAttacked: 0
 --- !u!1001 &1292909788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10798,6 +10818,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1371098756}
     m_Modifications:
+    - target: {fileID: 2625207914505250189, guid: 2ecad219f9586d844b39558f7196f446, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 1269568585}
     - target: {fileID: 6381676814877407371, guid: 2ecad219f9586d844b39558f7196f446, type: 3}
       propertyPath: m_Name
       value: HUD
