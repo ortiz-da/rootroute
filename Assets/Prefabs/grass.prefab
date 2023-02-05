@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 3329099254225457178}
   hasTower: 0
-  tower1: {fileID: 1773153251000373071, guid: 5c918ba0b53718a4d902ba4906354207, type: 3}
+  tower1: {fileID: 3216797403401275226, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
 --- !u!50 &3329099254225457175
 Rigidbody2D:
   serializedVersion: 4
