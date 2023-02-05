@@ -45,7 +45,7 @@ public class Digging : MonoBehaviour
 
             Debug.Log("MINE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
-            Debug.Log(clickedBlock.ToString());
+
             animator.SetBool("Mining", true);
 
         }
@@ -70,7 +70,7 @@ public class Digging : MonoBehaviour
 
         if (tilemap.GetTile(clickedBlock) != null)
         {
-            if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
+            if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")) && !(tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1")))
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
             }
@@ -89,12 +89,15 @@ public class Digging : MonoBehaviour
             
         Tile tile = tilemap.GetTile<Tile>(tilemapPos);
 
-        if (tile.sprite.texture.name.Equals("mineshaft"))
+        
+        Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
+        tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+        
+        if (tile.sprite.texture.name.Contains("mineshaft"))
         {
             // center it + .5
 
-            Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
-            tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+
 
         }
 
