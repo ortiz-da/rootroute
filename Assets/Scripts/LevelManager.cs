@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tree.health <= 0 || resourceManager.biomass < 0)
+        if (tree.health <= 0)
         {
             isGameOver = true;
             LevelLost();
