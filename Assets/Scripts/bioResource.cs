@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class bioResource : MonoBehaviour
 {
-    public float resourceRate = 2f;
+    public float resourceRate = 1f;
     public float resourceProviding = 1f;
     public Vector3Int position;
     public Vector2Int correctedPosition;

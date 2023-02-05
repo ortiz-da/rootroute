@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class ResourceManager : MonoBehaviour
 
     NesScripts.Controls.PathFind.Point origin = new Point(15, 0);
 
-    float biomassRate = 0f;
+    public float biomassRate;
    
     GameObject[] resources;
     List<GameObject> towers;
@@ -19,13 +18,14 @@ public class ResourceManager : MonoBehaviour
     NesScripts.Controls.PathFind.Grid grid;
     void Start()
     {
-        biomass = VariableSetup.biomass;
+        biomass = VariableSetup.startingBiomass;
+        biomassRate = 0f;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
         
         myceliumMap[origin.x, origin.y] = true;
         towers = new List<GameObject>();
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
-        StartCoroutine(biomassUpdate());
+        StartCoroutine(biomassCounterUpdate());
     }
 
     // Update is called once per frame
@@ -70,6 +70,10 @@ public class ResourceManager : MonoBehaviour
 
     public void towerPlaced(GameObject tower)
     {
+        biomass -= VariableSetup.tower1Cost;
+        Debug.Log(biomassRate.ToString());
+        biomassRate -= VariableSetup.tower1BiomassPerShot;
+        Debug.Log(biomassRate.ToString());
         Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
         tower.GetComponent<TowerAttack>().correctedPosition = corrected;
         myceliumMap[corrected.x, corrected.y] = true;
@@ -129,18 +133,19 @@ public class ResourceManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("Tower is connected");
                 towerAttack.connected = true;
-                biomass -= VariableSetup.tower1Cost;
+                biomassRate -= VariableSetup.tower1BiomassPerShot;
             }
         }
     }
 
     public void biomassUpdate(float cost)
     {
-        biomassRate += cost;
+        biomass += cost;
     }
 
-    IEnumerator biomassUpdate()
+    IEnumerator biomassCounterUpdate()
     {
         biomass += biomassRate;
         yield return new WaitForSeconds(VariableSetup.rate);
