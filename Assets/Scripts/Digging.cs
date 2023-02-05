@@ -20,6 +20,8 @@ public class Digging : MonoBehaviour
 
     public TileBase mineshaftTile;
 
+    public TileBase mineshaftWithMyceliumTile;
+
 
 
     // Start is called before the first frame update
@@ -61,7 +63,11 @@ public class Digging : MonoBehaviour
 
             if (tile.sprite.texture.name.Equals("mineshaft"))
             {
-                Instantiate(myceliumBlock, tilemapPos, Quaternion.identity);
+                // center it + .5
+
+                Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
+                tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+
             }
             
             

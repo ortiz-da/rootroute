@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: mineshaft
+  m_Name: mycelium
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 1595672692, guid: b1fb4ad2cd57e445daeb41d02185d31a, type: 3}
+  m_Sprite: {fileID: -1111100653, guid: 15bfde2250e10451fa22647b44d83bd0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -33,4 +33,4 @@ MonoBehaviour:
     e33: 1
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
-  m_ColliderType: 0
+  m_ColliderType: 1
