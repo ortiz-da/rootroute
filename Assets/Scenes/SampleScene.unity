@@ -1916,8 +1916,6 @@ MonoBehaviour:
   mineshaftTile: {fileID: 11400000, guid: 83b89e1faa912457e90e4089cb2b0e7f, type: 2}
   mineshaftWithMyceliumTile: {fileID: 11400000, guid: aa6090d860730404b9b8cb9e21d09076, type: 2}
   resourceManager: {fileID: 0}
-  digSound: {fileID: 8300000, guid: 346fcf01de23a0342951bd2ed1b1de0c, type: 3}
-  placeSound: {fileID: 8300000, guid: 82e24552de303ea42bf8cb8470494f62, type: 3}
 --- !u!95 &1020308542
 Animator:
   serializedVersion: 5
@@ -12082,6 +12080,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0408d96e5bc3b7f49a6dd0a9106c95ee, type: 3}
+--- !u!1 &2011211977
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011211979}
+  - component: {fileID: 2011211978}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2011211978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011211977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 571a71ec05f080347b423e710ec1d4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2011211979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011211977}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0311737, y: -0.26026267, z: 0.021407422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2039103325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3329099254225457179, guid: 0408d96e5bc3b7f49a6dd0a9106c95ee, type: 3}
