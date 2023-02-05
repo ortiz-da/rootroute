@@ -124,6 +124,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   distanceToBeetle: 0
   particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
+  hitbox: {fileID: 0}
 --- !u!61 &3216797403401275223
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.0055175, y: 2}
+  m_Size: {x: 2.5, y: 2}
   m_EdgeRadius: 0
 --- !u!1 &8397408112169376961
 GameObject:
@@ -206,5 +207,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.0105019, y: 1.9985938}
+  m_Size: {x: 2.1, y: 1.9985938}
   m_EdgeRadius: 0
