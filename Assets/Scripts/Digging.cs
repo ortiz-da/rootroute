@@ -20,6 +20,7 @@ public class Digging : MonoBehaviour
 
     public TileBase mineshaftWithMyceliumTile;
 
+    private float mineDistance = 1.2f;
 
 
     // Start is called before the first frame update
@@ -39,7 +40,7 @@ public class Digging : MonoBehaviour
         float distance = Vector3.Distance(selectedPoint, transform.position);
 
         
-        if (Input.GetButton("Fire1") && distance <= 1f )
+        if (Input.GetButton("Fire1") && distance <= mineDistance )
         {
             // clicked on
 
@@ -50,7 +51,7 @@ public class Digging : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Fire2") && distance <= 1f)
+        if (Input.GetButton("Fire2") && distance <= mineDistance)
         {
             // Debug.Log("PLACE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
