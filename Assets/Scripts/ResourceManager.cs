@@ -117,7 +117,6 @@ public class ResourceManager : MonoBehaviour
                 Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
                 bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", true);
-
                 biomassRate += bio.resourceRate;
             }
         }

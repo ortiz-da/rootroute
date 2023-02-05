@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60136a94f236f7b4fa22f775a430bf2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceRate: 2
+  resourceRate: 1
   resourceProviding: 1
   position: {x: 0, y: 0, z: 0}
   correctedPosition: {x: 0, y: 0}
