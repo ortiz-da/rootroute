@@ -85,10 +85,12 @@ public class Digging : MonoBehaviour
                 audioSource.clip = digSound;
                 audioSource.pitch = Random.Range(.5f, 1f);
                 audioSource.Play();
-                if(tilemap.GetTile(clickedBlock).name.Equals("MyceliumRuleTile"))
+                /*Debug.Log("Breaking entered");
+                Debug.Log(tilemap.GetTile(clickedBlock).name);*/
+                if(tilemap.GetTile(clickedBlock).name.Equals("MineShaftRuleTile"))
                 {
                     resourceManager.myceliumDeleted(tilemap.WorldToCell(clickedBlock));
-                    Debug.Log("Successfully deleted mycelium");
+                    //Debug.Log("Successfully deleted mycelium");
                 }
             }
         }

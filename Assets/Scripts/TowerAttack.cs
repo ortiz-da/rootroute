@@ -60,9 +60,12 @@ public class TowerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        animator.SetBool("attacking", true);
-        attackersInTrigger++;
-        isAttacking= true;
+        if (connected)
+        {
+            animator.SetBool("attacking", true);
+            attackersInTrigger++;
+            isAttacking = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -85,19 +88,22 @@ public class TowerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
-        if (!animator.GetBool("attacking"))
-            animator.SetBool("attacking", true);
-        Debug.Log("TOWER ATTACK");
-        audioSource.clip = attackSound;
-        audioSource.pitch = Random.Range(.5f, 1f);
-        audioSource.Play();
-        
-        Instantiate(particles, transform.position, Quaternion.identity);
-        hitbox.enabled= true;
-        isAttacking = false;
-        yield return new WaitForSeconds(VariableSetup.rate);
+        if (connected)
+        {
+            if (!animator.GetBool("attacking"))
+                animator.SetBool("attacking", true);
+            Debug.Log("TOWER ATTACK");
+            audioSource.clip = attackSound;
+            audioSource.pitch = Random.Range(.5f, 1f);
+            audioSource.Play();
 
-        hitbox.enabled= false;
-        isAttacking = true;
+            Instantiate(particles, transform.position, Quaternion.identity);
+            hitbox.enabled = true;
+            isAttacking = false;
+            yield return new WaitForSeconds(VariableSetup.rate);
+
+            hitbox.enabled = false;
+            isAttacking = true;
+        }
     }
 }
