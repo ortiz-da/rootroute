@@ -22,15 +22,24 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tree.health <= 0 || timer.countdown <= 0 || resourceManager.biomass < 0)
+        if (tree.health <= 0 || resourceManager.biomass < 0)
         {
             isGameOver = true;
             LevelLost();
+        }
+        if(timer.countdown <= 0)
+        {
+            LevelWon();
         }
     }
 
     void LevelLost()
     {
-        SceneManager.LoadScene("LoadingScene");
+        SceneManager.LoadScene("LoseScene");
+    }
+
+    void LevelWon()
+    {
+        SceneManager.LoadScene("WinScene");
     }
 }
