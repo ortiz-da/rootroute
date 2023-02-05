@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OpeningSceneSpaceToContinue : MonoBehaviour
+public class LoadSceneOnClick : MonoBehaviour
 {
-    void UpdateLoadScene() {
+    void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
             //Save stuff
             SceneManager.LoadScene("SampleScene");
