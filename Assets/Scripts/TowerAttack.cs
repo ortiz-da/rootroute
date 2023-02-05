@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
 {
-    [SerializeField] private GameObject beetle;
-    public GameObject bullet;
     private Animator animator;
     [SerializeField] private float distanceToBeetle;
 
@@ -21,7 +19,6 @@ public class TowerAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beetle = GameObject.FindGameObjectWithTag("AGEnemy");
         animator = GetComponent<Animator>();
 
         GameObject hit = transform.GetChild(0).gameObject;
