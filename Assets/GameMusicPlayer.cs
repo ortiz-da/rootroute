@@ -14,6 +14,12 @@ public class GameMusicPlayer : MonoBehaviour
     public AudioClip healthLowClip;
     public AudioClip overgroundClip;
     public AudioClip undegroundClip;
+
+
+    public GameObject player;
+    
+    private float playerHeight = 4.4f;
+    // 4 to -20 is the world height
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +28,7 @@ public class GameMusicPlayer : MonoBehaviour
         combatAudioSource.volume = 0;
         combatAudioSource.Play();
         healthLowAudioSource.clip = healthLowClip;
-        combatAudioSource.volume = 0;
+        healthLowAudioSource.volume = 0;
         healthLowAudioSource.Play();
         overgroundAudioSource.clip = overgroundClip;
         overgroundAudioSource.Play();
@@ -34,6 +40,9 @@ public class GameMusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        playerHeight = Mathf.Abs(player.transform.position.y -4.4f);
+        undergroundAudioSource.volume = playerHeight / 21;
+        overgroundAudioSource.volume = 1 - (playerHeight / 21);
+
     }
 }
