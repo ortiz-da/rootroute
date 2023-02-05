@@ -45,7 +45,7 @@ public class Digging : MonoBehaviour
 
             Debug.Log("MINE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
-            Debug.Log(clickedBlock.ToString());
+
             animator.SetBool("Mining", true);
 
         }
@@ -70,7 +70,7 @@ public class Digging : MonoBehaviour
 
         if (tilemap.GetTile(clickedBlock) != null)
         {
-            if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")))
+            if (!(tilemap.GetTile(clickedBlock).name.Equals("grass")) && !(tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1")))
             {
                 tilemap.SetTile(clickedBlock, mineshaftTile);
             }
