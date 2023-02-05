@@ -26,12 +26,13 @@ public class SpawnBeetles : MonoBehaviour
 
     IEnumerator SpawnBeetle()
     {
+        yield return new WaitForSeconds(10);
         while (waveNumber < 15)
         {
 
             SpawnWave();
             
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
             waveNumber++;
         }
 

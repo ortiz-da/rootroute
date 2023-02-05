@@ -11,7 +11,7 @@ public class ResourceManager : MonoBehaviour
     NesScripts.Controls.PathFind.Point origin = new Point(15, 0);
 
     public float biomassRate;
-   
+
     GameObject[] resources;
     List<GameObject> towers;
     bool[,] myceliumMap = new bool[31, 25];
@@ -21,7 +21,7 @@ public class ResourceManager : MonoBehaviour
         biomass = VariableSetup.startingBiomass;
         biomassRate = 0f;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
-        
+
         myceliumMap[origin.x, origin.y] = true;
         towers = new List<GameObject>();
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
@@ -31,7 +31,7 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     public void myceliumPlaced(Vector3Int spot)
@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
             bioResource bio = resource.GetComponent<bioResource>();
             Vector2Int corrected = correctPosition(bio.position);
             bio.correctedPosition = corrected;
-            Debug.Log(corrected.ToString());
+            //Debug.Log(corrected.ToString());
             myceliumMap[corrected.x, corrected.y] = true;
         }
     }
@@ -72,9 +72,9 @@ public class ResourceManager : MonoBehaviour
     {
         biomass -= VariableSetup.tower1Cost;
 
-        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack>().position.ToString());
-        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
-        tower.GetComponent<TowerAttack>().correctedPosition = corrected;
+        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack2>().position.ToString());
+        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack2>().position);
+        tower.GetComponent<TowerAttack2>().correctedPosition = corrected;
         Debug.Log("Tower at: " + corrected.ToString());
 
         towers.Add(tower);
@@ -96,46 +96,47 @@ public class ResourceManager : MonoBehaviour
 
     private void trace()
     {
-        foreach(GameObject resource in resources)
+        foreach (GameObject resource in resources)
         {
             bioResource bio = resource.GetComponent<bioResource>();
             Point pos = makePoint(bio.position);
-            if(Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
+            if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
             {
-                if(bio.connected)
+                if (bio.connected)
                 {
                     bio.connected = false;
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
             }
-            else if(!bio.connected)
+            // Only connect once
+            else if (!bio.connected)
             {
-                Debug.Log("bio is connected");
+                Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
                 biomassRate += bio.resourceRate;
             }
         }
 
-        foreach(GameObject tower in towers)
+        foreach (GameObject tower in towers)
         {
-            TowerAttack towerAttack= tower.GetComponent<TowerAttack>();
-            Point pos = makePoint(towerAttack.position);
+            TowerAttack2 towerAttack2 = tower.GetComponent<TowerAttack2>();
+            Point pos = makePoint(towerAttack2.position);
             if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
             {
-                if (towerAttack.connected)
+                if (towerAttack2.connected)
                 {
-                    towerAttack.connected = false;
+                    towerAttack2.connected = false;
                     Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
             }
-            else
+            // Only connect once
+            else if (!towerAttack2.connected)
             {
                 Debug.Log("Tower is connected");
-                towerAttack.connected = true;
-                //biomassRate -= VariableSetup.tower1BiomassPerShot;
+                towerAttack2.connected = true;
             }
         }
     }
@@ -147,11 +148,7 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator biomassCounterUpdate()
     {
-        while (true)
-        {
-            //Debug.Log("Goes into biomass update");
-            biomass += biomassRate;
-            yield return new WaitForSeconds(VariableSetup.rate);
-        }
+        biomass += biomassRate;
+        yield return new WaitForSeconds(VariableSetup.rate);
     }
 }
