@@ -12,7 +12,7 @@ public class ResourceManager : MonoBehaviour
     float biomassRate = 0f;
    
     GameObject[] resources;
-    GameObject[] towers;
+    List<GameObject> towers;
     bool[,] myceliumMap = new bool[31, 25];
     NesScripts.Controls.PathFind.Grid grid;
     void Start()
@@ -25,6 +25,7 @@ public class ResourceManager : MonoBehaviour
             Point pos = makePoint(bio.position);
             myceliumMap[pos.x, pos.y] = true;
         }
+        towers = new List<GameObject>();
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
     }
 
@@ -50,9 +51,10 @@ public class ResourceManager : MonoBehaviour
         trace();
     }
 
-    public void towerPlaced(Vector3Int spot)
+    public void towerPlaced(GameObject tower)
     {
-        Vector2Int corrected = correctPosition(spot);
+        
+        //Vector2Int corrected = correctPosition(spot);
         //add tower to towers array
         trace();
     }

@@ -7,8 +7,8 @@ public class TreeHealth : MonoBehaviour
 {
     public TreeManager tree;
     public AudioClip lowHealthSFX;
-    public GameObject character;
 
+    private GameObject character;
     private GameObject[] leafs;
     private int leafNum;
     private bool soundPlayed = false;
@@ -36,6 +36,7 @@ public class TreeHealth : MonoBehaviour
         if(!soundPlayed && tree.health <= 15)
         {
             AudioSource.PlayClipAtPoint(lowHealthSFX, character.transform.position);
+            soundPlayed = true;
         }
     }
 }

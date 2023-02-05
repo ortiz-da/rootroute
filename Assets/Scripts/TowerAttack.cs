@@ -15,7 +15,7 @@ public class TowerAttack : MonoBehaviour
 
     private int attackersInTrigger = 0;
 
-    private ResourceManager resourceManager;
+    public ResourceManager resourceManager;
     private Tilemap tilemap;
 
     public Collider2D hitbox;
@@ -26,14 +26,14 @@ public class TowerAttack : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        resourceManager = GameObject.Find("treeHouseFull").GetComponent<ResourceManager>();
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
         GameObject hit = transform.GetChild(0).gameObject;
         hitbox = hit.GetComponent<Collider2D>();
         hitbox.enabled= false;
-        resourceManager.towerPlaced(tilemap.WorldToCell(transform.position));
-        Debug.Log(tilemap.WorldToCell(transform.position).ToString());
+        resourceManager.towerPlaced(gameObject);
+        Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
     }
 
     // Update is called once per frame

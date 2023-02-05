@@ -14,12 +14,12 @@ public class highlightBlock : MonoBehaviour
     
     public GameObject tower1;
 
-    public ResourceManager resourceManager;
+    private ResourceManager resourceManager;
 
     void Start()
     {
         // http://answers.unity.com/answers/993502/view.html
-
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
 
 
     }

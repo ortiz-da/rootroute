@@ -16,7 +16,7 @@ public class bioResource : MonoBehaviour
     private bool sending = false;
     void Start()
     {
-        resourceManager = GameObject.Find("treeHouseFull").GetComponent<ResourceManager>();
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         position = tilemap.WorldToCell(transform.position);
     }
