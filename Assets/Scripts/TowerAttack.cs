@@ -22,10 +22,12 @@ public class TowerAttack : MonoBehaviour
     private Tilemap tilemap;
 
     public Collider2D hitbox;
-
-    public AudioClip towerAttackSFX; //add this to any script that needs to play a clip
-
+    
     public bool connected;
+    
+    private AudioSource audioSource;
+
+    public AudioClip attackSound;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,9 @@ public class TowerAttack : MonoBehaviour
 
         correctedPosition = new Vector2Int();
         //Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
+        
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -79,11 +84,16 @@ public class TowerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
+        Debug.Log("TOWER ATTACK");
+        audioSource.clip = attackSound;
+        audioSource.pitch = Random.Range(.5f, 1f);
+        audioSource.Play();
+        
         Instantiate(particles, transform.position, Quaternion.identity);
         hitbox.enabled= true;
         isAttacking = false;
         yield return new WaitForSeconds(VariableSetup.rate);
-        AudioSource.PlayClipAtPoint(towerAttackSFX, transform.position);
+
         hitbox.enabled= false;
         isAttacking = true;
     }
