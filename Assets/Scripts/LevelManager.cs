@@ -11,17 +11,18 @@ public class LevelManager : MonoBehaviour
 
     public timerScript timer;
 
-
+    ResourceManager resourceManager;
     void Start()
     {
         tree = GameObject.Find("treeHouseFull").GetComponent<TreeManager>();
         timer = GameObject.Find("timer").GetComponent<timerScript>();
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (tree.health <= 0 || timer.countdown <= 0)
+        if (tree.health <= 0 || timer.countdown <= 0 || resourceManager.biomass < 0)
         {
             isGameOver = true;
             LevelLost();
