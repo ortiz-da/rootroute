@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
             bioResource bio = resource.GetComponent<bioResource>();
             Vector2Int corrected = correctPosition(bio.position);
             bio.correctedPosition = corrected;
-            //Debug.Log(corrected.ToString());
+            Debug.Log(corrected.ToString());
             myceliumMap[corrected.x, corrected.y] = true;
         }
     }
@@ -72,9 +72,9 @@ public class ResourceManager : MonoBehaviour
     {
         biomass -= VariableSetup.tower1Cost;
 
-        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack2>().position.ToString());
-        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack2>().position);
-        tower.GetComponent<TowerAttack2>().correctedPosition = corrected;
+        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack>().position.ToString());
+        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
+        tower.GetComponent<TowerAttack>().correctedPosition = corrected;
         Debug.Log("Tower at: " + corrected.ToString());
 
         towers.Add(tower);
@@ -109,10 +109,9 @@ public class ResourceManager : MonoBehaviour
                     //we will need to call the users attention to the break
                 }
             }
-            // Only connect once
             else if(!bio.connected)
             {
-                Debug.Log("Path found to " + resource.name);
+                Debug.Log("bio is connected");
                 bio.connected = true;
                 biomassRate += bio.resourceRate;
             }
@@ -120,23 +119,23 @@ public class ResourceManager : MonoBehaviour
 
         foreach(GameObject tower in towers)
         {
-            TowerAttack2 towerAttack2= tower.GetComponent<TowerAttack2>();
-            Point pos = makePoint(towerAttack2.position);
+            TowerAttack towerAttack= tower.GetComponent<TowerAttack>();
+            Point pos = makePoint(towerAttack.position);
             if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
             {
-                if (towerAttack2.connected)
+                if (towerAttack.connected)
                 {
-                    towerAttack2.connected = false;
+                    towerAttack.connected = false;
                     Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
             }
-            // Only connect once
-            else if(!towerAttack2.connected)
+            else
             {
                 Debug.Log("Tower is connected");
-                towerAttack2.connected = true;
+                towerAttack.connected = true;
+                //biomassRate -= VariableSetup.tower1BiomassPerShot;
             }
         }
     }
@@ -148,7 +147,11 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator biomassCounterUpdate()
     {
-        biomass += biomassRate;
-        yield return new WaitForSeconds(VariableSetup.rate);
+        while (true)
+        {
+            //Debug.Log("Goes into biomass update");
+            biomass += biomassRate;
+            yield return new WaitForSeconds(VariableSetup.rate);
+        }
     }
 }

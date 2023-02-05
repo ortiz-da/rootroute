@@ -12,7 +12,7 @@ public class VariableSetup : MonoBehaviour
 
     static public float beetleSpawnRate = 60f;
 
-    static public float countdownTimerLength = 180f;
+    static public float countdownTimerLength = 120f;
 
     static public float beetleHealth = 10f;
 
