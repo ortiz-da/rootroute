@@ -83,26 +83,29 @@ public class TowerAttack2 : MonoBehaviour
 
     IEnumerator shoot()
     {
-        shooting = true;
-        Instantiate(particles, transform.position, Quaternion.identity);
-        
-        resourceManager.biomassUpdate(-1);
-        
-        audioSource.clip = attackSound;
-        audioSource.pitch = Random.Range(.5f, 1f);
-        audioSource.Play();
-        
-        animator.SetBool("attacking", true);
-        for (int i = 0; i < collidedEnemies.Count; i++)
+        if (resourceManager.biomass > 0)
         {
+            shooting = true;
+            Instantiate(particles, transform.position, Quaternion.identity);
+
+            resourceManager.biomassUpdate(-1);
+
+            audioSource.clip = attackSound;
+            audioSource.pitch = Random.Range(.5f, 1f);
+            audioSource.Play();
+
+            animator.SetBool("attacking", true);
+            for (int i = 0; i < collidedEnemies.Count; i++)
+            {
             https://forum.unity.com/threads/calling-function-from-other-scripts-c.57072/
-            GameObject enemy = collidedEnemies[i].gameObject;
-            enemy.GetComponent<BeetleHealth>().DecreaseHealth();
-            // Only kills if health is 0
-            enemy.GetComponent<BeetleHealth>().KillBeetle();
+                GameObject enemy = collidedEnemies[i].gameObject;
+                enemy.GetComponent<BeetleHealth>().DecreaseHealth();
+                // Only kills if health is 0
+                enemy.GetComponent<BeetleHealth>().KillBeetle();
+            }
+            yield return new WaitForSeconds(1);
+            shooting = false;
         }
-        yield return new WaitForSeconds(1);
-        shooting = false;
 
     }
     
