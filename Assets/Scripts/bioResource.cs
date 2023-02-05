@@ -10,12 +10,14 @@ public class bioResource : MonoBehaviour
     public Vector3Int position;
     public Tilemap tilemap;
 
-    public ResourceManager resourceManager;
+    private ResourceManager resourceManager;
 
     public bool connected = false;
     private bool sending = false;
     void Start()
     {
+        resourceManager = GameObject.Find("treeHouseFull").GetComponent<ResourceManager>();
+        tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         position = tilemap.WorldToCell(transform.position);
     }
 

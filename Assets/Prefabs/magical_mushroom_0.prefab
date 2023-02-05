@@ -124,7 +124,7 @@ MonoBehaviour:
   bullet: {fileID: 0}
   distanceToBeetle: 0
   particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 5329886849048207099}
 --- !u!61 &3216797403401275223
 BoxCollider2D:
   m_ObjectHideFlags: 0
