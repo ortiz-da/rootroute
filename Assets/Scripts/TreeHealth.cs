@@ -19,7 +19,7 @@ public class TreeHealth : MonoBehaviour
     void Update()
     {
         int curHealth = (int)tree.health / 10;
-        Debug.Log("curhealth: " + curHealth);
+        //Debug.Log("curhealth: " + curHealth);
         for(int i = 0; i < leafs.Length; i++)
         {
             if (i >= leafs.Length - curHealth)
