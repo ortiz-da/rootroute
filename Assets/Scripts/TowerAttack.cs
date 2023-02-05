@@ -39,6 +39,7 @@ public class TowerAttack : MonoBehaviour
         GameObject hit = transform.GetChild(0).gameObject;
         hitbox = hit.GetComponent<Collider2D>();
         hitbox.enabled= false;
+        resourceManager.enabled = true;
         resourceManager.towerPlaced(gameObject);
 
         position = tilemap.WorldToCell(transform.position);

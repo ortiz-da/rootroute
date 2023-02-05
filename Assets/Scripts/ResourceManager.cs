@@ -71,12 +71,10 @@ public class ResourceManager : MonoBehaviour
     public void towerPlaced(GameObject tower)
     {
         biomass -= VariableSetup.tower1Cost;
-        Debug.Log(biomassRate.ToString());
-        biomassRate -= VariableSetup.tower1BiomassPerShot;
-        Debug.Log(biomassRate.ToString());
         Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack>().position);
         tower.GetComponent<TowerAttack>().correctedPosition = corrected;
         myceliumMap[corrected.x, corrected.y] = true;
+        Debug.Log("Tower at: " + corrected.ToString());
         grid.UpdateGrid(myceliumMap);
         trace();
     }
