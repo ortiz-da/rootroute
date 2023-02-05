@@ -10,10 +10,16 @@ public class TreeManager : MonoBehaviour
 
     [SerializeField] private AGEnemyMovement AGEnemy;
     [SerializeField] private bool isBeingAttacked = false;
+    
+    private AudioSource audioSource;
+
+    public AudioClip lowHealthSound;
     void Start()
     {
         maxHealth = VariableSetup.treeLife;
         health = VariableSetup.treeLife;
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -36,6 +42,11 @@ public class TreeManager : MonoBehaviour
     IEnumerator AGAttacking()
     {
         health --;
+        if (health <= 15)
+        {
+            audioSource.clip = lowHealthSound;
+            audioSource.Play();
+        }
         isBeingAttacked = false;
         yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
         
