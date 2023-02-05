@@ -14,6 +14,8 @@ public class TowerAttack : MonoBehaviour
 
     private bool isAttacking = false;
 
+    private int attackersInTrigger = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,19 +31,22 @@ public class TowerAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit trigger");
+        attackersInTrigger++;
         isAttacking= true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        animator.SetBool("attacking", false);
-        StopAllCoroutines();
+        attackersInTrigger--;
+        if (attackersInTrigger == 0)
+        {
+            isAttacking= false;
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!isAttacking)
+        if (isAttacking)
         {
             StartCoroutine(attack());
         }
@@ -49,9 +54,9 @@ public class TowerAttack : MonoBehaviour
 
     IEnumerator attack()
     {
+        animator.SetBool("attacking", true);
         Instantiate(particles, transform.position, Quaternion.identity);
-
+        animator.SetBool("attacking", false);
         yield return new WaitForSeconds(VariableSetup.rate);
-        isAttacking= false;
     }
 }
