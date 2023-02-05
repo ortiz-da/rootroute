@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 // https://youtu.be/dwcT-Dch0bA
 public class PlayerMovement : MonoBehaviour
@@ -16,10 +17,14 @@ public class PlayerMovement : MonoBehaviour
     public BoxCollider2D wallClimbCollider;
 
     public float runSpeed = 40f;
+    
+    private AudioSource audioSource;
+
+    public AudioClip runSound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     
@@ -46,5 +51,13 @@ public class PlayerMovement : MonoBehaviour
     {
         controller.Move(horizontal * Time.fixedDeltaTime, false, jump);
         jump = false;
+    }
+
+    // Called by animation event
+    public void PlayWalkSound()
+    {
+        audioSource.clip = runSound;
+        audioSource.pitch = Random.Range(.5f, 1f);
+        audioSource.Play();
     }
 }
