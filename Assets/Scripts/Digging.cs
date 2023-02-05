@@ -28,7 +28,7 @@ public class Digging : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
     }
 
     // Update is called once per frame
@@ -94,11 +94,11 @@ public class Digging : MonoBehaviour
             
         Tile tile = tilemap.GetTile<Tile>(clickedBlock);
 
-        Debug.Log(tile);
+        //Debug.Log(tile);
         if (tile == null && !(tilemap.GetTile(clickedBlock).name.Equals("grass")))
         {
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
-
+            resourceManager.myceliumPlaced(clickedBlock);
             Debug.Log(tilemap.GetTile(clickedBlock).name);
         }
 
