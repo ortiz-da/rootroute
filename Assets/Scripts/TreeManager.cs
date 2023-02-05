@@ -10,6 +10,7 @@ public class TreeManager : MonoBehaviour
 
     [SerializeField] private AGEnemyMovement AGEnemy;
     [SerializeField] private bool isBeingAttacked = false;
+    [SerializeField] private int enemyCounter = 0;
     
     private AudioSource audioSource;
 
@@ -29,14 +30,26 @@ public class TreeManager : MonoBehaviour
         {
             StartCoroutine(AGAttacking());
         }
+        Debug.Log(health);
+        Debug.Log(isBeingAttacked);
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("AGEnemy"))
         {
+            enemyCounter++;
             isBeingAttacked = true;
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("AGEnemy"))
+        {
+            enemyCounter--;
+        }
+        
     }
 
     IEnumerator AGAttacking()
@@ -49,7 +62,15 @@ public class TreeManager : MonoBehaviour
         }
         isBeingAttacked = false;
         yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
-        
-        isBeingAttacked = true;
+
+        if(enemyCounter > 0)
+        {
+            isBeingAttacked = true;
+        }
+        else
+        {
+            isBeingAttacked=false;
+        }
+
     }
 }
