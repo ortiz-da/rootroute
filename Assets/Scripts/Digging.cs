@@ -43,7 +43,7 @@ public class Digging : MonoBehaviour
         {
             // clicked on
 
-            Debug.Log("MINE BLOCK");
+            // Debug.Log("MINE BLOCK");
             clickedBlock = tilemap.WorldToCell(selectedPoint);
 
             animator.SetBool("Mining", true);
@@ -52,13 +52,10 @@ public class Digging : MonoBehaviour
 
         if (Input.GetButton("Fire2") && distance <= 1f)
         {
-            Debug.Log("PLACE BLOCK");
+            // Debug.Log("PLACE BLOCK");
+            clickedBlock = tilemap.WorldToCell(selectedPoint);
             animator.SetBool("Building", true);
 
-            
-            
-            
-            
         }
 
     }
@@ -85,18 +82,14 @@ public class Digging : MonoBehaviour
 
 // https://www.reddit.com/r/Unity2D/comments/d3mx3e/how_to_get_clicked_tile_in_a_tilemap/
             
-        Vector3Int tilemapPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        // Vector3Int tilemapPos = tilemap.WorldToCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             
-        Tile tile = tilemap.GetTile<Tile>(tilemapPos);
+        Tile tile = tilemap.GetTile<Tile>(clickedBlock);
 
-        
-        Vector3 centeredPos = new Vector3(tilemapPos.x + .5f, tilemapPos.y + .5f, tilemapPos.z);
-        tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
-        
-        if (tile.sprite.texture.name.Contains("mineshaft"))
+        Debug.Log(tile);
+        if (tile == null)
         {
-            // center it + .5
-
+            tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
 
 
         }
