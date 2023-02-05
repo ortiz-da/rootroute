@@ -119,7 +119,6 @@ public class ResourceManager : MonoBehaviour
 
         foreach(GameObject tower in towers)
         {
-            Debug.Log("enters tower search");
             TowerAttack towerAttack= tower.GetComponent<TowerAttack>();
             Point pos = makePoint(towerAttack.position);
             if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
@@ -127,6 +126,7 @@ public class ResourceManager : MonoBehaviour
                 if (towerAttack.connected)
                 {
                     towerAttack.connected = false;
+                    Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
