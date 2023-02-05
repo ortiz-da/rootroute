@@ -105,6 +105,8 @@ public class ResourceManager : MonoBehaviour
                 if (bio.connected)
                 {
                     bio.connected = false;
+                    bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", false);
+
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }
@@ -114,6 +116,8 @@ public class ResourceManager : MonoBehaviour
             {
                 Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
+                bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", true);
+
                 biomassRate += bio.resourceRate;
             }
         }
