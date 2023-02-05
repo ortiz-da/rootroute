@@ -7,7 +7,6 @@ public class TreeManager : MonoBehaviour
     public float health;
     public float maxHealth;
     public TreeHealth healthBar;
-    public AudioClip crunchSFX;
 
     [SerializeField] private AGEnemyMovement AGEnemy;
     [SerializeField] private bool isBeingAttacked = false;
@@ -38,7 +37,6 @@ public class TreeManager : MonoBehaviour
     {
         health --;
         isBeingAttacked = false;
-        AudioSource.PlayClipAtPoint(crunchSFX, transform.position);
         yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
         
         isBeingAttacked = true;
