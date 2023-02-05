@@ -1302,63 +1302,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3329099254225457179, guid: 0408d96e5bc3b7f49a6dd0a9106c95ee, type: 3}
   m_PrefabInstance: {fileID: 1208762604}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &669373327
+--- !u!1001 &655092226
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.751107
+      value: -8.268871
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.6926036
+      value: 5.0432863
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4747613480026909865, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275221, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8204466658798067038, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+    - target: {fileID: 3216797403401275226, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
       propertyPath: m_Name
-      value: termite
+      value: magical_mushroom_0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c1995737b0ad7b14482e091e235d34d1, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,6 +1857,7 @@ MonoBehaviour:
   animator: {fileID: 1020308542}
   wallClimbCollider: {fileID: 0}
   runSpeed: 20
+  runSound: {fileID: 8300000, guid: 5a02c9e25b4843e449dab7ca88edcc13, type: 3}
 --- !u!70 &1020308535
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

@@ -65,7 +65,7 @@ public class highlightBlock : MonoBehaviour
             Vector3Int buildBlock = tilemap.WorldToCell(transform.position);
             tilemap.SetTile(buildBlock, mineshaftWithMyceliumTile);
 
-            Debug.Log("PLACE TOWER");
+             // Debug.Log("PLACE TOWER");
             hasTower = true;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
             resourceManager.biomassUpdate(VariableSetup.tower1Cost);
@@ -77,7 +77,7 @@ public class highlightBlock : MonoBehaviour
 
         if (other.CompareTag("character"))
         {
-            Debug.Log("LEAVE");
+            // Debug.Log("LEAVE");
 
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             blockColor = gameObject.GetComponent<SpriteRenderer>().color;
