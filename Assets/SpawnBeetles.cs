@@ -9,10 +9,14 @@ public class SpawnBeetles : MonoBehaviour
     public GameObject beetle;
 
     private int waveNumber = 0;
+
+    private AudioSource audioSource;
+    public AudioClip waveStartSound;
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnBeetle());
-
+        
     }
 
     // Update is called once per frame
@@ -35,6 +39,9 @@ public class SpawnBeetles : MonoBehaviour
 
     private void SpawnWave()
     {
+        audioSource.clip = waveStartSound;
+        audioSource.Play();
+
         Instantiate(beetle);
         Instantiate(beetle);
         Instantiate(beetle);
