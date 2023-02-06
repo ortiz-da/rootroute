@@ -10,6 +10,7 @@ TagManager:
   - leaf
   - biomatter
   - attackBox
+  - BGEnemy
   layers:
   - Default
   - TransparentFX

@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 5782e0a035c004273aef146ee34645ac
+labels:
+- WormBounce
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
