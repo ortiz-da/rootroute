@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
             bioResource bio = resource.GetComponent<bioResource>();
             Vector2Int corrected = correctPosition(bio.position);
             bio.correctedPosition = corrected;
-            //Debug.Log(corrected.ToString());
+            Debug.Log(corrected.ToString());
             myceliumMap[corrected.x, corrected.y] = true;
         }
     }
@@ -100,7 +100,8 @@ public class ResourceManager : MonoBehaviour
         {
             bioResource bio = resource.GetComponent<bioResource>();
             Point pos = makePoint(bio.position);
-            if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
+            List<Point> path = Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan);
+            if (path.Count == 0) //there is no path
             {
                 if (bio.connected)
                 {
@@ -112,7 +113,7 @@ public class ResourceManager : MonoBehaviour
                 }
             }
             // Only connect once
-            else if (!bio.connected)
+            else if(!bio.connected)
             {
                 Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
@@ -125,7 +126,7 @@ public class ResourceManager : MonoBehaviour
         {
             TowerAttack2 towerAttack2 = tower.GetComponent<TowerAttack2>();
             Point pos = makePoint(towerAttack2.position);
-            if (Pathfinding.FindPath(grid, pos, origin).Count == 0) //there is no path
+            if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count == 0) //there is no path
             {
                 if (towerAttack2.connected)
                 {
@@ -153,7 +154,7 @@ public class ResourceManager : MonoBehaviour
     {
         while (!LevelManager.isGameOver)
         {
-            Debug.Log("adding " + biomassRate);
+            //Debug.Log("adding " + biomassRate);
             biomass += biomassRate;
             yield return new WaitForSeconds(VariableSetup.rate);
         }
