@@ -15,20 +15,35 @@ public class bioResource : MonoBehaviour
 
     public bool connected = false;
     private bool sending = false;
+
+    private float timeLeft;
     void Start()
     {
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         position = tilemap.WorldToCell(transform.position);
         correctedPosition = new Vector2Int();
+
+        timeLeft = VariableSetup.biomassLife;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(connected && sending)
+        if (connected && timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+            Debug.Log(timeLeft.ToString());
+        }
+        if (connected && sending)
         {
             StartCoroutine(sendBiomass());
+        }
+
+        if(timeLeft <= 0)
+        {
+            Debug.Log("possum obliterated");
+            gameObject.SetActive(false);
         }
     }
 
