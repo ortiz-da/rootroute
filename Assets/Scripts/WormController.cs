@@ -11,11 +11,12 @@ public class WormController : MonoBehaviour
 
     Rigidbody2D wormRigid;
 
-    private float wormSpeed = 0.1f;
+    private float wormSpeed = .5f;
 
     WormDetector detector;
     void Start()
     {
+        transform.Rotate(0, 0, Random.Range(1, 360));
         tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
         wormRigid = GetComponent<Rigidbody2D>();
         turnWorm();
@@ -24,13 +25,13 @@ public class WormController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        wormRigid.velocity = transform.forward * wormSpeed;
+        wormRigid.velocity = transform.right * wormSpeed;
         Vector3Int intPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
-        Debug.Log(tilemap.GetTile(intPos));
+        //Debug.Log(tilemap.GetTile(intPos));
     }
 
     public void turnWorm()
     {
-        transform.Rotate(0, 0, Random.Range(1, 360));
+        transform.Rotate(0, 0, Random.Range(90, 270));
     }
 }

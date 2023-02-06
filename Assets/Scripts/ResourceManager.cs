@@ -153,7 +153,7 @@ public class ResourceManager : MonoBehaviour
     {
         while (!LevelManager.isGameOver)
         {
-            Debug.Log("adding " + biomassRate);
+            //Debug.Log("adding " + biomassRate);
             biomass += biomassRate;
             yield return new WaitForSeconds(VariableSetup.rate);
         }
