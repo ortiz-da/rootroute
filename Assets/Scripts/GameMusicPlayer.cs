@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMusicPlayer : MonoBehaviour
@@ -17,12 +15,12 @@ public class GameMusicPlayer : MonoBehaviour
 
 
     public GameObject player;
-    
+
     private float playerHeight = 4.4f;
     // 4 to -20 is the world height
-    
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         combatAudioSource.clip = combatClip;
         combatAudioSource.volume = 0;
@@ -34,15 +32,15 @@ public class GameMusicPlayer : MonoBehaviour
         overgroundAudioSource.Play();
         undergroundAudioSource.clip = undegroundClip;
         undergroundAudioSource.Play();
-
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        playerHeight = Mathf.Abs(player.transform.position.y -4.4f);
-        undergroundAudioSource.volume = playerHeight / 21;
-        overgroundAudioSource.volume = 1 - (playerHeight / 21);
 
+    // As the player gets lower in the level, the music shifts
+    private void Update()
+    {
+        playerHeight = Mathf.Abs(player.transform.position.y - 4.4f);
+        undergroundAudioSource.volume = playerHeight / 21;
+        overgroundAudioSource.volume = 1 - playerHeight / 21;
     }
 }
