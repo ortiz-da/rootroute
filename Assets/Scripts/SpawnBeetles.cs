@@ -14,11 +14,15 @@ public class SpawnBeetles : MonoBehaviour
 
     private AudioSource audioSource;
     public AudioClip waveStartSound;
+
+    public GameObject spawnRight;
+
+    //private Quaternion flipped;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnBeetle());
-
+        //flipped = new Quaternion(Quaternion.identity.x, -Quaternion.identity.y, -Quaternion.identity.z, Quaternion.identity.w);
     }
 
     // Update is called once per frame
@@ -46,7 +50,15 @@ public class SpawnBeetles : MonoBehaviour
         audioSource.Play();
         for (int i = 0; i < Random.Range(3, maxSpawn); i++)
         {
-            Instantiate(beetle);
+            if(waveNumber > 2 && Random.Range(1, 3) == 2) 
+            {
+                GameObject thisbeetle = Instantiate(beetle, spawnRight.transform.position, Quaternion.identity);
+                Vector3 theScale = thisbeetle.transform.localScale;
+                theScale.x *= -1;
+                thisbeetle.transform.localScale = theScale;
+            }
+            else
+                Instantiate(beetle);
             yield return new WaitForSeconds(Random.Range(0f, 2f));
         }
     }

@@ -27,12 +27,14 @@ public class AGEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         timePassed = timePassed + Time.deltaTime;
     }
 
     private void FixedUpdate()
     { 
-        transform.position += new Vector3(beetleSpeed, 0, 0);
+        Vector3 treepos = new Vector3(tree.transform.position.x, transform.position.y, tree.transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, treepos, beetleSpeed);
     }
 
     void OnCollisionStay2D(Collision2D col)
