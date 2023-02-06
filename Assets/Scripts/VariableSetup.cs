@@ -16,6 +16,10 @@ public class VariableSetup : MonoBehaviour
 
     static public float beetleHealth = 10f;
 
+    static public float ActualBeetleSpawnRate = 60f;
+    static public float ActualBeetleHealth = 10f;
+    static public int ActualBeetleAttackRate = 2;
+
     static public float tower1Cost = 25f;
     static public float tower1Dmg = 5f;
     static public float tower1Health = 20f;
