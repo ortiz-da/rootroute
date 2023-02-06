@@ -18,7 +18,7 @@ public class SpawnBeetles : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnBeetle());
-        
+
     }
 
     // Update is called once per frame
@@ -32,8 +32,8 @@ public class SpawnBeetles : MonoBehaviour
         while (waveNumber < 15)
         {
             maxSpawn++;
-            SpawnWave();
-            
+            StartCoroutine(SpawnWave());
+
             yield return new WaitForSeconds(Random.Range(5, 15));
             waveNumber++;
         }
@@ -44,7 +44,7 @@ public class SpawnBeetles : MonoBehaviour
     {
         audioSource.clip = waveStartSound;
         audioSource.Play();
-        for(int i = 0; i < Random.Range(3, maxSpawn); i++) 
+        for (int i = 0; i < Random.Range(3, maxSpawn); i++)
         {
             Instantiate(beetle);
             yield return new WaitForSeconds(Random.Range(0f, 2f));
