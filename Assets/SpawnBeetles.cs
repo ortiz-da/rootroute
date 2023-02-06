@@ -10,6 +10,8 @@ public class SpawnBeetles : MonoBehaviour
 
     private int waveNumber = 0;
 
+    private int maxSpawn = 3;
+
     private AudioSource audioSource;
     public AudioClip waveStartSound;
     void Start()
@@ -29,22 +31,23 @@ public class SpawnBeetles : MonoBehaviour
         yield return new WaitForSeconds(10);
         while (waveNumber < 15)
         {
-
+            maxSpawn++;
             SpawnWave();
             
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(Random.Range(5, 15));
             waveNumber++;
         }
 
     }
 
-    private void SpawnWave()
+    IEnumerator SpawnWave()
     {
         audioSource.clip = waveStartSound;
         audioSource.Play();
-
-        Instantiate(beetle);
-        Instantiate(beetle);
-        Instantiate(beetle);
+        for(int i = 0; i < Random.Range(3, maxSpawn); i++) 
+        {
+            Instantiate(beetle);
+            yield return new WaitForSeconds(Random.Range(0f, 2f));
+        }
     }
 }

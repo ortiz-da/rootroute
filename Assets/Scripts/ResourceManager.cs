@@ -151,7 +151,7 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator biomassCounterUpdate()
     {
-        while (true)
+        while (!LevelManager.isGameOver)
         {
             Debug.Log("adding " + biomassRate);
             biomass += biomassRate;
