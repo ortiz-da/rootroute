@@ -10,6 +10,7 @@ TagManager:
   - leaf
   - biomatter
   - attackBox
+  - grass
   layers:
   - Default
   - TransparentFX

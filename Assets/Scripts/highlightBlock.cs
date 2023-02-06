@@ -20,8 +20,6 @@ public class highlightBlock : MonoBehaviour
 
     private ResourceManager resourceManager;
 
-    public GameObject mycelium;
-
     public TileBase mineshaftWithMyceliumTile;
 
     private TextMeshProUGUI errorText;
@@ -33,7 +31,6 @@ public class highlightBlock : MonoBehaviour
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
         errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
-
     }
 
     // Update is called once per frame
@@ -47,17 +44,37 @@ public class highlightBlock : MonoBehaviour
 
         if (other.CompareTag("character") && !hasTower)
         {
-            // Debug.Log("ENTER");
-
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             blockColor = gameObject.GetComponent<SpriteRenderer>().color;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, .5f);
-            
+        }
+    }
+
+    public void placeTower()
+    {
+        if (resourceManager.biomass >= VariableSetup.tower1Cost)
+        {
+            Vector3 towerPos = new Vector3(this.transform.position.x, this.transform.position.y + 1.5f);
+            Instantiate(tower1, towerPos, Quaternion.identity, null);
+
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            spriteRenderer.sortingOrder = -1;
+            Vector3Int buildBlock = tilemap.WorldToCell(transform.position);
+            tilemap.SetTile(buildBlock, mineshaftWithMyceliumTile);
+
+            // Debug.Log("PLACE TOWER");
+            hasTower = true;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
+
+        }
+        else if (resourceManager.biomass < VariableSetup.tower1Cost)
+        {
+            StartCoroutine(textDisplay());
         }
     }
 
 
-    private void OnTriggerStay2D(Collider2D other)
+    /*private void OnTriggerStay2D(Collider2D other)
     {
         
         if (Input.GetKeyDown(KeyCode.F) && !hasTower && resourceManager.biomass >= VariableSetup.tower1Cost)
@@ -79,7 +96,7 @@ public class highlightBlock : MonoBehaviour
         {
             StartCoroutine(textDisplay());
         }
-    }
+    }*/
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -90,7 +107,8 @@ public class highlightBlock : MonoBehaviour
 
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             blockColor = gameObject.GetComponent<SpriteRenderer>().color;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);        }
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
+        }
     }
 
     IEnumerator textDisplay()
