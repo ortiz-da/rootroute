@@ -4,8 +4,6 @@ public class WormController : MonoBehaviour
 {
     private readonly float wormSpeed = 2f;
 
-    private WormDetector detector;
-
 
     private Vector3 wormDestination;
 

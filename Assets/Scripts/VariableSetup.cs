@@ -1,45 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VariableSetup : MonoBehaviour
 {
-    static public float treeLife = 100f;
-    static public float startingBiomass = 50f;
+    public static float treeLife = 100f;
+    public static float startingBiomass = 50f;
 
     //rates in seconds, i.e. seconds between events
-    static public float wormSpawnRate = 120f;
+    public static float wormSpawnRate = 120f;
 
-    static public float beetleSpawnRate = 60f;
+    public static float beetleSpawnRate = 60f;
 
-    static public float countdownTimerLength = 120f;
+    public static float countdownTimerLength = 240f;
 
-    static public float beetleHealth = 10f;
+    public static float beetleHealth = 10f;
 
-    static public float tower1Cost = 25f;
-    static public float tower1Dmg = 5f;
-    static public float tower1Health = 20f;
-    static public float tower1BiomassPerShot = 1f;
+    public static float tower1Cost = 25f;
+    public static float tower1Dmg = 5f;
+    public static float tower1Health = 20f;
+    public static float tower1BiomassPerShot = 1f;
 
-    static public float rate = 2f;
+    public static float rate = 2f;
 
-    static public float myceliumHP = 10f;
+    public static float myceliumHP = 10f;
 
-    static public float wormHP = 10f;
+    public static float wormHP = 10f;
 
-    static public float playerAtkDmg = 1f;
+    public static float playerAtkDmg = 1f;
 
-    static public float wormAttackRate = 3f;
-    static public int beetleAttackRate = 2;
+    public static float wormAttackRate = 3f;
+
+    public static int beetleAttackRate = 2;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 }
