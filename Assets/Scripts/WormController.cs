@@ -1,45 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class WormController : MonoBehaviour
 {
-    public GameObject worm;
+    private readonly float wormSpeed = 2f;
 
-    public Tilemap tilemap;
+    private WormDetector detector;
 
-    Rigidbody2D wormRigid;
 
-    private float wormSpeed = 1f;
+    private Vector3 wormDestination;
 
-    WormDetector detector;
-    void Start()
+
+    private void Start()
     {
-        transform.Rotate(0, 0, Random.Range(1, 360));
-        tilemap = GameObject.Find("Tilemap").GetComponent<Tilemap>();
-        wormRigid = GetComponent<Rigidbody2D>();
-        turnWorm();
+        wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
+
+
+        // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
+        var difference = wormDestination - transform.position;
+        var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+
+        Debug.Log(wormDestination);
+        // transform.Rotate(0, 0, Random.Range(1, 360));
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        wormRigid.velocity = transform.right * wormSpeed;
-        Vector3Int intPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, (int)transform.position.z);
-        //Debug.Log(tilemap.GetTile(intPos));
-    }
+        // move sprite towards the target location
 
-    public void turnWorm()
-    {
-        transform.Rotate(0, 0, Random.Range(90, 270));
-    }
+        var step = wormSpeed * Time.deltaTime;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Barrier"))
+        // move sprite towards the target location
+        transform.position = Vector3.MoveTowards(transform.position, wormDestination, step);
+
+        if (transform.position.Equals(wormDestination))
         {
-            turnWorm();
+            wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f));
+
+            // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
+            var difference = wormDestination - transform.position;
+            var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
         }
     }
 }
