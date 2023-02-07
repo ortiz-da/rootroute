@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TreeManager : MonoBehaviour
@@ -9,27 +8,24 @@ public class TreeManager : MonoBehaviour
     public TreeHealth healthBar;
 
     [SerializeField] private AGEnemyMovement AGEnemy;
-    [SerializeField] private bool isBeingAttacked = false;
-    [SerializeField] private int enemyCounter = 0;
-    
-    private AudioSource audioSource;
+    [SerializeField] private bool isBeingAttacked;
+    public int enemyCounter;
 
     public AudioClip lowHealthSound;
-    void Start()
+
+    private AudioSource audioSource;
+
+    private void Start()
     {
         maxHealth = VariableSetup.treeLife;
         health = VariableSetup.treeLife;
         audioSource = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isBeingAttacked)
-        {
-            StartCoroutine(AGAttacking());
-        }
+        if (isBeingAttacked) StartCoroutine(AGAttacking());
         //Debug.Log(health);
         //Debug.Log(isBeingAttacked);
     }
@@ -45,32 +41,24 @@ public class TreeManager : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("AGEnemy"))
-        {
-            enemyCounter--;
-        }
-        
+        if (col.gameObject.CompareTag("AGEnemy")) enemyCounter--;
     }
 
-    IEnumerator AGAttacking()
+    private IEnumerator AGAttacking()
     {
-        health --;
+        health--;
         if (health <= 15)
         {
             audioSource.clip = lowHealthSound;
             audioSource.Play();
         }
+
         isBeingAttacked = false;
         yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
 
-        if(enemyCounter > 0)
-        {
+        if (enemyCounter > 0)
             isBeingAttacked = true;
-        }
         else
-        {
-            isBeingAttacked=false;
-        }
-
+            isBeingAttacked = false;
     }
 }

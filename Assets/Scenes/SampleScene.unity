@@ -341,6 +341,7 @@ MonoBehaviour:
   overgroundClip: {fileID: 8300000, guid: d34cd868fe3ef4aceb689849f17f9501, type: 3}
   undegroundClip: {fileID: 8300000, guid: b8bd7742c71f948f7ba96e8dea8b6657, type: 3}
   player: {fileID: 1020308533}
+  tree: {fileID: 1269568585}
 --- !u!4 &111235915
 Transform:
   m_ObjectHideFlags: 0
