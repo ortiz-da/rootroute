@@ -1340,7 +1340,7 @@ GameObject:
   - component: {fileID: 330023305}
   m_Layer: 0
   m_Name: WormBarrier
-  m_TagString: Untagged
+  m_TagString: Barrier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56349,11 +56349,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.59
+      value: 13.13
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -56361,19 +56361,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9063079
+      value: 0.6518611
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.42261827
+      value: -0.7583385
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -56385,7 +56385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7352634574467793825, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 50
+      value: -98.636
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a73883b48c2b4c43a4006c02b5d0c3f, type: 3}

@@ -11,7 +11,7 @@ public class WormController : MonoBehaviour
 
     Rigidbody2D wormRigid;
 
-    private float wormSpeed = .5f;
+    private float wormSpeed = 1f;
 
     WormDetector detector;
     void Start()
@@ -33,5 +33,13 @@ public class WormController : MonoBehaviour
     public void turnWorm()
     {
         transform.Rotate(0, 0, Random.Range(90, 270));
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Barrier"))
+        {
+            turnWorm();
+        }
     }
 }
