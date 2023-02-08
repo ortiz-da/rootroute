@@ -16,6 +16,8 @@ public class GameMusicPlayer : MonoBehaviour
 
     public GameObject player;
 
+    public TreeManager tree;
+
     private float playerHeight = 4.4f;
     // 4 to -20 is the world height
 
@@ -35,12 +37,13 @@ public class GameMusicPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
-
-    // As the player gets lower in the level, the music shifts
     private void Update()
     {
         playerHeight = Mathf.Abs(player.transform.position.y - 4.4f);
         undergroundAudioSource.volume = playerHeight / 21;
         overgroundAudioSource.volume = 1 - playerHeight / 21;
+
+        healthLowAudioSource.volume = 1f - tree.health / tree.maxHealth;
+        combatAudioSource.volume = tree.enemyCounter / 10f;
     }
 }

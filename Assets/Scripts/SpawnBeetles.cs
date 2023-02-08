@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBeetles : MonoBehaviour
@@ -7,59 +6,43 @@ public class SpawnBeetles : MonoBehaviour
     // Start is called before the first frame update
 
     public GameObject beetle;
+    public AudioClip waveStartSound;
 
-    private int waveNumber = 0;
+    private AudioSource audioSource;
 
     private int maxSpawn = 3;
 
-    private AudioSource audioSource;
-    public AudioClip waveStartSound;
+    private int waveNumber;
 
-    public GameObject spawnRight;
-
-    //private Quaternion flipped;
-    void Start()
+    private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnBeetle());
-        //flipped = new Quaternion(Quaternion.identity.x, -Quaternion.identity.y, -Quaternion.identity.z, Quaternion.identity.w);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 
-    IEnumerator SpawnBeetle()
+    private IEnumerator SpawnBeetle()
     {
         yield return new WaitForSeconds(10);
         while (waveNumber < 15)
         {
-            maxSpawn++;
-            StartCoroutine(SpawnWave());
+            audioSource.clip = waveStartSound;
+            audioSource.Play();
 
-            yield return new WaitForSeconds(Random.Range(5, 15));
-            waveNumber++;
-        }
 
-    }
-
-    IEnumerator SpawnWave()
-    {
-        audioSource.clip = waveStartSound;
-        audioSource.Play();
-        for (int i = 0; i < Random.Range(3, maxSpawn); i++)
-        {
-            if(waveNumber > 2 && Random.Range(1, 3) == 2) 
+            for (var i = 0; i < Random.Range(3, maxSpawn); i++)
             {
-                GameObject thisbeetle = Instantiate(beetle, spawnRight.transform.position, Quaternion.identity);
-                Vector3 theScale = thisbeetle.transform.localScale;
-                theScale.x *= -1;
-                thisbeetle.transform.localScale = theScale;
-            }
-            else
                 Instantiate(beetle);
-            yield return new WaitForSeconds(Random.Range(0f, 2f));
+                yield return new WaitForSeconds(Random.Range(0f, 2f));
+            }
+
+            yield return new WaitForSeconds(Random.Range(10, 15));
+            waveNumber++;
+            maxSpawn++;
         }
     }
 }

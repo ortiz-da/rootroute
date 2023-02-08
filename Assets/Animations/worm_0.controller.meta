@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-guid: d253577b2bcf59a419cd981f70f1c232
-labels:
-- WormBounce
+guid: d0795684ddb2ff2448171addadc31d78
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 11400000
+  mainObjectFileID: 9100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
