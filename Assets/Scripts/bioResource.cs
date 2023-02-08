@@ -42,15 +42,25 @@ public class bioResource : MonoBehaviour
 
         if(timeLeft <= 0)
         {
-            StopAllCoroutines();
+
+            // TODO: can't get it to stop sending resources
+            gameObject.SetActive(false);
+
+            
+            /*
+             *             StopAllCoroutines();
             connected = false;
             sending = false;
             Destroy(gameObject);
+            resourceManager.biomassRate -= resourceProviding;
+             */
+
         }
     }
 
     IEnumerator sendBiomass()
     {
+        Debug.Log("SENDING");
         resourceManager.biomassUpdate(resourceProviding);
         sending = false;
         yield return new WaitForSeconds(resourceRate);

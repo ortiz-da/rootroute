@@ -12,13 +12,14 @@ public class WormController : MonoBehaviour
     private Tilemap _tilemap;
 
     public TileBase mineshaftTile;
-    public ResourceManager resourceManager;
+    private ResourceManager resourceManager;
 
 
 
     private void Start()
     {
 
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         _tilemap = FindObjectOfType<Tilemap>();
         wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
 
@@ -36,7 +37,7 @@ public class WormController : MonoBehaviour
     {
         Vector3Int worldCell = _tilemap.WorldToCell(transform.position);
         
-        Debug.Log(_tilemap.GetTile(worldCell).name);
+        // Debug.Log(_tilemap.GetTile(worldCell).name);
 
         // If worm comes in contact with mycelium, destroy the mycelium.
         if (_tilemap.GetTile(worldCell).name.Equals("MyceliumRuleTile"))

@@ -42,7 +42,7 @@ public class ResourceManager : MonoBehaviour
             CheckResources();
         }
         Vector2Int corrected = correctPosition(spot);
-        Debug.Log("Mycelium Placed! spot: " + corrected.ToString()); //(-1,1,0)
+        // Debug.Log("Mycelium Placed! spot: " + corrected.ToString()); //(-1,1,0)
         myceliumMap[corrected.x, corrected.y] = true;
         grid.UpdateGrid(myceliumMap);
         trace();
@@ -63,7 +63,7 @@ public class ResourceManager : MonoBehaviour
             bioResource bio = resource.GetComponent<bioResource>();
             Vector2Int corrected = correctPosition(bio.position);
             bio.correctedPosition = corrected;
-            Debug.Log(corrected.ToString());
+            // Debug.Log(corrected.ToString());
             myceliumMap[corrected.x, corrected.y] = true;
         }
     }

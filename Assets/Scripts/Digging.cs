@@ -78,7 +78,7 @@ public class Digging : MonoBehaviour
             // idk why it thinks mycelium tiles are called mineshaftRuleTile
             if (tilemap.GetTile(clickedBlock).name.Equals("MineShaftRuleTile"))
                 resourceManager.myceliumDeleted(tilemap.WorldToCell(clickedBlock));
-            Debug.Log("Successfully deleted mycelium");
+            // Debug.Log("Successfully deleted mycelium");
         }
     }
 
