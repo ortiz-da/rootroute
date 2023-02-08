@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class WormController : MonoBehaviour
 {
@@ -8,8 +9,17 @@ public class WormController : MonoBehaviour
     private Vector3 wormDestination;
 
 
+    private Tilemap _tilemap;
+
+    public TileBase mineshaftTile;
+    public ResourceManager resourceManager;
+
+
+
     private void Start()
     {
+
+        _tilemap = FindObjectOfType<Tilemap>();
         wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
 
 
@@ -18,14 +28,23 @@ public class WormController : MonoBehaviour
         var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
-        Debug.Log(wormDestination);
         // transform.Rotate(0, 0, Random.Range(1, 360));
     }
 
     // Update is called once per frame
     private void Update()
     {
-        // move sprite towards the target location
+        Vector3Int worldCell = _tilemap.WorldToCell(transform.position);
+        
+        Debug.Log(_tilemap.GetTile(worldCell).name);
+
+        // If worm comes in contact with mycelium, destroy the mycelium.
+        if (_tilemap.GetTile(worldCell).name.Equals("MyceliumRuleTile"))
+        {
+            _tilemap.SetTile(worldCell, mineshaftTile);
+            resourceManager.myceliumDeleted(worldCell); // possibly buggy?
+        }
+        
 
         var step = wormSpeed * Time.deltaTime;
 

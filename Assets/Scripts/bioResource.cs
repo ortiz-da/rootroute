@@ -33,7 +33,7 @@ public class bioResource : MonoBehaviour
         if (connected && timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
-            Debug.Log(timeLeft.ToString());
+            // Debug.Log(timeLeft.ToString());
         }
         if (connected && sending)
         {
@@ -42,8 +42,10 @@ public class bioResource : MonoBehaviour
 
         if(timeLeft <= 0)
         {
-            Debug.Log("possum obliterated");
-            gameObject.SetActive(false);
+            StopAllCoroutines();
+            connected = false;
+            sending = false;
+            Destroy(gameObject);
         }
     }
 

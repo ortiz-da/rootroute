@@ -31,6 +31,8 @@ public class VariableSetup : MonoBehaviour
 
     public static int beetleAttackRate = 2;
 
+    public static int biomassLife = 10;
+
     // Start is called before the first frame update
     private void Start()
     {
