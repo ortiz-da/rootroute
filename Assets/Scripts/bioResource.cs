@@ -44,7 +44,7 @@ public class bioResource : MonoBehaviour
         {
 
             // TODO: can't get it to stop sending resources
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
 
             
             /*

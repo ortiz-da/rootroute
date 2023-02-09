@@ -8,20 +8,25 @@ public class ResourceManager : MonoBehaviour
 {
     public float biomass;
 
-    NesScripts.Controls.PathFind.Point origin = new Point(15, 0);
+    NesScripts.Controls.PathFind.Point origin = new Point(0, 1);
 
     public float biomassRate;
 
     GameObject[] resources;
     List<GameObject> towers;
-    bool[,] myceliumMap = new bool[31, 25];
+    private bool[,] myceliumMap;
     NesScripts.Controls.PathFind.Grid grid;
+
+    public Tilemap _tilemap;
     void Start()
     {
         biomass = VariableSetup.startingBiomass;
         biomassRate = 0f;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
+        _tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
 
+        // size of 2d array now depends on size of tilemap
+        myceliumMap  = new bool[_tilemap.size.x, _tilemap.size.y];
         myceliumMap[origin.x, origin.y] = true;
         towers = new List<GameObject>();
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
@@ -31,7 +36,7 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log(_tilemap.size);
     }
 
     public void myceliumPlaced(Vector3Int spot)

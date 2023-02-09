@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class VariableSetup : MonoBehaviour
 {
-    public static float treeLife = 100f;
+    public static float treeLife = 10000f;
     public static float startingBiomass = 50f;
 
     //rates in seconds, i.e. seconds between events
@@ -34,6 +34,8 @@ public class VariableSetup : MonoBehaviour
     public static int biomassLife = 3;
 
     public static int numWaves = 15;
+
+    public static int maxWorms = 4;
 
     // Start is called before the first frame update
     private void Start()
