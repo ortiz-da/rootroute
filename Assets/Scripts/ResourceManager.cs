@@ -8,7 +8,7 @@ public class ResourceManager : MonoBehaviour
 {
     public float biomass;
 
-    NesScripts.Controls.PathFind.Point origin = new Point(0, 1);
+    private NesScripts.Controls.PathFind.Point origin;
 
     public float biomassRate;
 
@@ -17,6 +17,9 @@ public class ResourceManager : MonoBehaviour
     private bool[,] myceliumMap;
     NesScripts.Controls.PathFind.Grid grid;
 
+    public GameObject falseMarker;
+    public GameObject trueMarker;
+
     public Tilemap _tilemap;
     void Start()
     {
@@ -24,19 +27,28 @@ public class ResourceManager : MonoBehaviour
         biomassRate = 0f;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
         _tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
+        
+        // 00 is now bottom left.
+        // so origin point is at the top
+
+        int originX = (_tilemap.size.x / 2) ;
+        int originY = _tilemap.size.y - 1;
+        origin = new Point(originX, originY);
+        Debug.Log(originX);
+        Debug.Log(originY);
 
         // size of 2d array now depends on size of tilemap
         myceliumMap  = new bool[_tilemap.size.x, _tilemap.size.y];
         myceliumMap[origin.x, origin.y] = true;
         towers = new List<GameObject>();
         grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
+
         StartCoroutine(biomassCounterUpdate());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(_tilemap.size);
     }
 
     public void myceliumPlaced(Vector3Int spot)
@@ -46,17 +58,18 @@ public class ResourceManager : MonoBehaviour
             resources = GameObject.FindGameObjectsWithTag("biomatter");
             CheckResources();
         }
-        Vector2Int corrected = correctPosition(spot);
-        // Debug.Log("Mycelium Placed! spot: " + corrected.ToString()); //(-1,1,0)
-        myceliumMap[corrected.x, corrected.y] = true;
+        // Vector2Int corrected = correctPosition(spot);
+        Debug.Log("Mycelium Placed! spot: " + spot); //(-1,1,0)
+        myceliumMap[spot.x, spot.y] = true;
         grid.UpdateGrid(myceliumMap);
         trace();
     }
 
     public void myceliumDeleted(Vector3Int spot)
     {
-        Vector2Int corrected = correctPosition(spot);
-        myceliumMap[corrected.x, corrected.y] = false;
+        Debug.Log("Mycelium deleted! spot: " + spot); //(-1,1,0)
+
+        myceliumMap[spot.x, spot.y] = false;
         grid.UpdateGrid(myceliumMap);
         trace();
     }
@@ -66,10 +79,9 @@ public class ResourceManager : MonoBehaviour
         foreach (GameObject resource in resources)
         {
             bioResource bio = resource.GetComponent<bioResource>();
-            Vector2Int corrected = correctPosition(bio.position);
-            bio.correctedPosition = corrected;
+
             // Debug.Log(corrected.ToString());
-            myceliumMap[corrected.x, corrected.y] = true;
+            myceliumMap[bio.position.x, bio.position.y] = true;
         }
     }
 
@@ -77,14 +89,12 @@ public class ResourceManager : MonoBehaviour
     {
         biomass -= VariableSetup.tower1Cost;
 
-        Debug.Log("In resourcemanager " + tower.GetComponent<TowerAttack2>().position.ToString());
-        Vector2Int corrected = correctPosition(tower.GetComponent<TowerAttack2>().position);
-        tower.GetComponent<TowerAttack2>().correctedPosition = corrected;
-        Debug.Log("Tower at: " + corrected.ToString());
+        var towerPos = tower.GetComponent<TowerAttack2>().position;
+        Debug.Log("Tower at: " + towerPos.ToString());
 
         towers.Add(tower);
 
-        myceliumMap[corrected.x, corrected.y] = true;
+        myceliumMap[towerPos.x, towerPos.y] = true;
         grid.UpdateGrid(myceliumMap);
         trace();
     }

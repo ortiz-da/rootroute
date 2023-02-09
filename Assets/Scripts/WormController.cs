@@ -9,7 +9,7 @@ public class WormController : MonoBehaviour
     private Vector3 wormDestination;
 
 
-    private Tilemap _tilemap;
+    public Tilemap tilemap;
 
     public TileBase mineshaftTile;
     private ResourceManager resourceManager;
@@ -20,7 +20,7 @@ public class WormController : MonoBehaviour
     {
 
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        _tilemap = FindObjectOfType<Tilemap>();
+        // _tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
         wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
 
 
@@ -35,14 +35,14 @@ public class WormController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Vector3Int worldCell = _tilemap.WorldToCell(transform.position);
+        Vector3Int worldCell = tilemap.WorldToCell(transform.position);
         
         // Debug.Log(_tilemap.GetTile(worldCell).name);
 
         // If worm comes in contact with mycelium, destroy the mycelium.
-        if (_tilemap.GetTile(worldCell).name.Equals("MyceliumRuleTile"))
+        if (tilemap.GetTile(worldCell).name.Equals("MyceliumRuleTile"))
         {
-            _tilemap.SetTile(worldCell, mineshaftTile);
+            tilemap.SetTile(worldCell, mineshaftTile);
             resourceManager.myceliumDeleted(worldCell); // possibly buggy?
         }
         

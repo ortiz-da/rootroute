@@ -15,12 +15,12 @@ public class TilemapGenerator : MonoBehaviour
     void Start()
     {
         _tilemap = GetComponent<Tilemap>();
-        for (int y = 0; y >= -25; y--)
+        for (int y = 0; y < 25; y++)
         {
-            for (int x = -16; x <= 16; x++)
+            for (int x = 0; x < 31; x++)
             {
                 int rand = Random.Range(0, 10);
-                _tilemap.SetTile(new Vector3Int(x, y), rand > 0 || y == 0 ? dirtTile : bedrockTile);
+                _tilemap.SetTile(new Vector3Int(x, y), rand > 0 || y == 24 ? dirtTile : bedrockTile);
             }
         }
     }

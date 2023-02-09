@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1be3399e65337645b03bf8d4d6659f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 0}
   mineshaftTile: {fileID: 11400000, guid: 83b89e1faa912457e90e4089cb2b0e7f, type: 2}
-  resourceManager: {fileID: 0}
 --- !u!50 &7352634574467793827
 Rigidbody2D:
   serializedVersion: 4

@@ -39,6 +39,7 @@ public class Digging : MonoBehaviour
         {
             // https://gamedevbeginner.com/how-to-convert-the-mouse-position-to-world-space-in-unity-2d-3d/
             // https://stackoverflow.com/a/56519572
+
             var selectedPoint = camera1.ScreenToWorldPoint(Input.mousePosition);
             selectedPoint = new Vector3(selectedPoint.x, selectedPoint.y, 0);
             var distance = Vector3.Distance(selectedPoint, transform.position);
@@ -48,6 +49,8 @@ public class Digging : MonoBehaviour
             {
                 clickedBlock = tilemap.WorldToCell(selectedPoint);
 
+                // Something fishy with names...
+                // Debug.Log(tilemap.GetTile<Tile>(clickedBlock).name);
                 // Left click to mine blocks
                 if (Input.GetButton("Fire1"))
                     animator.SetBool("Mining", true);
