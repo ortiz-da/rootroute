@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NesScripts.Controls.PathFind;
@@ -47,7 +48,7 @@ public class ResourceManager : MonoBehaviour
 
         // printMyceliumGrid();
 
-        // StartCoroutine(biomassCounterUpdate());
+        StartCoroutine(biomassCounterUpdate());
     }
 
     // Update is called once per frame
@@ -141,6 +142,8 @@ public class ResourceManager : MonoBehaviour
                 {
                     bio.connected = false;
                     bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", false);
+                    biomassRate -= bio.resourceRate;
+
 
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
@@ -171,7 +174,6 @@ public class ResourceManager : MonoBehaviour
             if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count ==
                 0) //there is no path
             {
-                Debug.Log("no path for " + tower);
                 if (towerAttack2.connected)
                 {
                     towerAttack2.connected = false;
@@ -183,19 +185,19 @@ public class ResourceManager : MonoBehaviour
             // Only connect once
             else if (!towerAttack2.connected)
             {
-                Debug.Log("path found for " + tower);
-
                 towerAttack2.connected = true;
             }
         }
     }
 
+    // change the total biomass number by the given cost
     public void biomassUpdate(float cost)
     {
         biomass += cost;
     }
 
-    /*private IEnumerator biomassCounterUpdate()
+    // Coroutine that runs every second. Increases the total biomass by the current rate
+    private IEnumerator biomassCounterUpdate()
     {
         while (!LevelManager.isGameOver)
         {
@@ -203,5 +205,5 @@ public class ResourceManager : MonoBehaviour
             biomass += biomassRate;
             yield return new WaitForSeconds(VariableSetup.rate);
         }
-    }*/
+    }
 }

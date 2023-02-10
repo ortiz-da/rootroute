@@ -40,6 +40,8 @@ public class VariableSetup : MonoBehaviour
     public static int worldXSize = 31;
     public static int worldYSize = 25;
 
+    public static int maxNumBiomass = 10;
+
     // Start is called before the first frame update
     private void Start()
     {
