@@ -34,11 +34,13 @@ public class bioResource : MonoBehaviour
         // Debug.Log(timeLeft.ToString());
         if (connected && sending) StartCoroutine(sendBiomass());
 
+        // possum disappears after being used for a bit
         if (timeLeft <= 0)
         {
             // TODO: can't get it to stop sending resources
             // gameObject.SetActive(false);
-
+            // resourceManager.myceliumDeleted(position);
+            // StopAllCoroutines();
 
             /*
              *             StopAllCoroutines();

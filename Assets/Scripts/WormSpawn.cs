@@ -19,14 +19,14 @@ public class WormSpawn : MonoBehaviour
 
     private IEnumerator spawnWorm()
     {
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(10);
         var position = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
             Random.Range(0f, VariableSetup.worldYSize), 0);
         while (!LevelManager.isGameOver && numWorms <= VariableSetup.maxWorms)
         {
             Instantiate(worm, position, Quaternion.identity);
             numWorms++;
-            yield return new WaitForSeconds(Random.Range(30, 60));
+            yield return new WaitForSeconds(VariableSetup.wormSpawnRate);
         }
     }
 }
