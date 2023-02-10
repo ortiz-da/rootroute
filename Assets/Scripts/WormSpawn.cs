@@ -5,7 +5,7 @@ public class WormSpawn : MonoBehaviour
 {
     public GameObject worm;
 
-    private int numWorms = 0;
+    private int numWorms;
 
     private void Start()
     {
@@ -19,8 +19,9 @@ public class WormSpawn : MonoBehaviour
 
     private IEnumerator spawnWorm()
     {
-        yield return new WaitForSeconds(30);
-        var position = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
+        yield return new WaitForSeconds(0);
+        var position = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
+            Random.Range(0f, VariableSetup.worldYSize), 0);
         while (!LevelManager.isGameOver && numWorms <= VariableSetup.maxWorms)
         {
             Instantiate(worm, position, Quaternion.identity);

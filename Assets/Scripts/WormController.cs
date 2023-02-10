@@ -3,25 +3,22 @@ using UnityEngine.Tilemaps;
 
 public class WormController : MonoBehaviour
 {
+    public Tilemap tilemap;
+
+    public TileBase mineshaftTile;
     private readonly float wormSpeed = 2f;
+    private ResourceManager resourceManager;
 
 
     private Vector3 wormDestination;
 
 
-    public Tilemap tilemap;
-
-    public TileBase mineshaftTile;
-    private ResourceManager resourceManager;
-
-
-
     private void Start()
     {
-
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        // _tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
-        wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f), 0);
+        tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
+        wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
+            Random.Range(0f, VariableSetup.worldYSize), 0);
 
 
         // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
@@ -35,8 +32,8 @@ public class WormController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        Vector3Int worldCell = tilemap.WorldToCell(transform.position);
-        
+        var worldCell = tilemap.WorldToCell(transform.position);
+
         // Debug.Log(_tilemap.GetTile(worldCell).name);
 
         // If worm comes in contact with mycelium, destroy the mycelium.
@@ -45,7 +42,7 @@ public class WormController : MonoBehaviour
             tilemap.SetTile(worldCell, mineshaftTile);
             resourceManager.myceliumDeleted(worldCell); // possibly buggy?
         }
-        
+
 
         var step = wormSpeed * Time.deltaTime;
 
@@ -54,7 +51,8 @@ public class WormController : MonoBehaviour
 
         if (transform.position.Equals(wormDestination))
         {
-            wormDestination = new Vector3(Random.Range(-15f, 15f), Random.Range(-20f, 2f));
+            wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
+                Random.Range(0f, VariableSetup.worldYSize), 0);
 
             // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
             var difference = wormDestination - transform.position;
