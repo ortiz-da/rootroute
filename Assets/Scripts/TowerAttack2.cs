@@ -70,7 +70,7 @@ public class TowerAttack2 : MonoBehaviour
             shooting = true;
             Instantiate(particles, transform.position, Quaternion.identity);
 
-            // resourceManager.biomassUpdate(-1);
+            resourceManager.biomassUpdate(-1);
 
             audioSource.clip = attackSound;
             audioSource.pitch = Random.Range(.5f, 1f);

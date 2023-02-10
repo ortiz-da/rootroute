@@ -164,8 +164,6 @@ public class ResourceManager : MonoBehaviour
             var towerAttack2 = tower.GetComponent<TowerAttack2>();
             // position 2 blocks below tower's location
             var pos = makePoint(towerAttack2.myceliumConnectorPosition);
-            /*Debug.Log(towerAttack2.myceliumConnectorPosition.x);
-            Debug.Log(towerAttack2.myceliumConnectorPosition.y);*/
 
 
             Debug.Log("PATHFINDING FROM: (" + pos.x + ", " + pos.y + ")" + " TO: (" + origin.x + ", " + origin.y + ")");
@@ -192,10 +190,10 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    /*public void biomassUpdate(float cost)
+    public void biomassUpdate(float cost)
     {
         biomass += cost;
-    }*/
+    }
 
     /*private IEnumerator biomassCounterUpdate()
     {
