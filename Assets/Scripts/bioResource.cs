@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -11,13 +10,14 @@ public class bioResource : MonoBehaviour
     public Vector2Int correctedPosition;
     public Tilemap tilemap;
 
-    private ResourceManager resourceManager;
+    public bool connected;
 
-    public bool connected = false;
-    private bool sending = false;
+    private ResourceManager resourceManager;
+    private bool sending;
 
     private float timeLeft;
-    void Start()
+
+    private void Start()
     {
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
@@ -28,25 +28,18 @@ public class bioResource : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (connected && timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-            // Debug.Log(timeLeft.ToString());
-        }
-        if (connected && sending)
-        {
-            StartCoroutine(sendBiomass());
-        }
+        if (connected && timeLeft > 0) timeLeft -= Time.deltaTime;
+        // Debug.Log(timeLeft.ToString());
+        if (connected && sending) StartCoroutine(sendBiomass());
 
-        if(timeLeft <= 0)
+        if (timeLeft <= 0)
         {
-
             // TODO: can't get it to stop sending resources
             // gameObject.SetActive(false);
 
-            
+
             /*
              *             StopAllCoroutines();
             connected = false;
@@ -54,14 +47,13 @@ public class bioResource : MonoBehaviour
             Destroy(gameObject);
             resourceManager.biomassRate -= resourceProviding;
              */
-
         }
     }
 
-    IEnumerator sendBiomass()
+    private IEnumerator sendBiomass()
     {
         Debug.Log("SENDING");
-        resourceManager.biomassUpdate(resourceProviding);
+        // resourceManager.biomassUpdate(resourceProviding);
         sending = false;
         yield return new WaitForSeconds(resourceRate);
         sending = true;

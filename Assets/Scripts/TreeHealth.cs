@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TreeHealth : MonoBehaviour
 {
@@ -9,11 +6,12 @@ public class TreeHealth : MonoBehaviour
     public AudioClip lowHealthSFX;
 
     private GameObject character;
-    private GameObject[] leafs;
     private int leafNum;
-    private bool soundPlayed = false;
+
+    private GameObject[] leafs;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         character = GameObject.Find("character");
         leafs = GameObject.FindGameObjectsWithTag("leaf");
@@ -21,18 +19,15 @@ public class TreeHealth : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        int curHealth = (int)tree.health / 10;
+        var curHealth = (int)tree.health / 10;
         //Debug.Log("curhealth: " + curHealth);
-        for(int i = 0; i < leafs.Length; i++)
-        {
+        for (var i = 0; i < leafs.Length; i++)
             if (i >= leafs.Length - curHealth)
                 leafs[i].SetActive(true);
             else
                 leafs[i].SetActive(false);
-        }
         leafNum = curHealth;
-        
     }
 }

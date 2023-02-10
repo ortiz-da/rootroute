@@ -1,12 +1,9 @@
-    using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TowerAttack : MonoBehaviour
 {
-    private Animator animator;
     [SerializeField] private float distanceToBeetle;
 
     public GameObject particles;
@@ -14,48 +11,47 @@ public class TowerAttack : MonoBehaviour
     public Vector3Int position;
     public Vector2Int correctedPosition;
 
-    private bool isAttacking = false;
-
-    private int attackersInTrigger = 0;
-
     public ResourceManager resourceManager;
-    private Tilemap tilemap;
 
     public Collider2D hitbox;
-    
+
     public bool connected;
-    
-    private AudioSource audioSource;
 
     public AudioClip attackSound;
+    private Animator animator;
+
+    private int attackersInTrigger;
+
+    private AudioSource audioSource;
+
+    private bool isAttacking;
+    private Tilemap tilemap;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
-        GameObject hit = transform.GetChild(0).gameObject;
+        var hit = transform.GetChild(0).gameObject;
         hitbox = hit.GetComponent<Collider2D>();
-        hitbox.enabled= false;
+        hitbox.enabled = false;
 
         position = tilemap.WorldToCell(transform.position);
         position.y -= 2; //2 or 3 here?
 
-        resourceManager.towerPlaced(gameObject);
+        // resourceManager.towerPlaced(gameObject);
 
         correctedPosition = new Vector2Int();
         //Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
-        
-        audioSource = GetComponent<AudioSource>();
 
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -73,20 +69,17 @@ public class TowerAttack : MonoBehaviour
         attackersInTrigger--;
         if (attackersInTrigger == 0)
         {
-            isAttacking= false;
+            isAttacking = false;
             animator.SetBool("attacking", false);
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isAttacking && connected)
-        {
-            StartCoroutine(attack());
-        }
+        if (isAttacking && connected) StartCoroutine(attack());
     }
 
-    IEnumerator attack()
+    private IEnumerator attack()
     {
         if (connected)
         {

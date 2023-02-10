@@ -37,6 +37,9 @@ public class VariableSetup : MonoBehaviour
 
     public static int maxWorms = 4;
 
+    public static int worldXSize = 31;
+    public static int worldYSize = 25;
+
     // Start is called before the first frame update
     private void Start()
     {

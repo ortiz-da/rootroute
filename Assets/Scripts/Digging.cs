@@ -44,8 +44,8 @@ public class Digging : MonoBehaviour
             selectedPoint = new Vector3(selectedPoint.x, selectedPoint.y, 0);
             var distance = Vector3.Distance(selectedPoint, transform.position);
 
-            // Only mine blocks if the player is close enough
-            if (distance <= mineDistance)
+            // Only mine blocks if the player is close enough and below ground
+            if (distance <= mineDistance && inBounds(selectedPoint))
             {
                 clickedBlock = tilemap.WorldToCell(selectedPoint);
 
@@ -59,6 +59,13 @@ public class Digging : MonoBehaviour
                 else if (Input.GetButton("Fire2")) animator.SetBool("Building", true);
             }
         }
+    }
+
+    // checks if a point is within tilemap
+    private bool inBounds(Vector3 selectedPoint)
+    {
+        return selectedPoint.y < VariableSetup.worldYSize && selectedPoint.y >= 0 && selectedPoint.x >= 0 &&
+               selectedPoint.x < VariableSetup.worldXSize;
     }
 
     // Deletes a block that a player mined. Is called by an animation event that occurs on the last frame of the mine animation.
@@ -80,7 +87,7 @@ public class Digging : MonoBehaviour
             // Code for when player mines a mycelium tile.
             // idk why it thinks mycelium tiles are called mineshaftRuleTile
             if (tilemap.GetTile(clickedBlock).name.Equals("MineShaftRuleTile"))
-                resourceManager.myceliumDeleted(tilemap.WorldToCell(clickedBlock));
+                resourceManager.myceliumDeleted(clickedBlock);
             // Debug.Log("Successfully deleted mycelium");
         }
     }

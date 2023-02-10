@@ -1,121 +1,140 @@
-using NesScripts.Controls.PathFind;
-using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using NesScripts.Controls.PathFind;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Grid = NesScripts.Controls.PathFind.Grid;
 
 public class ResourceManager : MonoBehaviour
 {
     public float biomass;
 
-    private NesScripts.Controls.PathFind.Point origin;
-
     public float biomassRate;
-
-    GameObject[] resources;
-    List<GameObject> towers;
-    private bool[,] myceliumMap;
-    NesScripts.Controls.PathFind.Grid grid;
 
     public GameObject falseMarker;
     public GameObject trueMarker;
 
     public Tilemap _tilemap;
-    void Start()
+    private Grid grid;
+    private bool[,] myceliumMap;
+
+    private Point origin;
+
+    private GameObject[] resources;
+    private List<GameObject> towers;
+
+    private void Start()
     {
         biomass = VariableSetup.startingBiomass;
         biomassRate = 0f;
         resources = GameObject.FindGameObjectsWithTag("biomatter");
-        _tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
-        
+
         // 00 is now bottom left.
         // so origin point is at the top
 
-        int originX = (_tilemap.size.x / 2) ;
-        int originY = _tilemap.size.y - 1;
+        var originX = _tilemap.size.x / 2;
+        var originY = _tilemap.size.y - 1;
         origin = new Point(originX, originY);
-        Debug.Log(originX);
-        Debug.Log(originY);
+
 
         // size of 2d array now depends on size of tilemap
-        myceliumMap  = new bool[_tilemap.size.x, _tilemap.size.y];
+        // add 1 to y to account for grass layer that can be "connected" since it has towers on it
+        myceliumMap = new bool[_tilemap.size.x, _tilemap.size.y + 1];
         myceliumMap[origin.x, origin.y] = true;
         towers = new List<GameObject>();
-        grid = new NesScripts.Controls.PathFind.Grid(myceliumMap);
+        grid = new Grid(myceliumMap);
 
-        StartCoroutine(biomassCounterUpdate());
+
+        // printMyceliumGrid();
+
+        // StartCoroutine(biomassCounterUpdate());
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+    }
+
+    // prints "upside down"
+    private void printMyceliumGrid()
+    {
+        // https://www.reddit.com/r/Unity3D/comments/dc3ttd/how_to_print_a_2d_array_to_the_unity_console_as_a/
+        var sb = new StringBuilder();
+        for (var y = 0; y < myceliumMap.GetLength(1); y++)
+        {
+            for (var x = 0; x < myceliumMap.GetLength(0); x++) sb.Append(myceliumMap[x, y] ? "1" : "0");
+
+            sb.AppendLine();
+        }
+
+        Debug.Log(sb.ToString());
     }
 
     public void myceliumPlaced(Vector3Int spot)
     {
-        if (resources.Length == 0)
-        {
-            resources = GameObject.FindGameObjectsWithTag("biomatter");
-            CheckResources();
-        }
-        // Vector2Int corrected = correctPosition(spot);
-        Debug.Log("Mycelium Placed! spot: " + spot); //(-1,1,0)
+        if (resources.Length == 0) resources = GameObject.FindGameObjectsWithTag("biomatter");
+        // CheckResources();
+
         myceliumMap[spot.x, spot.y] = true;
+        /*
+        printMyceliumGrid();
+        */
         grid.UpdateGrid(myceliumMap);
         trace();
     }
 
     public void myceliumDeleted(Vector3Int spot)
     {
-        Debug.Log("Mycelium deleted! spot: " + spot); //(-1,1,0)
-
         myceliumMap[spot.x, spot.y] = false;
         grid.UpdateGrid(myceliumMap);
         trace();
     }
 
+    /*
     private void CheckResources()
     {
-        foreach (GameObject resource in resources)
+        foreach (var resource in resources)
         {
-            bioResource bio = resource.GetComponent<bioResource>();
+            var bio = resource.GetComponent<bioResource>();
 
             // Debug.Log(corrected.ToString());
             myceliumMap[bio.position.x, bio.position.y] = true;
         }
     }
+    */
 
+    // tower added, and its mycelium pos
     public void towerPlaced(GameObject tower)
     {
         biomass -= VariableSetup.tower1Cost;
 
-        var towerPos = tower.GetComponent<TowerAttack2>().position;
-        Debug.Log("Tower at: " + towerPos.ToString());
+        var myceliumConnectorPosition = tower.GetComponent<TowerAttack2>().myceliumConnectorPosition;
 
         towers.Add(tower);
-
-        myceliumMap[towerPos.x, towerPos.y] = true;
+        myceliumMap[myceliumConnectorPosition.x, myceliumConnectorPosition.y] = true;
         grid.UpdateGrid(myceliumMap);
+        // printMyceliumGrid();
+
         trace();
     }
 
-    private Vector2Int correctPosition(Vector3Int spot)
-    {
-        return new Vector2Int(spot.x + 16, (spot.y - 3) * -1);
-    }
 
     private Point makePoint(Vector3Int spot)
     {
-        return new Point(spot.x + 16, (spot.y - 3) * -1);
+        return new Point(spot.x, spot.y);
     }
 
     private void trace()
     {
-        foreach (GameObject resource in resources)
+        // printMyceliumGrid();
+
+        // Check which resources are connected (if any)
+        foreach (var resource in resources)
         {
-            bioResource bio = resource.GetComponent<bioResource>();
-            Point pos = makePoint(bio.position);
-            List<Point> path = Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan);
+            var bio = resource.GetComponent<bioResource>();
+            var pos = makePoint(bio.position);
+            var path = Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan);
+
             if (path.Count == 0) //there is no path
             {
                 if (bio.connected)
@@ -128,7 +147,7 @@ public class ResourceManager : MonoBehaviour
                 }
             }
             // Only connect once
-            else if(!bio.connected)
+            else if (!bio.connected)
             {
                 Debug.Log("Path found to " + resource.name);
                 bio.connected = true;
@@ -137,12 +156,24 @@ public class ResourceManager : MonoBehaviour
             }
         }
 
-        foreach (GameObject tower in towers)
+        // Check which towers are connected (if any)
+        foreach (var tower in towers)
         {
-            TowerAttack2 towerAttack2 = tower.GetComponent<TowerAttack2>();
-            Point pos = makePoint(towerAttack2.position);
-            if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count == 0) //there is no path
+            Debug.Log(tower.transform.position);
+            // Get script attached to tower
+            var towerAttack2 = tower.GetComponent<TowerAttack2>();
+            // position 2 blocks below tower's location
+            var pos = makePoint(towerAttack2.myceliumConnectorPosition);
+            /*Debug.Log(towerAttack2.myceliumConnectorPosition.x);
+            Debug.Log(towerAttack2.myceliumConnectorPosition.y);*/
+
+
+            Debug.Log("PATHFINDING FROM: (" + pos.x + ", " + pos.y + ")" + " TO: (" + origin.x + ", " + origin.y + ")");
+
+            if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count ==
+                0) //there is no path
             {
+                Debug.Log("no path for " + tower);
                 if (towerAttack2.connected)
                 {
                     towerAttack2.connected = false;
@@ -154,18 +185,19 @@ public class ResourceManager : MonoBehaviour
             // Only connect once
             else if (!towerAttack2.connected)
             {
-                Debug.Log("Tower is connected");
+                Debug.Log("path found for " + tower);
+
                 towerAttack2.connected = true;
             }
         }
     }
 
-    public void biomassUpdate(float cost)
+    /*public void biomassUpdate(float cost)
     {
         biomass += cost;
-    }
+    }*/
 
-    IEnumerator biomassCounterUpdate()
+    /*private IEnumerator biomassCounterUpdate()
     {
         while (!LevelManager.isGameOver)
         {
@@ -173,5 +205,5 @@ public class ResourceManager : MonoBehaviour
             biomass += biomassRate;
             yield return new WaitForSeconds(VariableSetup.rate);
         }
-    }
+    }*/
 }

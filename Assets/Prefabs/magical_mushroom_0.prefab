@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3216797403401275226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.424661, y: 4.959762, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -247,7 +247,8 @@ MonoBehaviour:
   connected: 1
   attackSound: {fileID: 8300000, guid: 99f7e536d47e3c542af8e3f74b9f0a87, type: 3}
   collidedEnemies: []
-  position: {x: 0, y: 0, z: 0}
+  resourceManager: {fileID: 0}
+  myceliumConnectorPosition: {x: 0, y: 0, z: 0}
   correctedPosition: {x: 0, y: 0}
 --- !u!1 &8397408112169376961
 GameObject:
