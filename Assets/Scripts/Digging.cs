@@ -18,6 +18,8 @@ public class Digging : MonoBehaviour
     public AudioClip digSound;
     public AudioClip placeSound;
 
+    public Tilemap backgroundTilemap;
+
     private readonly float mineDistance = 1.2f;
 
     private AudioSource audioSource;
@@ -109,6 +111,7 @@ public class Digging : MonoBehaviour
             audioSource.pitch = Random.Range(.5f, 1f);
             audioSource.Play();
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+            backgroundTilemap.SetTile(clickedBlock, mineshaftTile);
             resourceManager.myceliumPlaced(clickedBlock);
         }
     }

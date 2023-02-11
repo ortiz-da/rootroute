@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class VariableSetup : MonoBehaviour
 {
-    public static float treeLife = 100f;
+    public static float treeLife = 10000f;
     public static float startingBiomass = 50f;
 
     //rates in seconds, i.e. seconds between events
