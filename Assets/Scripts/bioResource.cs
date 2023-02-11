@@ -60,4 +60,16 @@ public class bioResource : MonoBehaviour
         yield return new WaitForSeconds(resourceRate);
         sending = true;
     }
+
+    public void connectResource()
+    {
+        connected = true;
+        gameObject.GetComponent<Animator>().SetBool("PossumConnected", true);
+    }
+
+    public void disconnectResource()
+    {
+        connected = false;
+        gameObject.GetComponent<Animator>().SetBool("PossumConnected", false);
+    }
 }

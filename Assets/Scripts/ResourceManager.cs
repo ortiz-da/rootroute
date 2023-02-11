@@ -87,6 +87,7 @@ public class ResourceManager : MonoBehaviour
 
     public void myceliumDeleted(Vector3Int spot)
     {
+        Debug.Log("MYCELIUM DELETED");
         myceliumMap[spot.x, spot.y] = false;
         grid.UpdateGrid(myceliumMap);
         trace();
@@ -141,8 +142,7 @@ public class ResourceManager : MonoBehaviour
             {
                 if (bio.connected)
                 {
-                    bio.connected = false;
-                    bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", false);
+                    bio.disconnectResource();
                     biomassRate -= bio.resourceRate;
 
 
@@ -154,8 +154,7 @@ public class ResourceManager : MonoBehaviour
             else if (!bio.connected)
             {
                 Debug.Log("Path found to " + resource.name);
-                bio.connected = true;
-                bio.gameObject.GetComponent<Animator>().SetBool("PossumConnected", true);
+                bio.connectResource();
                 biomassRate += bio.resourceRate;
             }
         }
@@ -163,7 +162,7 @@ public class ResourceManager : MonoBehaviour
         // Check which towers are connected (if any)
         foreach (var tower in towers)
         {
-            Debug.Log(tower.transform.position);
+            // Debug.Log(tower.transform.position);
             // Get script attached to tower
             var towerAttack2 = tower.GetComponent<TowerAttack2>();
             // position 2 blocks below tower's location
@@ -177,7 +176,7 @@ public class ResourceManager : MonoBehaviour
             {
                 if (towerAttack2.connected)
                 {
-                    towerAttack2.connected = false;
+                    towerAttack2.disconnectTower();
                     Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
@@ -186,7 +185,7 @@ public class ResourceManager : MonoBehaviour
             // Only connect once
             else if (!towerAttack2.connected)
             {
-                towerAttack2.connected = true;
+                towerAttack2.connectTower();
             }
         }
     }

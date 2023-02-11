@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1874838030, guid: bb28323f1afa24192a59aa9208a39592, type: 3}
+  m_Sprite: {fileID: 71617555, guid: bb28323f1afa24192a59aa9208a39592, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particles: {fileID: 4872023123004144771, guid: bf0c9dd3e08d7e9499aa39daffc52385, type: 3}
-  connected: 1
+  connected: 0
   attackSound: {fileID: 8300000, guid: 99f7e536d47e3c542af8e3f74b9f0a87, type: 3}
   collidedEnemies: []
   resourceManager: {fileID: 0}

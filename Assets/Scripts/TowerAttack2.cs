@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 public class TowerAttack2 : MonoBehaviour
 {
     public GameObject particles;
 
-    public bool connected = true;
+    public bool connected = false;
     public AudioClip attackSound;
 
     public List<Collider2D> collidedEnemies = new();
@@ -23,9 +25,7 @@ public class TowerAttack2 : MonoBehaviour
     private bool shooting;
     private Tilemap tilemap;
 
-
-    // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -36,9 +36,16 @@ public class TowerAttack2 : MonoBehaviour
 
         // resourceManager.towerPlaced(gameObject);
 
+        // using awake so that these variables will be set before the resource manager attempts to pathfind from the 
+        // myceliumConnectorPosition. Ensures that if a tower is placed on a connected mycelium, the tower will come into the world powered.
         myceliumConnectorPosition = tilemap.WorldToCell(transform.position);
         myceliumConnectorPosition.y -= 2; //2 or 3 here?
         correctedPosition = new Vector2Int();
+    }
+
+    // Start is called before the first frame update
+    private void Start()
+    {
     }
 
     // Update is called once per frame
@@ -47,6 +54,11 @@ public class TowerAttack2 : MonoBehaviour
         if (collidedEnemies.Count > 0 && !shooting && connected) StartCoroutine(shoot());
 
         if (collidedEnemies.Count == 0 || !shooting || !connected) animator.SetBool("attacking", false);
+
+        if (animator.GetBool("powered") != connected)
+        {
+            animator.SetBool("powered", connected);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -88,5 +100,17 @@ public class TowerAttack2 : MonoBehaviour
             yield return new WaitForSeconds(1);
             shooting = false;
         }
+    }
+
+    public void connectTower()
+    {
+        connected = true;
+        animator.SetBool("powered", true);
+    }
+
+    public void disconnectTower()
+    {
+        connected = false;
+        animator.SetBool("powered", false);
     }
 }
