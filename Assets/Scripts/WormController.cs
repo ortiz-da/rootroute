@@ -37,7 +37,8 @@ public class WormController : MonoBehaviour
         // Debug.Log(_tilemap.GetTile(worldCell).name);
 
         // If worm comes in contact with mycelium, destroy the mycelium.
-        if (tilemap.GetTile(worldCell).name.Equals("MyceliumRuleTile"))
+        TileBase tile = tilemap.GetTile(worldCell);
+        if (tile != null && tile.name.Equals("MyceliumRuleTile"))
         {
             tilemap.SetTile(worldCell, mineshaftTile);
             resourceManager.myceliumDeleted(worldCell); // possibly buggy?

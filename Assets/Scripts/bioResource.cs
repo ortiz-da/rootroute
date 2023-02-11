@@ -40,9 +40,9 @@ public class bioResource : MonoBehaviour
             // TODO: can't get it to stop sending resources
             // gameObject.SetActive(false);
             //resourceManager.removeResourc(gameObject);
-            Debug.Log("resource depleted");
+            /*Debug.Log("resource depleted");
             StopAllCoroutines();
-            Destroy(gameObject);
+            Destroy(gameObject);*/
             /*StopAllCoroutines();
             connected = false;
             sending = false;

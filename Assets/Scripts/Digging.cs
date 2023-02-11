@@ -76,9 +76,8 @@ public class Digging : MonoBehaviour
         animator.SetBool("Mining", false);
 
 
-        // Don't allow players to mine mineshaft tiles, or worldborder tiles
-        // For some reason, the mineshaft tiles count as null?
-        if (tilemap.GetTile(clickedBlock) != null)
+        // Don't allow players to mine air, or worldborder tiles
+        if (tilemap.GetTile(clickedBlock) != null && !tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1"))
         {
             var clickedBlockName = tilemap.GetTile(clickedBlock).name;
             backgroundTilemap.SetTile(clickedBlock, mineshaftTile);
@@ -112,8 +111,8 @@ public class Digging : MonoBehaviour
             audioSource.clip = placeSound;
             audioSource.pitch = Random.Range(.5f, 1f);
             audioSource.Play();
-            resourceManager.myceliumPlaced(clickedBlock);
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
+            resourceManager.myceliumPlaced(clickedBlock);
         }
     }
 }
