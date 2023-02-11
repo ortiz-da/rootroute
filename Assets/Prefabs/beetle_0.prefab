@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 552002083}
   - component: {fileID: 7127465835102125659}
   - component: {fileID: 8016919629927826120}
+  - component: {fileID: 4149980374041404612}
   m_Layer: 0
   m_Name: beetle_0
   m_TagString: AGEnemy
@@ -193,7 +194,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 6
 --- !u!82 &8016919629927826120
 AudioSource:
   m_ObjectHideFlags: 0
@@ -290,3 +291,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4149980374041404612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2284275941033718296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49020424bcf91f14896c6a09611f1f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
