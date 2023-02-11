@@ -25,9 +25,17 @@ public class TreeManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isBeingAttacked) StartCoroutine(AGAttacking());
-        //Debug.Log(health);
-        //Debug.Log(isBeingAttacked);
+        // todo fix
+        if (health <= 15)
+        {
+            audioSource.clip = lowHealthSound;
+            audioSource.Play();
+        }
+
+        if (enemyCounter <= 0)
+        {
+            isBeingAttacked = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -44,21 +52,8 @@ public class TreeManager : MonoBehaviour
         if (col.gameObject.CompareTag("AGEnemy")) enemyCounter--;
     }
 
-    private IEnumerator AGAttacking()
+    public void decreaseHealth(int dmg)
     {
-        health--;
-        if (health <= 15)
-        {
-            audioSource.clip = lowHealthSound;
-            audioSource.Play();
-        }
-
-        isBeingAttacked = false;
-        yield return new WaitForSeconds(VariableSetup.beetleAttackRate);
-
-        if (enemyCounter > 0)
-            isBeingAttacked = true;
-        else
-            isBeingAttacked = false;
+        this.health -= dmg;
     }
 }

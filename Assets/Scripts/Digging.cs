@@ -80,7 +80,9 @@ public class Digging : MonoBehaviour
         if (tilemap.GetTile(clickedBlock) != null &&
             !tilemap.GetTile(clickedBlock).name.Equals("WorldBorder1"))
         {
-            tilemap.SetTile(clickedBlock, mineshaftTile);
+            backgroundTilemap.SetTile(clickedBlock, mineshaftTile);
+            tilemap.SetTile(clickedBlock, null);
+
             // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
             audioSource.clip = digSound;
             audioSource.pitch = Random.Range(.5f, 1f);
@@ -111,7 +113,6 @@ public class Digging : MonoBehaviour
             audioSource.pitch = Random.Range(.5f, 1f);
             audioSource.Play();
             tilemap.SetTile(clickedBlock, mineshaftWithMyceliumTile);
-            backgroundTilemap.SetTile(clickedBlock, mineshaftTile);
             resourceManager.myceliumPlaced(clickedBlock);
         }
     }

@@ -73,6 +73,7 @@ public class ResourceManager : MonoBehaviour
 
     public void myceliumPlaced(Vector3Int spot)
     {
+        // Will not find resources if called right at start, cuz that's when they are spawning?
         if (resources.Length == 0) resources = GameObject.FindGameObjectsWithTag("biomatter");
         // CheckResources();
 
