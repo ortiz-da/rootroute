@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tree: {fileID: 0}
+  lowHealthSFX: {fileID: 0}
 --- !u!1 &7478181075171061788
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35afcd92711c82449a3785c411c163d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdown: 0
   timerText: {fileID: 6982803694041982912}
 --- !u!1001 &136575242471955169
 PrefabInstance:
