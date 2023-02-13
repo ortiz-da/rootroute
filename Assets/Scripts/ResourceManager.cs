@@ -169,7 +169,7 @@ public class ResourceManager : MonoBehaviour
             var pos = makePoint(towerAttack2.myceliumConnectorPosition);
 
 
-            Debug.Log("PATHFINDING FROM: (" + pos.x + ", " + pos.y + ")" + " TO: (" + origin.x + ", " + origin.y + ")");
+            // Debug.Log("PATHFINDING FROM: (" + pos.x + ", " + pos.y + ")" + " TO: (" + origin.x + ", " + origin.y + ")");
 
             if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count ==
                 0) //there is no path

@@ -25,6 +25,7 @@ public class TilemapGenerator : MonoBehaviour
         var originX = _tilemap.size.x / 2;
         var originY = _tilemap.size.y - 1;
         _tilemap.SetTile(new Vector3Int(originX, originY), myceliumTile);
+        _tilemap.SetColor(new Vector3Int(originX, originY), Color.green);
     }
 
     // Update is called once per frame
