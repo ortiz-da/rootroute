@@ -30,7 +30,7 @@ public class RunWaves : MonoBehaviour
     private IEnumerator SpawnWave()
     {
         // 10 seconds to get ready before waves
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(30);
         while (waveNumber < VariableSetup.numWaves)
         {
             // Play sound indicating start of wave
