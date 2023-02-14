@@ -18,6 +18,7 @@ public class VariableSetup : MonoBehaviour
     public static float tower1Dmg = 5f;
     public static float tower1Health = 20f;
     public static float tower1BiomassPerShot = 1f;
+    public static float towerSecBetweenShots = 1f;
 
     public static float rate = 2f;
 

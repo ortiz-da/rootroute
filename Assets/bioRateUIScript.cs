@@ -16,10 +16,9 @@ public class bioRateUIScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        var rate = resourceManager.biomassRate;
+        float rate = resourceManager.biomassRate;
         var sign = rate >= 0f ? "+" : "-";
-        rateText.text = sign + resourceManager.biomassRate + "/" + VariableSetup.rate + "sec";
+        rateText.text = sign + rate / VariableSetup.rate + "/" + "sec";
         rateText.color = rate > 0f ? Color.green : Color.red;
-        ;
     }
 }

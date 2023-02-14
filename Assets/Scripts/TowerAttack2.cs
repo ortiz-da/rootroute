@@ -51,7 +51,12 @@ public class TowerAttack2 : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (collidedEnemies.Count > 0 && !shooting && connected) StartCoroutine(shoot());
+        if (collidedEnemies.Count > 0 && !shooting && connected)
+        {
+            // TODO in progress, want to make display of rate reflect when towers are shooting
+            //resourceManager.biomassRate -= VariableSetup.towerSecBetweenShots;
+            StartCoroutine(shoot());
+        }
 
         if (collidedEnemies.Count == 0 || !shooting || !connected) animator.SetBool("attacking", false);
 
@@ -94,6 +99,7 @@ public class TowerAttack2 : MonoBehaviour
                 var enemy = collidedEnemies[i].gameObject;
                 enemy.GetComponent<BeetleHealth>().DecreaseHealth();
                 // Only kills if health is 0
+                // todo clean up this code
                 enemy.GetComponent<BeetleHealth>().KillBeetle();
             }
 

@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     public timerScript timer;
 
     ResourceManager resourceManager;
+
     void Start()
     {
         tree = GameObject.Find("treeHouseFull").GetComponent<TreeManager>();
@@ -26,10 +27,6 @@ public class LevelManager : MonoBehaviour
         {
             isGameOver = true;
             LevelLost();
-        }
-        if(timer.countdown <= 0)
-        {
-            LevelWon();
         }
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class bioCounterScript : MonoBehaviour
 {
-    public TextMeshProUGUI bioText;
+    private TextMeshProUGUI bioText;
     private float curbio;
     private float currate;
 
@@ -11,7 +11,7 @@ public class bioCounterScript : MonoBehaviour
 
     private void Start()
     {
-        bioText = GameObject.Find("bioCounter").GetComponent<TextMeshProUGUI>();
+        bioText = GetComponent<TextMeshProUGUI>();
         // rateImage = GameObject.Find("rate").GetComponent<Image>();
         //rateText = GameObject.Find("rate#").GetComponent<TextMeshProUGUI>();
 

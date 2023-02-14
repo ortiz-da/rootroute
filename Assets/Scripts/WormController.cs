@@ -12,9 +12,18 @@ public class WormController : MonoBehaviour
 
     private Vector3 wormDestination;
 
+    // the origin block
+    private int _originX;
+    private int _originY;
+
 
     private void Start()
     {
+        var size = tilemap.size;
+        _originX = size.x / 2;
+        _originY = size.y - 1;
+
+        // todo fix
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
         wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
@@ -38,7 +47,9 @@ public class WormController : MonoBehaviour
 
         // If worm comes in contact with mycelium, destroy the mycelium.
         TileBase tile = tilemap.GetTile(worldCell);
-        if (tile != null && tile.name.Equals("MyceliumRuleTile"))
+        // dont allow eating of origin block
+        if (tile != null && tile.name.Equals("MyceliumRuleTile") &&
+            !(worldCell.x == _originX && worldCell.y == _originY))
         {
             tilemap.SetTile(worldCell, mineshaftTile);
             resourceManager.myceliumDeleted(worldCell); // possibly buggy?
