@@ -81,7 +81,7 @@ public class Digging : MonoBehaviour
     {
         bool result = selectedPoint.y < VariableSetup.worldYSize && selectedPoint.y >= 0 && selectedPoint.x >= 0 &&
                       selectedPoint.x < VariableSetup.worldXSize;
-        Debug.Log(result);
+        // Debug.Log(result);
         return result;
     }
 

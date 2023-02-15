@@ -19,13 +19,15 @@ public class WormController : MonoBehaviour
 
     private void Start()
     {
+        tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
+
+
         var size = tilemap.size;
         _originX = size.x / 2;
         _originY = size.y - 1;
 
         // todo fix
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
         wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
             Random.Range(0f, VariableSetup.worldYSize), 0);
 

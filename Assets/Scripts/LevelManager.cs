@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         tree = GameObject.Find("treeHouseFull").GetComponent<TreeManager>();
-        timer = GameObject.Find("timer").GetComponent<timerScript>();
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
     }
 
