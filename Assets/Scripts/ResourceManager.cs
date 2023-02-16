@@ -22,12 +22,14 @@ public class ResourceManager : MonoBehaviour
     private Point origin;
 
     private GameObject[] resources;
-    private List<GameObject> towers;
+    public List<GameObject> towers;
 
     private void Start()
     {
         biomass = VariableSetup.startingBiomass;
         biomassRate = 0f;
+
+        // todo possibly will need to fix once biomass can appear/dissappear
         resources = GameObject.FindGameObjectsWithTag("biomatter");
 
         // 00 is now bottom left.
@@ -205,5 +207,11 @@ public class ResourceManager : MonoBehaviour
             biomass += biomassRate;
             yield return new WaitForSeconds(VariableSetup.rate);
         }
+    }
+
+    // Updates list of resources
+    public void ReFindBiomass()
+    {
+        resources = GameObject.FindGameObjectsWithTag("biomatter");
     }
 }

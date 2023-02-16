@@ -12,8 +12,8 @@ public class SpawnBiomass : MonoBehaviour
         while (currentNumBiomass < VariableSetup.maxNumBiomass)
         {
             // https://docs.unity3d.com/ScriptReference/Random.Range.html
-            var position = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
-                Random.Range(0f, VariableSetup.worldYSize), 0);
+            var position = new Vector3(Random.Range(0, VariableSetup.worldXSize),
+                Random.Range(0, VariableSetup.worldYSize), 0);
             Instantiate(biomass, position, Quaternion.identity);
             currentNumBiomass++;
         }

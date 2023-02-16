@@ -1920,6 +1920,7 @@ MonoBehaviour:
   falseMarker: {fileID: 3048967575504918999, guid: deb3dc7a29ff6864987a877bbab617f8, type: 3}
   trueMarker: {fileID: 558826619274579590, guid: 1ae47e7cd3d7dcb49bdb22b159b28b07, type: 3}
   _tilemap: {fileID: 80656928}
+  towers: []
 --- !u!4 &411691526
 Transform:
   m_ObjectHideFlags: 0
@@ -2859,6 +2860,7 @@ MonoBehaviour:
   - {fileID: 8204466658798067038, guid: 0caa4a9ed19ebb44f8515e455b46f4f7, type: 3}
   - {fileID: 2284275941033718296, guid: 3d27fcb15e46db4439a455ebe94fe87a, type: 3}
   waveText: {fileID: 121577675}
+  firstWaveDelay: 30
 --- !u!4 &885965827
 Transform:
   m_ObjectHideFlags: 0
@@ -26691,10 +26693,22 @@ MonoBehaviour:
   - Welcome to Root Router!
   - Your job is to defend the tree from insects.
   - First, use left click to dig a tunnel.
-  - COMPLETE
+  - Nice! Now press 'F' to place a tower on the grass above you.
+  - Good work! Keep in mind that towers cost biomass to place. Last step is to connect
+    your tower back to the core.
+  - Use right click to place down mycelium to connect your tower back to the core.
+  - Now you're ready to defend. Here comes the first wave!
+  - Notice that you've used up some biomass. You'll should replenish it.
+  - To get more biomass, dig to that dead possum, and connect it back to the core.
+  - The more biomass you connect to the core, the faster you'll pull in resources.
+  - (Just keep an eye out for worms who like to eat mycelium...)
+  - That should be enough to get you started. Defend your tree. Defend your mycelium.
+    Good luck!
   highlightFrame: {fileID: 3726119352160721595, guid: c0a7c6fa30f4bbb43bcbec496227761b, type: 3}
   nextButton: {fileID: 475925235}
   locked: 0
+  waveManager: {fileID: 885965825}
+  possum: {fileID: 3528925385973531966, guid: bf45f52009bd94643b260acfc3e29581, type: 3}
 --- !u!224 &4671561238349642680
 RectTransform:
   m_ObjectHideFlags: 0

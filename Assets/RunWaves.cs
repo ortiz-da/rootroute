@@ -17,6 +17,8 @@ public class RunWaves : MonoBehaviour
 
     public TextMeshProUGUI waveText;
 
+    public int firstWaveDelay = 30;
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,11 @@ public class RunWaves : MonoBehaviour
         StartCoroutine(SpawnWave());
     }
 
+    public void setFirstWaveDelay(int delay)
+    {
+        this.firstWaveDelay = delay;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -34,8 +41,8 @@ public class RunWaves : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        // 10 seconds to get ready before waves
-        yield return new WaitForSeconds(30);
+        // to get ready before waves
+        yield return new WaitForSeconds(firstWaveDelay);
         while (waveNumber < VariableSetup.numWaves)
         {
             // Play sound indicating start of wave
