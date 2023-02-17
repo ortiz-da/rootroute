@@ -12,7 +12,7 @@ public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
     public string[] lines;
-    private float textSpeed = .03f;
+    private float textSpeed = .05f;
     private int index;
     public GameObject highlightFrame;
 
@@ -32,14 +32,23 @@ public class Dialogue : MonoBehaviour
 
     public GameObject possum;
 
+    private AudioSource _audioSource;
+
+    private LevelManager _levelManager;
+
+
     // Start is called before the first frame update
     void Start()
     {
         _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         waveManager.SetActive(false);
 
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+
+
         //tilemap = GameObject.Find("Grid").transform.GetChild(0).gameObject.GetComponent<Tilemap>();
         tmp.text = string.Empty;
+        _audioSource = GetComponent<AudioSource>();
         StartDialogue();
     }
 
@@ -79,6 +88,12 @@ public class Dialogue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             tmp.text += c;
+
+            if (!c.Equals(' '))
+            {
+                _audioSource.PlayOneShot(_audioSource.clip);
+            }
+
             yield return new WaitForSeconds(textSpeed);
         }
     }
@@ -94,6 +109,8 @@ public class Dialogue : MonoBehaviour
         }
         else
         {
+            // tutorial completed
+            _levelManager.LoadNextLevel();
             gameObject.SetActive(false);
         }
     }
@@ -122,6 +139,7 @@ public class Dialogue : MonoBehaviour
         {
             waveManager.GetComponent<RunWaves>().setFirstWaveDelay(0);
             waveManager.SetActive(true);
+            locked = true;
         }
         else if (index == 7)
         {
@@ -189,6 +207,12 @@ public class Dialogue : MonoBehaviour
             }
         }
 
+        // advance when all termites gone
+        else if (index == 6)
+        {
+            StartCoroutine(CheckEnemyCount());
+        }
+
         else if (index == 8)
         {
             if (_resourceManager.biomassRate > 0)
@@ -199,6 +223,18 @@ public class Dialogue : MonoBehaviour
                 tmp.text = lines[index];
                 NextLine();
             }
+        }
+    }
+
+    private IEnumerator CheckEnemyCount()
+    {
+        yield return new WaitForSeconds(1);
+        if (GameObject.FindGameObjectsWithTag("AGEnemy").Length == 0)
+        {
+            locked = false;
+            waveManager.SetActive(false);
+            StopAllCoroutines();
+            NextLine();
         }
     }
 }
