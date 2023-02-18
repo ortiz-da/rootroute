@@ -17,7 +17,7 @@ public class TreeManager : MonoBehaviour
 
     private void Start()
     {
-        _levelManager = GameObject.Find("LeveManager").GetComponent<LevelManager>();
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         maxHealth = VariableSetup.treeLife;
         health = VariableSetup.treeLife;
         audioSource = GetComponent<AudioSource>();
