@@ -32,7 +32,7 @@ public class VariableSetup : MonoBehaviour
 
     public static int beetleAttackRate = 2;
 
-    public static int biomassLife = 3;
+    public static int biomassLife = 10;
 
     public static int numWaves = 15;
 

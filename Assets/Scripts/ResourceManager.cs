@@ -89,7 +89,7 @@ public class ResourceManager : MonoBehaviour
 
     public void myceliumDeleted(Vector3Int spot)
     {
-        Debug.Log("MYCELIUM DELETED");
+        // Debug.Log("MYCELIUM DELETED");
         myceliumMap[spot.x, spot.y] = false;
         grid.UpdateGrid(myceliumMap);
         trace();
@@ -214,5 +214,6 @@ public class ResourceManager : MonoBehaviour
     public void ReFindBiomass()
     {
         resources = GameObject.FindGameObjectsWithTag("biomatter");
+        trace();
     }
 }

@@ -37,18 +37,17 @@ public class bioResource : MonoBehaviour
         // possum disappears after being used for a bit
         if (timeLeft <= 0)
         {
+            /*timeLeft = VariableSetup.biomassLife;
+
+            Debug.Log("RESOURCE DEPLETED");
             // TODO: can't get it to stop sending resources
-            // gameObject.SetActive(false);
-            //resourceManager.removeResourc(gameObject);
-            /*Debug.Log("resource depleted");
+            disconnectResource();
+
+
             StopAllCoroutines();
-            Destroy(gameObject);*/
-            /*StopAllCoroutines();
-            connected = false;
-            sending = false;
             this.transform.position = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
                 Random.Range(0f, VariableSetup.worldYSize), 0);
-            timeLeft = VariableSetup.biomassLife;*/
+            resourceManager.ReFindBiomass();*/
         }
     }
 

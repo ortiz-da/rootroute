@@ -128,7 +128,7 @@ public class Digging : MonoBehaviour
         // Need to also check in bounds here, in case the player quickly moves their mouse while holding after the initial click?
         if (tile == null && InBounds(selectedPoint))
         {
-            Debug.Log("PLACED MYCELIUM");
+            // Debug.Log("PLACED MYCELIUM");
             // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
             _audioSource.clip = placeSound;
             _audioSource.pitch = Random.Range(.5f, 1f);
