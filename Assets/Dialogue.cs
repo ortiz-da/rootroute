@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 // USING https://youtu.be/8oTYabhj248
 public class Dialogue : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class Dialogue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lines = TutorialLines.lines;
         _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         waveManager.SetActive(false);
 
