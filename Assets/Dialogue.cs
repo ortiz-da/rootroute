@@ -1,30 +1,27 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 // USING https://youtu.be/8oTYabhj248
 public class Dialogue : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
     public string[] lines;
-    private float textSpeed = .05f;
-    private int index;
+    private const float TextSpeed = .07f;
+    private int _index;
     public GameObject highlightFrame;
 
     public GameObject nextButton;
 
     //public GameObject player;
 
-    public bool locked = false;
+    public bool locked;
 
     //public Tilemap tilemap;
 
-    private GameObject instantiatedFrame;
+    private GameObject _instantiatedFrame;
 
     private ResourceManager _resourceManager;
 
@@ -60,32 +57,32 @@ public class Dialogue : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (tmp.text == lines[index] && !locked)
+            if (tmp.text == lines[_index] && !locked)
             {
                 NextLine();
             }
             else
             {
                 StopAllCoroutines();
-                tmp.text = lines[index];
+                tmp.text = lines[_index];
             }
         }
 
-        if (index < lines.Length)
+        if (_index < lines.Length)
         {
-            nextButton.gameObject.SetActive(tmp.text == lines[index]);
+            nextButton.gameObject.SetActive(tmp.text == lines[_index]);
         }
     }
 
     void StartDialogue()
     {
-        index = 0;
+        _index = 0;
         StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
     {
-        foreach (char c in lines[index].ToCharArray())
+        foreach (char c in lines[_index])
         {
             tmp.text += c;
 
@@ -94,15 +91,15 @@ public class Dialogue : MonoBehaviour
                 _audioSource.PlayOneShot(_audioSource.clip);
             }
 
-            yield return new WaitForSeconds(textSpeed);
+            yield return new WaitForSeconds(TextSpeed);
         }
     }
 
     void NextLine()
     {
-        if (index < lines.Length - 1)
+        if (_index < lines.Length - 1)
         {
-            index++;
+            _index++;
             RunTutorialStep();
             tmp.text = String.Empty;
             StartCoroutine(TypeLine());
@@ -110,48 +107,48 @@ public class Dialogue : MonoBehaviour
         else
         {
             // tutorial completed
-            _levelManager.LoadNextLevel();
+            _levelManager.LoadNextScene();
             gameObject.SetActive(false);
         }
     }
 
     private void RunTutorialStep()
     {
-        if (index == 2)
+        if (_index == 2)
         {
-            instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(9, 24, 0), Quaternion.identity);
-            instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer = false;
+            _instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(9, 24, 0), Quaternion.identity);
+            _instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer = false;
             locked = true;
         }
 
-        else if (index == 3)
+        else if (_index == 3)
         {
             locked = true;
         }
 
-        else if (index == 5)
+        else if (_index == 5)
         {
-            instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(15, 24, 0), Quaternion.identity);
-            instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer = false;
+            _instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(15, 24, 0), Quaternion.identity);
+            _instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer = false;
             locked = true;
         }
-        else if (index == 6)
+        else if (_index == 6)
         {
-            waveManager.GetComponent<RunWaves>().setFirstWaveDelay(0);
+            waveManager.GetComponent<RunWaves>().SetFirstWaveDelay(0);
             waveManager.SetActive(true);
             locked = true;
         }
-        else if (index == 7)
+        else if (_index == 7)
         {
             // todo stop wave manager
 
             // TODO draw attention to lower biomass
         }
-        else if (index == 8)
+        else if (_index == 8)
         {
             locked = true;
             Instantiate(possum, new Vector3(5, 24, 0), Quaternion.identity);
-            instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(5, 24, 0), Quaternion.identity);
+            _instantiatedFrame = Instantiate(highlightFrame, new Vector3Int(5, 24, 0), Quaternion.identity);
             _resourceManager.ReFindBiomass();
         }
         else
@@ -162,65 +159,65 @@ public class Dialogue : MonoBehaviour
 
     private void CheckUnlockCondition()
     {
-        if (index == 2)
+        if (_index == 2)
         {
             // if it was locked last frame, and now isn't, then the player did what they needed to do.
             // so play the next line automatically
-            if (instantiatedFrame != null)
+            if (_instantiatedFrame != null)
             {
-                if (locked == instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer)
+                if (locked == _instantiatedFrame.GetComponent<HighlightCollision>().touchedPlayer)
                 {
                     locked = false;
-                    Destroy(instantiatedFrame);
+                    Destroy(_instantiatedFrame);
                     StopAllCoroutines();
-                    tmp.text = lines[index];
+                    tmp.text = lines[_index];
                     NextLine();
                 }
             }
         }
 
-        else if (index == 3)
+        else if (_index == 3)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
                 locked = false;
                 StopAllCoroutines();
-                tmp.text = lines[index];
+                tmp.text = lines[_index];
                 NextLine();
             }
         }
 
         // todo bug if they complete this step in 4
-        else if (index == 5)
+        else if (_index == 5)
         {
             if (_resourceManager.towers.First().GetComponent<TowerAttack2>().connected)
             {
                 Debug.Log("CONNECTED TOWER");
-                if (instantiatedFrame != null)
+                if (_instantiatedFrame != null)
                 {
                     locked = false;
-                    Destroy(instantiatedFrame);
+                    Destroy(_instantiatedFrame);
                     StopAllCoroutines();
-                    tmp.text = lines[index];
+                    tmp.text = lines[_index];
                     NextLine();
                 }
             }
         }
 
         // advance when all termites gone
-        else if (index == 6)
+        else if (_index == 6)
         {
             StartCoroutine(CheckEnemyCount());
         }
 
-        else if (index == 8)
+        else if (_index == 8)
         {
             if (_resourceManager.biomassRate > 0)
             {
                 locked = false;
-                Destroy(instantiatedFrame);
+                Destroy(_instantiatedFrame);
                 StopAllCoroutines();
-                tmp.text = lines[index];
+                tmp.text = lines[_index];
                 NextLine();
             }
         }

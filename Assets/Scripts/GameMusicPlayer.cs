@@ -19,7 +19,7 @@ public class GameMusicPlayer : MonoBehaviour
     public TreeManager tree;
 
 
-    private float playerHeight;
+    private float _playerHeight;
     // 4 to -20 is the world height
 
     // Start is called before the first frame update
@@ -43,9 +43,9 @@ public class GameMusicPlayer : MonoBehaviour
         // Fade between above and below ground music
         // Could be cleaned up
         // 1.5 for the 1 block of grass + a bit above.
-        playerHeight = Mathf.Abs(1 - player.transform.position.y / (VariableSetup.worldYSize + 1.5f));
-        undergroundAudioSource.volume = playerHeight;
-        overgroundAudioSource.volume = 1 - playerHeight;
+        _playerHeight = Mathf.Abs(1 - player.transform.position.y / (VariableSetup.worldYSize + 1.5f));
+        undergroundAudioSource.volume = _playerHeight;
+        overgroundAudioSource.volume = 1 - _playerHeight;
 
         // Change music if tree health is low, or if tree is being attacked
         healthLowAudioSource.volume = 1f - tree.health / tree.maxHealth;

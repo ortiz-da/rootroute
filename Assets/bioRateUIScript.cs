@@ -1,24 +1,24 @@
 using TMPro;
 using UnityEngine;
 
-public class bioRateUIScript : MonoBehaviour
+public class BioRateUIScript : MonoBehaviour
 {
-    private TextMeshProUGUI rateText;
-    private ResourceManager resourceManager;
+    private TextMeshProUGUI _rateText;
+    private ResourceManager _resourceManager;
 
     // Start is called before the first frame update
     private void Start()
     {
-        rateText = GetComponent<TextMeshProUGUI>();
-        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        _rateText = GetComponent<TextMeshProUGUI>();
+        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        float rate = resourceManager.biomassRate;
+        float rate = _resourceManager.biomassRate;
         var sign = rate >= 0f ? "+" : "-";
-        rateText.text = sign + rate / VariableSetup.rate + "/" + "sec";
-        rateText.color = rate > 0f ? Color.green : Color.red;
+        _rateText.text = sign + rate / VariableSetup.rate + "/" + "sec";
+        _rateText.color = rate > 0f ? Color.green : Color.red;
     }
 }

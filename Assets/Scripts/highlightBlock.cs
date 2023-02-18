@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class highlightBlock : MonoBehaviour
+public class HighlightBlock : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
@@ -16,19 +16,19 @@ public class highlightBlock : MonoBehaviour
 
     public TileBase mineshaftWithMyceliumTile;
 
-    private Color blockColor;
+    private Color _blockColor;
 
-    private TextMeshProUGUI errorText;
+    private TextMeshProUGUI _errorText;
 
-    private ResourceManager resourceManager;
+    private ResourceManager _resourceManager;
 
     private void Start()
     {
         // http://answers.unity.com/answers/993502/view.html
-        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").transform.GetChild(0).GetComponent<Tilemap>();
 
-        errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
+        _errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
@@ -41,8 +41,9 @@ public class highlightBlock : MonoBehaviour
         if (other.CompareTag("character") && !hasTower)
         {
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, .5f);
+            _blockColor = gameObject.GetComponent<SpriteRenderer>().color;
+            gameObject.GetComponent<SpriteRenderer>().color =
+                new Color(_blockColor.r, _blockColor.g, _blockColor.b, .5f);
         }
     }
 
@@ -78,14 +79,15 @@ public class highlightBlock : MonoBehaviour
             // Debug.Log("LEAVE");
 
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
+            _blockColor = gameObject.GetComponent<SpriteRenderer>().color;
+            gameObject.GetComponent<SpriteRenderer>().color =
+                new Color(_blockColor.r, _blockColor.g, _blockColor.b, 1f);
         }
     }
 
-    public void placeTower()
+    public void PlaceTower()
     {
-        if (resourceManager.biomass >= VariableSetup.tower1Cost)
+        if (_resourceManager.biomass >= VariableSetup.tower1Cost)
         {
             var towerPos = new Vector3(transform.position.x, transform.position.y + 1.5f);
             var instatiatedTower = Instantiate(tower1, towerPos, Quaternion.identity, null);
@@ -97,21 +99,22 @@ public class highlightBlock : MonoBehaviour
 
             // Debug.Log("PLACE TOWER");
             hasTower = true;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
+            gameObject.GetComponent<SpriteRenderer>().color =
+                new Color(_blockColor.r, _blockColor.g, _blockColor.b, 1f);
 
             // tell the boolean grid there has been a tower placed
-            resourceManager.towerPlaced(instatiatedTower);
+            _resourceManager.TowerPlaced(instatiatedTower);
         }
-        else if (resourceManager.biomass < VariableSetup.tower1Cost)
+        else if (_resourceManager.biomass < VariableSetup.tower1Cost)
         {
-            StartCoroutine(textDisplay());
+            StartCoroutine(TextDisplay());
         }
     }
 
-    private IEnumerator textDisplay()
+    private IEnumerator TextDisplay()
     {
-        errorText.text = "Not enough biomatter!";
+        _errorText.text = "Not enough biomatter!";
         yield return new WaitForSeconds(1);
-        errorText.text = "";
+        _errorText.text = "";
     }
 }

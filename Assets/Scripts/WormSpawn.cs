@@ -5,11 +5,11 @@ public class WormSpawn : MonoBehaviour
 {
     public GameObject worm;
 
-    private int numWorms;
+    private int _numWorms;
 
     private void Start()
     {
-        StartCoroutine(spawnWorm());
+        StartCoroutine(SpawnWorm());
     }
 
     // Update is called once per frame
@@ -17,15 +17,15 @@ public class WormSpawn : MonoBehaviour
     {
     }
 
-    private IEnumerator spawnWorm()
+    private IEnumerator SpawnWorm()
     {
         yield return new WaitForSeconds(10);
         var position = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
             Random.Range(0f, VariableSetup.worldYSize), 0);
-        while (!LevelManager.isGameOver && numWorms <= VariableSetup.maxWorms)
+        while (_numWorms <= VariableSetup.maxWorms)
         {
             Instantiate(worm, position, Quaternion.identity);
-            numWorms++;
+            _numWorms++;
             yield return new WaitForSeconds(VariableSetup.wormSpawnRate);
         }
     }

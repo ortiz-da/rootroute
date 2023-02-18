@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class bioResource : MonoBehaviour
+public class BioResource : MonoBehaviour
 {
     public float resourceRate = 1f;
     public float resourceProviding = 1f;
@@ -12,30 +12,30 @@ public class bioResource : MonoBehaviour
 
     public bool connected;
 
-    private ResourceManager resourceManager;
-    private bool sending;
+    private ResourceManager _resourceManager;
+    private bool _sending;
 
-    private float timeLeft;
+    private float _timeLeft;
 
     private void Start()
     {
-        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
         position = tilemap.WorldToCell(transform.position);
         correctedPosition = new Vector2Int();
 
-        timeLeft = VariableSetup.biomassLife;
+        _timeLeft = VariableSetup.biomassLife;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (connected && timeLeft > 0) timeLeft -= Time.deltaTime;
+        if (connected && _timeLeft > 0) _timeLeft -= Time.deltaTime;
         // Debug.Log(timeLeft.ToString());
-        if (connected && sending) StartCoroutine(sendBiomass());
+        if (connected && _sending) StartCoroutine(SendBiomass());
 
         // possum disappears after being used for a bit
-        if (timeLeft <= 0)
+        if (_timeLeft <= 0)
         {
             // TODO: can't get it to stop sending resources
             // gameObject.SetActive(false);
@@ -52,22 +52,22 @@ public class bioResource : MonoBehaviour
         }
     }
 
-    private IEnumerator sendBiomass()
+    private IEnumerator SendBiomass()
     {
         Debug.Log("SENDING");
         // resourceManager.biomassUpdate(resourceProviding);
-        sending = false;
+        _sending = false;
         yield return new WaitForSeconds(resourceRate);
-        sending = true;
+        _sending = true;
     }
 
-    public void connectResource()
+    public void ConnectResource()
     {
         connected = true;
         gameObject.GetComponent<Animator>().SetBool("PossumConnected", true);
     }
 
-    public void disconnectResource()
+    public void DisconnectResource()
     {
         connected = false;
         gameObject.GetComponent<Animator>().SetBool("PossumConnected", false);

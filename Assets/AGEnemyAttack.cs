@@ -1,31 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AGEnemyAttack : MonoBehaviour
+public class AgEnemyAttack : MonoBehaviour
 {
     public int damage = 1;
 
     public TreeManager treeManager;
 
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
     public AudioClip crunchSound;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         treeManager = GameObject.FindGameObjectWithTag("tree").GetComponent<TreeManager>();
     }
 
     // Called via animation event in the TermiteAttackAnimation
     public void Attack()
     {
-        treeManager.decreaseHealth(damage);
+        treeManager.DecreaseHealth(damage);
         //Debug.Log("PLAY CRUNCH");
-        audioSource.clip = crunchSound;
-        audioSource.pitch = Random.Range(.5f, 1f);
-        audioSource.Play();
+        _audioSource.clip = crunchSound;
+        _audioSource.pitch = Random.Range(.5f, 1f);
+        _audioSource.Play();
     }
 }

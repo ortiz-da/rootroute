@@ -1,26 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class timerScript : MonoBehaviour
+public class TimerScript : MonoBehaviour
 {
     public float countdown;
     public TextMeshProUGUI timerText;
+
     void Start()
     {
         countdown = VariableSetup.countdownTimerLength;
-        updateTimer();
+        UpdateTimer();
     }
 
     // Update is called once per frame
     void Update()
     {
-        countdown -= Time.deltaTime; 
-        updateTimer();
+        countdown -= Time.deltaTime;
+        UpdateTimer();
     }
 
-    void updateTimer()
+    void UpdateTimer()
     {
         int sec = (int)countdown % 60;
         int min = (int)countdown / 60;

@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BeetleHealth : MonoBehaviour
 {
     // Start is called before the first frame update
-    float health = VariableSetup.beetleHealth;
+    float _health = VariableSetup.beetleHealth;
+
     void Start()
     {
         // Debug.Log("beetle start");
@@ -15,7 +14,6 @@ public class BeetleHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 
     /*
@@ -37,13 +35,12 @@ public class BeetleHealth : MonoBehaviour
     // NEW VERSION
     public void DecreaseHealth()
     {
-        health -= VariableSetup.tower1Dmg;
-
+        _health -= VariableSetup.tower1Dmg;
     }
 
     public void KillBeetle()
     {
-        if (health <= 0)
+        if (_health <= 0)
         {
             Destroy(gameObject);
         }

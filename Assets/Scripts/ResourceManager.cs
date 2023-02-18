@@ -12,16 +12,13 @@ public class ResourceManager : MonoBehaviour
 
     public float biomassRate;
 
-    public GameObject falseMarker;
-    public GameObject trueMarker;
+    public Tilemap tilemap;
+    private Grid _grid;
+    private bool[,] _myceliumMap;
 
-    public Tilemap _tilemap;
-    private Grid grid;
-    private bool[,] myceliumMap;
+    private Point _origin;
 
-    private Point origin;
-
-    private GameObject[] resources;
+    private GameObject[] _resources;
     public List<GameObject> towers;
 
     private void Start()
@@ -30,27 +27,28 @@ public class ResourceManager : MonoBehaviour
         biomassRate = 0f;
 
         // todo possibly will need to fix once biomass can appear/dissappear
-        resources = GameObject.FindGameObjectsWithTag("biomatter");
+        _resources = GameObject.FindGameObjectsWithTag("biomatter");
 
         // 00 is now bottom left.
         // so origin point is at the top
 
-        var originX = _tilemap.size.x / 2;
-        var originY = _tilemap.size.y - 1;
-        origin = new Point(originX, originY);
+        var tilemapSize = tilemap.size;
+        var originX = tilemapSize.x / 2;
+        var originY = tilemapSize.y - 1;
+        _origin = new Point(originX, originY);
 
 
         // size of 2d array now depends on size of tilemap
         // add 1 to y to account for grass layer that can be "connected" since it has towers on it
-        myceliumMap = new bool[_tilemap.size.x, _tilemap.size.y + 1];
-        myceliumMap[origin.x, origin.y] = true;
+        _myceliumMap = new bool[tilemapSize.x, tilemapSize.y + 1];
+        _myceliumMap[_origin.x, _origin.y] = true;
         towers = new List<GameObject>();
-        grid = new Grid(myceliumMap);
+        _grid = new Grid(_myceliumMap);
 
 
         // printMyceliumGrid();
 
-        StartCoroutine(biomassCounterUpdate());
+        StartCoroutine(BiomassCounterUpdate());
     }
 
     // Update is called once per frame
@@ -59,13 +57,13 @@ public class ResourceManager : MonoBehaviour
     }
 
     // prints "upside down"
-    private void printMyceliumGrid()
+    private void PrintMyceliumGrid()
     {
         // https://www.reddit.com/r/Unity3D/comments/dc3ttd/how_to_print_a_2d_array_to_the_unity_console_as_a/
         var sb = new StringBuilder();
-        for (var y = 0; y < myceliumMap.GetLength(1); y++)
+        for (var y = 0; y < _myceliumMap.GetLength(1); y++)
         {
-            for (var x = 0; x < myceliumMap.GetLength(0); x++) sb.Append(myceliumMap[x, y] ? "1" : "0");
+            for (var x = 0; x < _myceliumMap.GetLength(0); x++) sb.Append(_myceliumMap[x, y] ? "1" : "0");
 
             sb.AppendLine();
         }
@@ -73,26 +71,26 @@ public class ResourceManager : MonoBehaviour
         Debug.Log(sb.ToString());
     }
 
-    public void myceliumPlaced(Vector3Int spot)
+    public void MyceliumPlaced(Vector3Int spot)
     {
         // Will not find resources if called right at start, cuz that's when they are spawning?
-        if (resources.Length == 0) resources = GameObject.FindGameObjectsWithTag("biomatter");
+        if (_resources.Length == 0) _resources = GameObject.FindGameObjectsWithTag("biomatter");
         // CheckResources();
 
-        myceliumMap[spot.x, spot.y] = true;
+        _myceliumMap[spot.x, spot.y] = true;
         /*
         printMyceliumGrid();
         */
-        grid.UpdateGrid(myceliumMap);
-        trace();
+        _grid.UpdateGrid(_myceliumMap);
+        Trace();
     }
 
-    public void myceliumDeleted(Vector3Int spot)
+    public void MyceliumDeleted(Vector3Int spot)
     {
         Debug.Log("MYCELIUM DELETED");
-        myceliumMap[spot.x, spot.y] = false;
-        grid.UpdateGrid(myceliumMap);
-        trace();
+        _myceliumMap[spot.x, spot.y] = false;
+        _grid.UpdateGrid(_myceliumMap);
+        Trace();
     }
 
     /*
@@ -109,42 +107,42 @@ public class ResourceManager : MonoBehaviour
     */
 
     // tower added, and its mycelium pos
-    public void towerPlaced(GameObject tower)
+    public void TowerPlaced(GameObject tower)
     {
         biomass -= VariableSetup.tower1Cost;
 
         var myceliumConnectorPosition = tower.GetComponent<TowerAttack2>().myceliumConnectorPosition;
 
         towers.Add(tower);
-        myceliumMap[myceliumConnectorPosition.x, myceliumConnectorPosition.y] = true;
-        grid.UpdateGrid(myceliumMap);
+        _myceliumMap[myceliumConnectorPosition.x, myceliumConnectorPosition.y] = true;
+        _grid.UpdateGrid(_myceliumMap);
         // printMyceliumGrid();
 
-        trace();
+        Trace();
     }
 
 
-    private Point makePoint(Vector3Int spot)
+    private Point MakePoint(Vector3Int spot)
     {
         return new Point(spot.x, spot.y);
     }
 
-    private void trace()
+    private void Trace()
     {
         // printMyceliumGrid();
 
         // Check which resources are connected (if any)
-        foreach (var resource in resources)
+        foreach (var resource in _resources)
         {
-            var bio = resource.GetComponent<bioResource>();
-            var pos = makePoint(bio.position);
-            var path = Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan);
+            var bio = resource.GetComponent<BioResource>();
+            var pos = MakePoint(bio.position);
+            var path = Pathfinding.FindPath(_grid, pos, _origin, Pathfinding.DistanceType.Manhattan);
 
             if (path.Count == 0) //there is no path
             {
                 if (bio.connected)
                 {
-                    bio.disconnectResource();
+                    bio.DisconnectResource();
                     biomassRate -= bio.resourceRate;
 
 
@@ -156,7 +154,7 @@ public class ResourceManager : MonoBehaviour
             else if (!bio.connected)
             {
                 Debug.Log("Path found to " + resource.name);
-                bio.connectResource();
+                bio.ConnectResource();
                 biomassRate += bio.resourceRate;
             }
         }
@@ -168,17 +166,17 @@ public class ResourceManager : MonoBehaviour
             // Get script attached to tower
             var towerAttack2 = tower.GetComponent<TowerAttack2>();
             // position 2 blocks below tower's location
-            var pos = makePoint(towerAttack2.myceliumConnectorPosition);
+            var pos = MakePoint(towerAttack2.myceliumConnectorPosition);
 
 
             // Debug.Log("PATHFINDING FROM: (" + pos.x + ", " + pos.y + ")" + " TO: (" + origin.x + ", " + origin.y + ")");
 
-            if (Pathfinding.FindPath(grid, pos, origin, Pathfinding.DistanceType.Manhattan).Count ==
+            if (Pathfinding.FindPath(_grid, pos, _origin, Pathfinding.DistanceType.Manhattan).Count ==
                 0) //there is no path
             {
                 if (towerAttack2.connected)
                 {
-                    towerAttack2.disconnectTower();
+                    towerAttack2.DisconnectTower();
                     Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
@@ -187,21 +185,22 @@ public class ResourceManager : MonoBehaviour
             // Only connect once
             else if (!towerAttack2.connected)
             {
-                towerAttack2.connectTower();
+                towerAttack2.ConnectTower();
             }
         }
     }
 
     // change the total biomass number by the given cost
-    public void biomassUpdate(float cost)
+    public void BiomassUpdate(float cost)
     {
         biomass += cost;
     }
 
     // Coroutine that runs every second. Increases the total biomass by the current rate
-    private IEnumerator biomassCounterUpdate()
+    private IEnumerator BiomassCounterUpdate()
     {
-        while (!LevelManager.isGameOver)
+        // used to check while game is not over, might be good to have that?
+        while (true)
         {
             //Debug.Log("adding " + biomassRate);
             biomass += biomassRate;
@@ -212,6 +211,6 @@ public class ResourceManager : MonoBehaviour
     // Updates list of resources
     public void ReFindBiomass()
     {
-        resources = GameObject.FindGameObjectsWithTag("biomatter");
+        _resources = GameObject.FindGameObjectsWithTag("biomatter");
     }
 }

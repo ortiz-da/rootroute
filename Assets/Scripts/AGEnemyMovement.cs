@@ -1,25 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class AGEnemyMovement : MonoBehaviour
+public class AgEnemyMovement : MonoBehaviour
 {
     [SerializeField] private float enemySpeed = 0.04f;
     [SerializeField] private GameObject tree;
 
-    private Animator animator;
+    private Animator _animator;
     private static readonly int IsAttackingTree = Animator.StringToHash("IsAttackingTree");
-    private Vector3 treepos;
+    private Vector3 _treepos;
 
 
     // Start is called before the first frame update
     void Start()
     {
         tree = GameObject.FindGameObjectWithTag("tree");
-        animator = GetComponent<Animator>();
-        treepos = new Vector3(tree.transform.position.x, transform.position.y, tree.transform.position.z);
+        _animator = GetComponent<Animator>();
+        _treepos = new Vector3(tree.transform.position.x, transform.position.y, tree.transform.position.z);
     }
 
     // Update is called once per frame
@@ -29,7 +25,7 @@ public class AGEnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = Vector3.MoveTowards(transform.position, treepos, enemySpeed);
+        transform.position = Vector3.MoveTowards(transform.position, _treepos, enemySpeed);
     }
 
     void OnCollisionStay2D(Collision2D col)
@@ -37,7 +33,7 @@ public class AGEnemyMovement : MonoBehaviour
         if (col.gameObject.CompareTag("tree"))
         {
             enemySpeed = 0f;
-            animator.SetBool(IsAttackingTree, true);
+            _animator.SetBool(IsAttackingTree, true);
         }
         else
         {

@@ -5,8 +5,8 @@
  * Author: Ronen Ness.
  * Since: 2016. 
 */
+
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace NesScripts.Controls.PathFind
 {
@@ -22,17 +22,17 @@ namespace NesScripts.Controls.PathFind
         /// <summary>
         /// Different ways to calculate path distance.
         /// </summary>
-		public enum DistanceType
+        public enum DistanceType
         {
             /// <summary>
             /// The "ordinary" straight-line distance between two points.
             /// </summary>
-			Euclidean,
+            Euclidean,
 
             /// <summary>
             /// Distance without diagonals, only horizontal and/or vertical path lines.
             /// </summary>
-			Manhattan
+            Manhattan
         }
 
         /// <summary>
@@ -40,24 +40,26 @@ namespace NesScripts.Controls.PathFind
         /// </summary>
         /// <param name="grid">Grid to search.</param>
         /// <param name="startPos">Starting position.</param>
-		/// <param name="targetPos">Ending position.</param>
+        /// <param name="targetPos">Ending position.</param>
         /// <param name="distance">The type of distance, Euclidean or Manhattan.</param>
         /// <param name="ignorePrices">If true, will ignore tile price (how much it "cost" to walk on).</param>
         /// <returns>List of points that represent the path to walk.</returns>
-		public static List<Point> FindPath(Grid grid, Point startPos, Point targetPos, DistanceType distance = DistanceType.Euclidean, bool ignorePrices = false)
+        public static List<Point> FindPath(Grid grid, Point startPos, Point targetPos,
+            DistanceType distance = DistanceType.Euclidean, bool ignorePrices = false)
         {
             // find path
-            List<Node> nodes_path = _ImpFindPath(grid, startPos, targetPos, distance, ignorePrices);
+            List<Node> nodesPath = _ImpFindPath(grid, startPos, targetPos, distance, ignorePrices);
 
             // convert to a list of points and return
             List<Point> ret = new List<Point>();
-            if (nodes_path != null)
+            if (nodesPath != null)
             {
-                foreach (Node node in nodes_path)
+                foreach (Node node in nodesPath)
                 {
                     ret.Add(new Point(node.gridX, node.gridY));
                 }
             }
+
             return ret;
         }
 
@@ -70,7 +72,8 @@ namespace NesScripts.Controls.PathFind
         /// <param name="distance">The type of distance, Euclidean or Manhattan.</param>
         /// <param name="ignorePrices">If true, will ignore tile price (how much it "cost" to walk on).</param>
         /// <returns>List of grid nodes that represent the path to walk.</returns>
-        private static List<Node> _ImpFindPath(Grid grid, Point startPos, Point targetPos, DistanceType distance = DistanceType.Euclidean, bool ignorePrices = false)
+        private static List<Node> _ImpFindPath(Grid grid, Point startPos, Point targetPos,
+            DistanceType distance = DistanceType.Euclidean, bool ignorePrices = false)
         {
             Node startNode = grid.nodes[startPos.x, startPos.y];
             Node targetNode = grid.nodes[targetPos.x, targetPos.y];
@@ -84,7 +87,8 @@ namespace NesScripts.Controls.PathFind
                 Node currentNode = openSet[0];
                 for (int i = 1; i < openSet.Count; i++)
                 {
-                    if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
+                    if (openSet[i].FCost < currentNode.FCost ||
+                        openSet[i].FCost == currentNode.FCost && openSet[i].hCost < currentNode.hCost)
                     {
                         currentNode = openSet[i];
                     }
@@ -105,7 +109,8 @@ namespace NesScripts.Controls.PathFind
                         continue;
                     }
 
-                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) * (ignorePrices ? 1 : (int)(10.0f * neighbour.price));
+                    int newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour) *
+                        (ignorePrices ? 1 : (int)(10.0f * neighbour.price));
                     if (newMovementCostToNeighbour < neighbour.gCost || !openSet.Contains(neighbour))
                     {
                         neighbour.gCost = newMovementCostToNeighbour;
@@ -138,6 +143,7 @@ namespace NesScripts.Controls.PathFind
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
+
             path.Reverse();
             return path;
         }
@@ -152,10 +158,7 @@ namespace NesScripts.Controls.PathFind
         {
             int dstX = System.Math.Abs(nodeA.gridX - nodeB.gridX);
             int dstY = System.Math.Abs(nodeA.gridY - nodeB.gridY);
-            return (dstX > dstY) ?
-                14 * dstY + 10 * (dstX - dstY) :
-                14 * dstX + 10 * (dstY - dstX);
+            return (dstX > dstY) ? 14 * dstY + 10 * (dstX - dstY) : 14 * dstX + 10 * (dstY - dstX);
         }
     }
-
 }

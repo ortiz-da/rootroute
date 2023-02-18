@@ -18,27 +18,27 @@ public class TowerAttack : MonoBehaviour
     public bool connected;
 
     public AudioClip attackSound;
-    private Animator animator;
+    private Animator _animator;
 
-    private int attackersInTrigger;
+    private int _attackersInTrigger;
 
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
-    private bool isAttacking;
-    private Tilemap tilemap;
+    private bool _isAttacking;
+    private Tilemap _tilemap;
 
     // Start is called before the first frame update
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        _animator = GetComponent<Animator>();
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
+        _tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
         var hit = transform.GetChild(0).gameObject;
         hitbox = hit.GetComponent<Collider2D>();
         hitbox.enabled = false;
 
-        position = tilemap.WorldToCell(transform.position);
+        position = _tilemap.WorldToCell(transform.position);
         position.y -= 2; //2 or 3 here?
 
         // resourceManager.towerPlaced(gameObject);
@@ -46,7 +46,7 @@ public class TowerAttack : MonoBehaviour
         correctedPosition = new Vector2Int();
         //Debug.Log("tower placed: " + tilemap.WorldToCell(transform.position).ToString());
 
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,45 +58,45 @@ public class TowerAttack : MonoBehaviour
     {
         if (connected)
         {
-            animator.SetBool("attacking", true);
-            attackersInTrigger++;
-            isAttacking = true;
+            _animator.SetBool("attacking", true);
+            _attackersInTrigger++;
+            _isAttacking = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        attackersInTrigger--;
-        if (attackersInTrigger == 0)
+        _attackersInTrigger--;
+        if (_attackersInTrigger == 0)
         {
-            isAttacking = false;
-            animator.SetBool("attacking", false);
+            _isAttacking = false;
+            _animator.SetBool("attacking", false);
         }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isAttacking && connected) StartCoroutine(attack());
+        if (_isAttacking && connected) StartCoroutine(Attack());
     }
 
-    private IEnumerator attack()
+    private IEnumerator Attack()
     {
         if (connected)
         {
-            if (!animator.GetBool("attacking"))
-                animator.SetBool("attacking", true);
+            if (!_animator.GetBool("attacking"))
+                _animator.SetBool("attacking", true);
             Debug.Log("TOWER ATTACK");
-            audioSource.clip = attackSound;
-            audioSource.pitch = Random.Range(.5f, 1f);
-            audioSource.Play();
+            _audioSource.clip = attackSound;
+            _audioSource.pitch = Random.Range(.5f, 1f);
+            _audioSource.Play();
 
             Instantiate(particles, transform.position, Quaternion.identity);
             hitbox.enabled = true;
-            isAttacking = false;
+            _isAttacking = false;
             yield return new WaitForSeconds(VariableSetup.rate);
 
             hitbox.enabled = false;
-            isAttacking = true;
+            _isAttacking = true;
         }
     }
 }

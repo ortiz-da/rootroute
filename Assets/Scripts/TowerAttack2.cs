@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,27 +17,27 @@ public class TowerAttack2 : MonoBehaviour
 
     public Vector3Int myceliumConnectorPosition;
     public Vector2Int correctedPosition;
-    private Animator animator;
-    private AudioSource audioSource;
+    private Animator _animator;
+    private AudioSource _audioSource;
 
 
-    private bool shooting;
-    private Tilemap tilemap;
+    private bool _shooting;
+    private Tilemap _tilemap;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 
         resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
+        _tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
 
         // resourceManager.towerPlaced(gameObject);
 
         // using awake so that these variables will be set before the resource manager attempts to pathfind from the 
         // myceliumConnectorPosition. Ensures that if a tower is placed on a connected mycelium, the tower will come into the world powered.
-        myceliumConnectorPosition = tilemap.WorldToCell(transform.position);
+        myceliumConnectorPosition = _tilemap.WorldToCell(transform.position);
         myceliumConnectorPosition.y -= 2; //2 or 3 here?
         correctedPosition = new Vector2Int();
     }
@@ -51,18 +50,18 @@ public class TowerAttack2 : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (collidedEnemies.Count > 0 && !shooting && connected)
+        if (collidedEnemies.Count > 0 && !_shooting && connected)
         {
             // TODO in progress, want to make display of rate reflect when towers are shooting
             //resourceManager.biomassRate -= VariableSetup.towerSecBetweenShots;
-            StartCoroutine(shoot());
+            StartCoroutine(Shoot());
         }
 
-        if (collidedEnemies.Count == 0 || !shooting || !connected) animator.SetBool("attacking", false);
+        if (collidedEnemies.Count == 0 || !_shooting || !connected) _animator.SetBool("attacking", false);
 
-        if (animator.GetBool("powered") != connected)
+        if (_animator.GetBool("powered") != connected)
         {
-            animator.SetBool("powered", connected);
+            _animator.SetBool("powered", connected);
         }
     }
 
@@ -80,20 +79,20 @@ public class TowerAttack2 : MonoBehaviour
     {
     }
 
-    private IEnumerator shoot()
+    private IEnumerator Shoot()
     {
         if (resourceManager.biomass > 0)
         {
-            shooting = true;
+            _shooting = true;
             Instantiate(particles, transform.position, Quaternion.identity);
 
-            resourceManager.biomassUpdate(-1);
+            resourceManager.BiomassUpdate(-1);
 
-            audioSource.clip = attackSound;
-            audioSource.pitch = Random.Range(.5f, 1f);
-            audioSource.Play();
+            _audioSource.clip = attackSound;
+            _audioSource.pitch = Random.Range(.5f, 1f);
+            _audioSource.Play();
 
-            animator.SetBool("attacking", true);
+            _animator.SetBool("attacking", true);
             for (var i = 0; i < collidedEnemies.Count; i++)
             {
                 var enemy = collidedEnemies[i].gameObject;
@@ -104,19 +103,19 @@ public class TowerAttack2 : MonoBehaviour
             }
 
             yield return new WaitForSeconds(1);
-            shooting = false;
+            _shooting = false;
         }
     }
 
-    public void connectTower()
+    public void ConnectTower()
     {
         connected = true;
-        animator.SetBool("powered", true);
+        _animator.SetBool("powered", true);
     }
 
-    public void disconnectTower()
+    public void DisconnectTower()
     {
         connected = false;
-        animator.SetBool("powered", false);
+        _animator.SetBool("powered", false);
     }
 }

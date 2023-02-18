@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,49 +7,48 @@ public class LayTower : MonoBehaviour
     public Tilemap tilemap;
     public GameObject tower1;
 
-    private ResourceManager resourceManager;
+    private ResourceManager _resourceManager;
 
-    private TextMeshProUGUI errorText;
+    private TextMeshProUGUI _errorText;
 
-    private Collider2D grassTrigger;
+    private Collider2D _grassTrigger;
 
-    private highlightBlock currentGrass;
+    private HighlightBlock _currentGrass;
+
     void Start()
     {
-        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tilemap = GameObject.Find("Grid").GetComponentInChildren<Tilemap>();
 
-        errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
+        _errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
 
-        grassTrigger = gameObject.GetComponentInChildren<Collider2D>();
+        _grassTrigger = gameObject.GetComponentInChildren<Collider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && currentGrass != null)
+        if (Input.GetKeyDown(KeyCode.F) && _currentGrass != null)
         {
-            if(!currentGrass.hasTower)
+            if (!_currentGrass.hasTower)
             {
-                currentGrass.placeTower();
+                _currentGrass.PlaceTower();
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("grass"))
+        if (collision.CompareTag("grass"))
         {
-            currentGrass = collision.gameObject.GetComponent<highlightBlock>();
+            _currentGrass = collision.gameObject.GetComponent<HighlightBlock>();
         }
         else
-            currentGrass= null;
+            _currentGrass = null;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        currentGrass = null;
+        _currentGrass = null;
     }
-
-
 }
