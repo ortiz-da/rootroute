@@ -1,20 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // USES https://youtu.be/CE9VOZivb3I
 public class LevelManager : MonoBehaviour
 {
-    public TreeManager tree;
-
     public Animator transition;
 
     public float transitionTime = 1f;
 
+
     void Start()
     {
-        tree = GameObject.Find("treeHouseFull").GetComponent<TreeManager>();
     }
 
     // Update is called once per frame
