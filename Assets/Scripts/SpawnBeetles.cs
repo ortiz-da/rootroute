@@ -8,15 +8,15 @@ public class SpawnBeetles : MonoBehaviour
     public GameObject beetle;
     public AudioClip waveStartSound;
 
-    private AudioSource _audioSource;
+    private AudioSource audioSource;
 
-    private int _maxSpawn = 3;
+    private int maxSpawn = 3;
 
-    private int _waveNumber;
+    private int waveNumber;
 
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnBeetle());
     }
 
@@ -28,21 +28,21 @@ public class SpawnBeetles : MonoBehaviour
     private IEnumerator SpawnBeetle()
     {
         yield return new WaitForSeconds(10);
-        while (_waveNumber < 15)
+        while (waveNumber < 15)
         {
-            _audioSource.clip = waveStartSound;
-            _audioSource.Play();
+            audioSource.clip = waveStartSound;
+            audioSource.Play();
 
 
-            for (var i = 0; i < Random.Range(3, _maxSpawn); i++)
+            for (var i = 0; i < Random.Range(3, maxSpawn); i++)
             {
                 Instantiate(beetle);
                 yield return new WaitForSeconds(Random.Range(0f, 2f));
             }
 
             yield return new WaitForSeconds(Random.Range(10, 15));
-            _waveNumber++;
-            _maxSpawn++;
+            waveNumber++;
+            maxSpawn++;
         }
     }
 }

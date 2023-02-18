@@ -6,11 +6,11 @@ public class WormController : MonoBehaviour
     public Tilemap tilemap;
 
     public TileBase mineshaftTile;
-    private readonly float _wormSpeed = 2f;
-    private ResourceManager _resourceManager;
+    private readonly float wormSpeed = 2f;
+    private ResourceManager resourceManager;
 
 
-    private Vector3 _wormDestination;
+    private Vector3 wormDestination;
 
     // the origin block
     private int _originX;
@@ -27,13 +27,13 @@ public class WormController : MonoBehaviour
         _originY = size.y - 1;
 
         // todo fix
-        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        _wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
             Random.Range(0f, VariableSetup.worldYSize), 0);
 
 
         // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
-        var difference = _wormDestination - transform.position;
+        var difference = wormDestination - transform.position;
         var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
@@ -54,22 +54,22 @@ public class WormController : MonoBehaviour
             !(worldCell.x == _originX && worldCell.y == _originY))
         {
             tilemap.SetTile(worldCell, mineshaftTile);
-            _resourceManager.MyceliumDeleted(worldCell); // possibly buggy?
+            resourceManager.myceliumDeleted(worldCell); // possibly buggy?
         }
 
 
-        var step = _wormSpeed * Time.deltaTime;
+        var step = wormSpeed * Time.deltaTime;
 
         // move sprite towards the target location
-        transform.position = Vector3.MoveTowards(transform.position, _wormDestination, step);
+        transform.position = Vector3.MoveTowards(transform.position, wormDestination, step);
 
-        if (transform.position.Equals(_wormDestination))
+        if (transform.position.Equals(wormDestination))
         {
-            _wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
+            wormDestination = new Vector3(Random.Range(0f, VariableSetup.worldXSize),
                 Random.Range(0f, VariableSetup.worldYSize), 0);
 
             // https://answers.unity.com/questions/1023987/lookat-only-on-z-axis.html
-            var difference = _wormDestination - transform.position;
+            var difference = wormDestination - transform.position;
             var rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
         }

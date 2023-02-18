@@ -1,6 +1,8 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-// Used in tutorial to see if player has collided with "highlighting" square.
 public class HighlightCollision : MonoBehaviour
 {
     public bool touchedPlayer;

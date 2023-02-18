@@ -5,10 +5,8 @@
  * Author: Ronen Ness.
  * Since: 2016. 
 */
-
-
+using System.Collections.Generic;
 //using UnityEditor.Experimental.GraphView;
-
 namespace NesScripts.Controls.PathFind
 {
     /// <summary>
@@ -21,28 +19,28 @@ namespace NesScripts.Controls.PathFind
         public Node[,] nodes;
 
         // grid size
-        int _gridSizeX, _gridSizeY;
+        int gridSizeX, gridSizeY;
 
         /// <summary>
         /// Create a new grid with tile prices.
         /// </summary>
-        /// <param name="tilesCosts">A 2d array of tile prices.
+        /// <param name="tiles_costs">A 2d array of tile prices.
         ///     0.0f = Unwalkable tile.
         ///     1.0f = Normal tile.
         ///     > 1.0f = costy tile.
         ///     < 1.0f = cheap tile.
         /// </param>
-        public Grid(float[,] tilesCosts)
+        public Grid(float[,] tiles_costs)
         {
             // create nodes
-            CreateNodes(tilesCosts.GetLength(0), tilesCosts.GetLength(1));
+            CreateNodes(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
 
             // init nodes
-            for (int x = 0; x < _gridSizeX; x++)
+            for (int x = 0; x < gridSizeX; x++)
             {
-                for (int y = 0; y < _gridSizeY; y++)
+                for (int y = 0; y < gridSizeY; y++)
                 {
-                    nodes[x, y] = new Node(tilesCosts[x, y], x, y);
+                    nodes[x, y] = new Node(tiles_costs[x, y], x, y);
                 }
             }
         }
@@ -50,18 +48,18 @@ namespace NesScripts.Controls.PathFind
         /// <summary>
         /// Create a new grid without tile prices, eg with just walkable / unwalkable tiles.
         /// </summary>
-        /// <param name="walkableTiles">A 2d array representing which tiles are walkable and which are not.</param>
-        public Grid(bool[,] walkableTiles)
+        /// <param name="walkable_tiles">A 2d array representing which tiles are walkable and which are not.</param>
+        public Grid(bool[,] walkable_tiles)
         {
             // create nodes
-            CreateNodes(walkableTiles.GetLength(0), walkableTiles.GetLength(1));
+            CreateNodes(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
 
             // init nodes
-            for (int x = 0; x < _gridSizeX; x++)
+            for (int x = 0; x < gridSizeX; x++)
             {
-                for (int y = 0; y < _gridSizeY; y++)
+                for (int y = 0; y < gridSizeY; y++)
                 {
-                    nodes[x, y] = new Node(walkableTiles[x, y] ? 1.0f : 0.0f, x, y);
+                    nodes[x, y] = new Node(walkable_tiles[x, y] ? 1.0f : 0.0f, x, y);
                 }
             }
         }
@@ -73,32 +71,32 @@ namespace NesScripts.Controls.PathFind
         /// <param name="height">Nodes grid height.</param>
         private void CreateNodes(int width, int height)
         {
-            _gridSizeX = width;
-            _gridSizeY = height;
-            nodes = new Node[_gridSizeX, _gridSizeY];
+            gridSizeX = width;
+            gridSizeY = height;
+            nodes = new Node[gridSizeX, gridSizeY];
         }
 
         /// <summary>
         /// Updates the already created grid with new tile prices.
         /// </summary>
         /// <returns><c>true</c>, if grid was updated, <c>false</c> otherwise.</returns>
-        /// <param name="tilesCosts">Tiles costs.</param>
-        public void UpdateGrid(float[,] tilesCosts)
+        /// <param name="tiles_costs">Tiles costs.</param>
+        public void UpdateGrid(float[,] tiles_costs)
         {
             // check if need to re-create grid
             if (nodes == null ||
-                _gridSizeX != tilesCosts.GetLength(0) ||
-                _gridSizeY != tilesCosts.GetLength(1))
+                gridSizeX != tiles_costs.GetLength(0) ||
+                gridSizeY != tiles_costs.GetLength(1))
             {
-                CreateNodes(tilesCosts.GetLength(0), tilesCosts.GetLength(1));
+                CreateNodes(tiles_costs.GetLength(0), tiles_costs.GetLength(1));
             }
 
             // update nodes
-            for (int x = 0; x < _gridSizeX; x++)
+            for (int x = 0; x < gridSizeX; x++)
             {
-                for (int y = 0; y < _gridSizeY; y++)
+                for (int y = 0; y < gridSizeY; y++)
                 {
-                    nodes[x, y].Update(tilesCosts[x, y], x, y);
+                    nodes[x, y].Update(tiles_costs[x, y], x, y);
                 }
             }
         }
@@ -107,23 +105,23 @@ namespace NesScripts.Controls.PathFind
         /// Updates the already created grid without new tile prices, eg with just walkable / unwalkable tiles.
         /// </summary>
         /// <returns><c>true</c>, if grid was updated, <c>false</c> otherwise.</returns>
-        /// <param name="walkableTiles">Walkable tiles.</param>
-        public void UpdateGrid(bool[,] walkableTiles)
+        /// <param name="walkable_tiles">Walkable tiles.</param>
+        public void UpdateGrid(bool[,] walkable_tiles)
         {
             // check if need to re-create grid
             if (nodes == null ||
-                _gridSizeX != walkableTiles.GetLength(0) ||
-                _gridSizeY != walkableTiles.GetLength(1))
+                gridSizeX != walkable_tiles.GetLength(0) ||
+                gridSizeY != walkable_tiles.GetLength(1))
             {
-                CreateNodes(walkableTiles.GetLength(0), walkableTiles.GetLength(1));
+                CreateNodes(walkable_tiles.GetLength(0), walkable_tiles.GetLength(1));
             }
 
             // update grid
-            for (int x = 0; x < _gridSizeX; x++)
+            for (int x = 0; x < gridSizeX; x++)
             {
-                for (int y = 0; y < _gridSizeY; y++)
+                for (int y = 0; y < gridSizeY; y++)
                 {
-                    nodes[x, y].Update(walkableTiles[x, y] ? 1.0f : 0.0f, x, y);
+                    nodes[x, y].Update(walkable_tiles[x, y] ? 1.0f : 0.0f, x, y);
                 }
             }
         }
@@ -154,7 +152,6 @@ namespace NesScripts.Controls.PathFind
                         if (neighbor != null)
                             yield return neighbor;
                     }
-
                     break;
 
                 case Pathfinding.DistanceType.Euclidean:
@@ -167,7 +164,6 @@ namespace NesScripts.Controls.PathFind
                                 yield return neighbor;
                         }
                     }
-
                     break;
             }
         }
@@ -190,7 +186,7 @@ namespace NesScripts.Controls.PathFind
             int checkX = node.gridX + x;
             int checkY = node.gridY + y;
 
-            if (checkX >= 0 && checkX < _gridSizeX && checkY >= 0 && checkY < _gridSizeY)
+            if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
             {
                 return nodes[checkX, checkY];
             }
@@ -198,4 +194,5 @@ namespace NesScripts.Controls.PathFind
             return null;
         }
     }
+
 }

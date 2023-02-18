@@ -1,34 +1,34 @@
 using TMPro;
 using UnityEngine;
 
-public class BioCounterScript : MonoBehaviour
+public class bioCounterScript : MonoBehaviour
 {
-    private TextMeshProUGUI _bioText;
-    private float _curbio;
-    private float _currate;
+    private TextMeshProUGUI bioText;
+    private float curbio;
+    private float currate;
 
-    private ResourceManager _resourceManager;
+    private ResourceManager resourceManager;
 
     private void Start()
     {
-        _bioText = GetComponent<TextMeshProUGUI>();
+        bioText = GetComponent<TextMeshProUGUI>();
         // rateImage = GameObject.Find("rate").GetComponent<Image>();
         //rateText = GameObject.Find("rate#").GetComponent<TextMeshProUGUI>();
 
-        _resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        UpdateBio();
+        resourceManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        updateBio();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (_resourceManager.biomass != _curbio) UpdateBio();
+        if (resourceManager.biomass != curbio) updateBio();
     }
 
 
-    private void UpdateBio()
+    private void updateBio()
     {
-        _curbio = _resourceManager.biomass;
-        _bioText.text = "Biomatter: " + _curbio;
+        curbio = resourceManager.biomass;
+        bioText.text = "Biomatter: " + curbio;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -10,7 +11,7 @@ public class FlickerLight : MonoBehaviour
     void Start()
     {
         _light = GetComponent<Light2D>();
-        StartCoroutine(Flicker());
+        StartCoroutine(flicker());
     }
 
     // Update is called once per frame
@@ -18,7 +19,7 @@ public class FlickerLight : MonoBehaviour
     {
     }
 
-    IEnumerator Flicker()
+    IEnumerator flicker()
     {
         while (true)
         {

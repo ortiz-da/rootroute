@@ -3,19 +3,19 @@ using UnityEngine;
 public class TreeHealth : MonoBehaviour
 {
     public TreeManager tree;
-    public AudioClip lowHealthSfx;
+    public AudioClip lowHealthSFX;
 
-    private GameObject _character;
-    private int _leafNum;
+    private GameObject character;
+    private int leafNum;
 
-    private GameObject[] _leafs;
+    private GameObject[] leafs;
 
     // Start is called before the first frame update
     private void Start()
     {
-        _character = GameObject.Find("character");
-        _leafs = GameObject.FindGameObjectsWithTag("leaf");
-        _leafNum = _leafs.Length;
+        character = GameObject.Find("character");
+        leafs = GameObject.FindGameObjectsWithTag("leaf");
+        leafNum = leafs.Length;
     }
 
     // Update is called once per frame
@@ -23,11 +23,11 @@ public class TreeHealth : MonoBehaviour
     {
         var curHealth = (int)tree.health / 10;
         //Debug.Log("curhealth: " + curHealth);
-        for (var i = 0; i < _leafs.Length; i++)
-            if (i >= _leafs.Length - curHealth)
-                _leafs[i].SetActive(true);
+        for (var i = 0; i < leafs.Length; i++)
+            if (i >= leafs.Length - curHealth)
+                leafs[i].SetActive(true);
             else
-                _leafs[i].SetActive(false);
-        _leafNum = curHealth;
+                leafs[i].SetActive(false);
+        leafNum = curHealth;
     }
 }

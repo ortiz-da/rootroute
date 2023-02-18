@@ -22,9 +22,9 @@ public class VariableSetup : MonoBehaviour
 
     public static float rate = 2f;
 
-    public static float myceliumHp = 10f;
+    public static float myceliumHP = 10f;
 
-    public static float wormHp = 10f;
+    public static float wormHP = 10f;
 
     public static float playerAtkDmg = 1f;
 

@@ -28,7 +28,7 @@ public class Digging : MonoBehaviour
 
     // TODO name these better
     private Vector3Int _clickedBlock;
-    private Vector3 _selectedPoint;
+    private Vector3 selectedPoint;
 
     // the origin block
     private int _originX;
@@ -55,21 +55,21 @@ public class Digging : MonoBehaviour
         {
             // https://gamedevbeginner.com/how-to-convert-the-mouse-position-to-world-space-in-unity-2d-3d/
             // https://stackoverflow.com/a/56519572
-            _selectedPoint = camera1.ScreenToWorldPoint(Input.mousePosition);
-            _selectedPoint = new Vector3(_selectedPoint.x, _selectedPoint.y, 0);
-            var distance = Vector3.Distance(_selectedPoint, transform.position);
+            selectedPoint = camera1.ScreenToWorldPoint(Input.mousePosition);
+            selectedPoint = new Vector3(selectedPoint.x, selectedPoint.y, 0);
+            var distance = Vector3.Distance(selectedPoint, transform.position);
 
-            _clickedBlock = tilemap.WorldToCell(_selectedPoint);
+            _clickedBlock = tilemap.WorldToCell(selectedPoint);
 
             // Left click to mine blocks
             // Only mine blocks if the player is close enough and below ground
-            if (Input.GetButton("Fire1") && distance <= _mineDistance && InBounds(_selectedPoint))
+            if (Input.GetButton("Fire1") && distance <= _mineDistance && InBounds(selectedPoint))
             {
                 animator.SetBool(Mining, true);
             }
 
             // Right click to place mycelium.
-            else if (Input.GetButton("Fire2") && distance <= _placeDistance && InBounds(_selectedPoint))
+            else if (Input.GetButton("Fire2") && distance <= _placeDistance && InBounds(selectedPoint))
             {
                 animator.SetBool(Building, true);
             }
@@ -97,7 +97,7 @@ public class Digging : MonoBehaviour
         // Don't allow players to mine air, worldborder tiles, or origin block
         // Need to also check in bounds here, in case the player quickly moves their mouse while holding after the initial click?
         if (tile != null && !tile.name.Equals("WorldBorder1") &&
-            !(_clickedBlock.x == _originX && _clickedBlock.y == _originY && InBounds(_selectedPoint))
+            !(_clickedBlock.x == _originX && _clickedBlock.y == _originY && InBounds(selectedPoint))
            )
         {
             var clickedBlockName = tilemap.GetTile(_clickedBlock).name;
@@ -111,7 +111,7 @@ public class Digging : MonoBehaviour
 
             // Code for when player mines a mycelium tile.
             if (clickedBlockName.Equals("MyceliumRuleTile"))
-                resourceManager.MyceliumDeleted(_clickedBlock);
+                resourceManager.myceliumDeleted(_clickedBlock);
         }
     }
 
@@ -126,7 +126,7 @@ public class Digging : MonoBehaviour
 
         // Only can place mycelium on mineshaft tiles (for some reason are seen as null)
         // Need to also check in bounds here, in case the player quickly moves their mouse while holding after the initial click?
-        if (tile == null && InBounds(_selectedPoint))
+        if (tile == null && InBounds(selectedPoint))
         {
             Debug.Log("PLACED MYCELIUM");
             // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
@@ -134,7 +134,7 @@ public class Digging : MonoBehaviour
             _audioSource.pitch = Random.Range(.5f, 1f);
             _audioSource.Play();
             tilemap.SetTile(_clickedBlock, mineshaftWithMyceliumTile);
-            resourceManager.MyceliumPlaced(_clickedBlock);
+            resourceManager.myceliumPlaced(_clickedBlock);
         }
     }
 }

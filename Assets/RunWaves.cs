@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class RunWaves : MonoBehaviour
 {
-    private AudioSource _audioSource;
+    private AudioSource audioSource;
 
     public AudioClip waveStartSound;
 
-    private int _waveNumber = 1;
+    private int waveNumber = 1;
 
     public GameObject[] spawners;
 
@@ -23,13 +23,13 @@ public class RunWaves : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        waveText.text = "Wave: " + _waveNumber;
+        waveText.text = "Wave: " + waveNumber;
 
-        _audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnWave());
     }
 
-    public void SetFirstWaveDelay(int delay)
+    public void setFirstWaveDelay(int delay)
     {
         this.firstWaveDelay = delay;
     }
@@ -43,22 +43,22 @@ public class RunWaves : MonoBehaviour
     {
         // to get ready before waves
         yield return new WaitForSeconds(firstWaveDelay);
-        while (_waveNumber < VariableSetup.numWaves)
+        while (waveNumber < VariableSetup.numWaves)
         {
             // Play sound indicating start of wave
-            _audioSource.clip = waveStartSound;
-            _audioSource.Play();
+            audioSource.clip = waveStartSound;
+            audioSource.Play();
 
             // spawn some enemies (max possible increases each round),
             // randomly choosing which spawn point to start them at
-            for (var i = 0; i < Random.Range(3, _waveNumber); i++)
+            for (var i = 0; i < Random.Range(3, waveNumber); i++)
             {
                 // first 3 waves, only spawn at first spawner (left side of tree)
-                int spawnerIndex = _waveNumber < 3 ? 0 : Random.Range(0, spawners.Length);
+                int spawnerIndex = waveNumber < 3 ? 0 : Random.Range(0, spawners.Length);
                 Vector3 spawnPosition = spawners[spawnerIndex].transform.position;
 
                 // spawn different types of enemies in later waves
-                int enemyType = _waveNumber < 3 ? 0 : Random.Range(0, enemies.Length);
+                int enemyType = waveNumber < 3 ? 0 : Random.Range(0, enemies.Length);
 
                 Instantiate(
                     enemies[enemyType],
@@ -71,9 +71,9 @@ public class RunWaves : MonoBehaviour
             }
 
             // Wait between waves
-            yield return new WaitForSeconds(Random.Range(10, 15 + _waveNumber));
-            _waveNumber++;
-            waveText.text = "Wave: " + _waveNumber;
+            yield return new WaitForSeconds(Random.Range(10, 15 + waveNumber));
+            waveNumber++;
+            waveText.text = "Wave: " + waveNumber;
         }
     }
 }

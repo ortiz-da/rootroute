@@ -1,56 +1,53 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // USES https://youtu.be/CE9VOZivb3I
 public class LevelManager : MonoBehaviour
 {
+    public static bool isGameOver = false;
+
+    public TreeManager tree;
+
     public Animator transition;
 
     public float transitionTime = 1f;
-    private static readonly int Start1 = Animator.StringToHash("Start");
 
     void Start()
     {
+        tree = GameObject.Find("treeHouseFull").GetComponent<TreeManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (tree.health <= 0)
+        {
+            isGameOver = true;
+            LevelLost();
+        }
     }
 
-    public void LevelLost()
+    void LevelLost()
     {
-        LoadScene("LoseScene");
+        SceneManager.LoadScene("LoseScene");
     }
 
     void LevelWon()
     {
-        LoadScene("WinScene");
+        SceneManager.LoadScene("WinScene");
     }
 
-    // kinda bad naming, since it's the same as SceneManager.LoadScene, but does fading.
-    public void LoadScene(string sceneName)
+    public void LoadNextLevel()
     {
-        StartCoroutine(LoadSceneCoroutine(sceneName));
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
-    public void LoadNextScene()
+    IEnumerator LoadLevel(int levelIndex)
     {
-        StartCoroutine(LoadSceneCoroutine(SceneManager.GetActiveScene().buildIndex + 1));
-    }
-
-    IEnumerator LoadSceneCoroutine(int sceneIndex)
-    {
-        transition.SetTrigger(Start1);
+        transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionTime);
-        SceneManager.LoadScene(sceneIndex);
-    }
-
-    IEnumerator LoadSceneCoroutine(string sceneName)
-    {
-        transition.SetTrigger(Start1);
-        yield return new WaitForSeconds(transitionTime);
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(levelIndex);
     }
 }
