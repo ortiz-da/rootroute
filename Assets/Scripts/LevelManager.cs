@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 // USES https://youtu.be/CE9VOZivb3I
 public class LevelManager : MonoBehaviour
 {
-    public static bool isGameOver = false;
-
     public TreeManager tree;
 
     public Animator transition;
@@ -22,14 +20,9 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (tree.health <= 0)
-        {
-            isGameOver = true;
-            LevelLost();
-        }
     }
 
-    void LevelLost()
+    public void LevelLost()
     {
         SceneManager.LoadScene("LoseScene");
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// used in tutorial to see if player collides with "highlight" box
 public class HighlightCollision : MonoBehaviour
 {
     public bool touchedPlayer;

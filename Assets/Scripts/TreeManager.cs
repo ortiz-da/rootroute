@@ -7,16 +7,17 @@ public class TreeManager : MonoBehaviour
     public float maxHealth;
     public TreeHealth healthBar;
 
-    [SerializeField] private AGEnemyMovement AGEnemy;
-    [SerializeField] private bool isBeingAttacked;
     public int enemyCounter;
 
     public AudioClip lowHealthSound;
 
     private AudioSource audioSource;
 
+    private LevelManager _levelManager;
+
     private void Start()
     {
+        _levelManager = GameObject.Find("LeveManager").GetComponent<LevelManager>();
         maxHealth = VariableSetup.treeLife;
         health = VariableSetup.treeLife;
         audioSource = GetComponent<AudioSource>();
@@ -32,9 +33,9 @@ public class TreeManager : MonoBehaviour
             audioSource.Play();
         }
 
-        if (enemyCounter <= 0)
+        if (health <= 0)
         {
-            isBeingAttacked = false;
+            _levelManager.LevelLost();
         }
     }
 
@@ -43,7 +44,6 @@ public class TreeManager : MonoBehaviour
         if (col.gameObject.CompareTag("AGEnemy"))
         {
             enemyCounter++;
-            isBeingAttacked = true;
         }
     }
 

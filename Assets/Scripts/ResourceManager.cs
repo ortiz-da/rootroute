@@ -201,7 +201,8 @@ public class ResourceManager : MonoBehaviour
     // Coroutine that runs every second. Increases the total biomass by the current rate
     private IEnumerator biomassCounterUpdate()
     {
-        while (!LevelManager.isGameOver)
+        // used to be while game is not over
+        while (true)
         {
             //Debug.Log("adding " + biomassRate);
             biomass += biomassRate;
