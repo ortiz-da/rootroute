@@ -16,11 +16,11 @@ public class highlightBlock : MonoBehaviour
 
     public TileBase mineshaftWithMyceliumTile;
 
-    private Color blockColor;
-
     private TextMeshProUGUI errorText;
 
     private ResourceManager resourceManager;
+
+    private GameObject selector;
 
     private void Start()
     {
@@ -29,6 +29,7 @@ public class highlightBlock : MonoBehaviour
         tilemap = GameObject.Find("Grid").transform.GetChild(0).GetComponent<Tilemap>();
 
         errorText = GameObject.Find("errorText").GetComponent<TextMeshProUGUI>();
+        selector = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -40,9 +41,7 @@ public class highlightBlock : MonoBehaviour
     {
         if (other.CompareTag("character") && !hasTower)
         {
-            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, .5f);
+            selector.SetActive(true);
         }
     }
 
@@ -75,11 +74,8 @@ public class highlightBlock : MonoBehaviour
     {
         if (other.CompareTag("character"))
         {
-            // Debug.Log("LEAVE");
+            selector.SetActive(false);
 
-            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            blockColor = gameObject.GetComponent<SpriteRenderer>().color;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
         }
     }
 
@@ -94,10 +90,10 @@ public class highlightBlock : MonoBehaviour
             spriteRenderer.sortingOrder = -1;
             var buildBlock = tilemap.WorldToCell(transform.position);
             tilemap.SetTile(buildBlock, mineshaftWithMyceliumTile);
+            selector.SetActive(false);
 
             // Debug.Log("PLACE TOWER");
             hasTower = true;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(blockColor.r, blockColor.g, blockColor.b, 1f);
 
             // tell the boolean grid there has been a tower placed
             resourceManager.towerPlaced(instatiatedTower);
