@@ -155,7 +155,7 @@ public class ResourceManager : MonoBehaviour
             // Only connect once
             else if (!bio.connected)
             {
-                Debug.Log("Path found to " + resource.name);
+                // Debug.Log("Path found to " + resource.name);
                 bio.connectResource();
                 biomassRate += bio.resourceRate;
             }
@@ -179,7 +179,7 @@ public class ResourceManager : MonoBehaviour
                 if (towerAttack2.connected)
                 {
                     towerAttack2.disconnectTower();
-                    Debug.Log("disconnected tower!");
+                    // Debug.Log("disconnected tower!");
                     //if it was already connected and now isn't, something has broken the chain
                     //we will need to call the users attention to the break
                 }

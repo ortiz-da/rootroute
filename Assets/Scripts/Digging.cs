@@ -1,3 +1,5 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -27,8 +29,7 @@ public class Digging : MonoBehaviour
     private AudioSource _audioSource;
 
     // TODO name these better
-    private Vector3Int _clickedBlock;
-    private Vector3 selectedPoint;
+    private Vector3Int _clickedCell;
 
     // the origin block
     private int _originX;
@@ -36,6 +37,8 @@ public class Digging : MonoBehaviour
 
     private static readonly int Mining = Animator.StringToHash("Mining");
     private static readonly int Building = Animator.StringToHash("Building");
+
+    private Vector3Int mouseCell = Vector3Int.zero;
 
 
     // Start is called before the first frame update
@@ -51,36 +54,69 @@ public class Digging : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        IndicateMineableBlocks();
         if (Input.GetButton("Fire1") || Input.GetButton("Fire2"))
         {
             // https://gamedevbeginner.com/how-to-convert-the-mouse-position-to-world-space-in-unity-2d-3d/
             // https://stackoverflow.com/a/56519572
-            selectedPoint = camera1.ScreenToWorldPoint(Input.mousePosition);
-            selectedPoint = new Vector3(selectedPoint.x, selectedPoint.y, 0);
-            var distance = Vector3.Distance(selectedPoint, transform.position);
 
-            _clickedBlock = tilemap.WorldToCell(selectedPoint);
+
+            // don't set the clicked block location if the player is in the middle of placing/mining.
+            if (!(animator.GetBool(Mining) || animator.GetBool(Building)))
+            {
+                _clickedCell = backgroundTilemap.WorldToCell(camera1.ScreenToWorldPoint(Input.mousePosition));
+            }
+
+            /*
+            Debug.Log("CLICKED ON: " + _clickedBlock);
+            */
+
 
             // Left click to mine blocks
-            // Only mine blocks if the player is close enough and below ground
-            if (Input.GetButton("Fire1") && distance <= _mineDistance && InBounds(selectedPoint))
+            // Only mine blocks if:
+            // - the player is close enough and below ground
+            // - the block isn't the core block, or bedrock
+            if (Input.GetButton("Fire1"))
             {
-                animator.SetBool(Mining, true);
+                if (tilemap.GetTile(_clickedCell) != null)
+                {
+                    if (FindTilesAdjacentPlayer().Contains(_clickedCell) &&
+                        InBounds(_clickedCell) &&
+                        // todo allow for mining mycelium
+                        /*backgroundTilemap.GetTile(_clickedCell) != mineshaftTile &&*/
+                        // todo if get tile of a location that does not have a tile, throws null pointer?
+                        !tilemap.GetTile(_clickedCell).name.Equals("WorldBorder1") &&
+                        !(_clickedCell.x == _originX && _clickedCell.y == _originY))
+                    {
+                        animator.SetBool(Mining, true);
+                    }
+                }
             }
 
             // Right click to place mycelium.
-            else if (Input.GetButton("Fire2") && distance <= _placeDistance && InBounds(selectedPoint))
+            // Only can place mycelium on mineshaft tiles
+
+            else if (Input.GetButton("Fire2"))
             {
-                animator.SetBool(Building, true);
+                if (backgroundTilemap.GetTile(_clickedCell) != null)
+                {
+                    if (
+                        FindTilesAdjacentPlayer().Contains(_clickedCell) &&
+                        InBounds(_clickedCell) &&
+                        backgroundTilemap.GetTile(_clickedCell) == mineshaftTile)
+                    {
+                        animator.SetBool(Building, true);
+                    }
+                }
             }
         }
     }
 
     // checks if a point is within tilemap
-    private static bool InBounds(Vector3 selectedPoint)
+    private static bool InBounds(Vector3Int cell)
     {
-        bool result = selectedPoint.y < VariableSetup.worldYSize && selectedPoint.y >= 0 && selectedPoint.x >= 0 &&
-                      selectedPoint.x < VariableSetup.worldXSize;
+        bool result = cell.y < VariableSetup.worldYSize && cell.y >= 0 && cell.x >= 0 &&
+                      cell.x < VariableSetup.worldXSize;
         // Debug.Log(result);
         return result;
     }
@@ -90,29 +126,23 @@ public class Digging : MonoBehaviour
     {
         animator.SetBool(Mining, false);
 
-        TileBase tile = tilemap.GetTile(_clickedBlock);
 
         // Debug.Log(_clickedBlock);
 
         // Don't allow players to mine air, worldborder tiles, or origin block
-        // Need to also check in bounds here, in case the player quickly moves their mouse while holding after the initial click?
-        if (tile != null && !tile.name.Equals("WorldBorder1") &&
-            !(_clickedBlock.x == _originX && _clickedBlock.y == _originY && InBounds(selectedPoint))
-           )
-        {
-            var clickedBlockName = tilemap.GetTile(_clickedBlock).name;
-            backgroundTilemap.SetTile(_clickedBlock, mineshaftTile);
-            tilemap.SetTile(_clickedBlock, null);
 
-            // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
-            _audioSource.clip = digSound;
-            _audioSource.pitch = Random.Range(.5f, 1f);
-            _audioSource.Play();
+        var clickedBlockName = tilemap.GetTile(_clickedCell).name;
+        backgroundTilemap.SetTile(_clickedCell, mineshaftTile);
+        tilemap.SetTile(_clickedCell, null);
 
-            // Code for when player mines a mycelium tile.
-            if (clickedBlockName.Equals("MyceliumRuleTile"))
-                resourceManager.myceliumDeleted(_clickedBlock);
-        }
+        // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
+        _audioSource.clip = digSound;
+        _audioSource.pitch = Random.Range(.5f, 1f);
+        _audioSource.Play();
+
+        // Code for when player mines a mycelium tile.
+        if (clickedBlockName.Equals("MyceliumRuleTile"))
+            resourceManager.myceliumDeleted(_clickedCell);
     }
 
 
@@ -122,19 +152,60 @@ public class Digging : MonoBehaviour
         animator.SetBool(Building, false);
         // https://www.reddit.com/r/Unity2D/comments/d3mx3e/how_to_get_clicked_tile_in_a_tilemap/
 
-        var tile = tilemap.GetTile<Tile>(_clickedBlock);
+        // Debug.Log("PLACED MYCELIUM");
+        // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
+        _audioSource.clip = placeSound;
+        _audioSource.pitch = Random.Range(.5f, 1f);
+        _audioSource.Play();
+        tilemap.SetTile(_clickedCell, mineshaftWithMyceliumTile);
+        resourceManager.myceliumPlaced(_clickedCell);
+    }
 
-        // Only can place mycelium on mineshaft tiles (for some reason are seen as null)
-        // Need to also check in bounds here, in case the player quickly moves their mouse while holding after the initial click?
-        if (tile == null && InBounds(selectedPoint))
+    private Vector3Int[] FindTilesAdjacentPlayer()
+    {
+        Vector3Int playerCell = tilemap.WorldToCell(this.transform.position);
+
+        Vector3Int left = playerCell + Vector3Int.left;
+        Vector3Int right = playerCell + Vector3Int.right;
+        Vector3Int up = playerCell + Vector3Int.up;
+        Vector3Int down = playerCell + Vector3Int.down;
+
+        Vector3Int[] adjacentTiles = new[] { left, right, up, down, playerCell };
+
+        /*Debug.Log("PLAYER AT: " + playerCell);
+        Debug.Log("CAN MINE: " + left + " " + right + " " + up + " " + down);*/
+        return adjacentTiles;
+    }
+
+    private void IndicateMineableBlocks()
+    {
+        // find tile that mouse is over
+        // if a valid tile to mine, highlight it.
+
+        Vector3 mousePos = camera1.ScreenToWorldPoint(Input.mousePosition);
+
+        // if mouse was moved to a different cell since last frame
+        if (mouseCell != tilemap.WorldToCell(mousePos))
         {
-            // Debug.Log("PLACED MYCELIUM");
-            // https://docs.unity3d.com/ScriptReference/AudioSource.Play.html
-            _audioSource.clip = placeSound;
-            _audioSource.pitch = Random.Range(.5f, 1f);
-            _audioSource.Play();
-            tilemap.SetTile(_clickedBlock, mineshaftWithMyceliumTile);
-            resourceManager.myceliumPlaced(_clickedBlock);
+            // if the old cell had a tile in it
+            if (tilemap.GetTile(mouseCell) != null && !(mouseCell.x == _originX && mouseCell.y == _originY))
+            {
+                // reset that tile back to its original color
+                tilemap.SetColor(mouseCell, Color.white);
+                tilemap.SetTileFlags(mouseCell, TileFlags.LockAll);
+            }
+
+            // update what cell the mouse is in
+            mouseCell = tilemap.WorldToCell(mousePos);
+        }
+
+        if (FindTilesAdjacentPlayer().Contains(mouseCell))
+        {
+            if (tilemap.GetTile(mouseCell) != null && !tilemap.GetTile(mouseCell).name.Equals("WorldBorder1"))
+            {
+                tilemap.SetTileFlags(mouseCell, TileFlags.None);
+                tilemap.SetColor(mouseCell, Color.green);
+            }
         }
     }
 }
