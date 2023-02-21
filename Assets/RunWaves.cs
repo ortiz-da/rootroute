@@ -9,7 +9,7 @@ public class RunWaves : MonoBehaviour
 
     public AudioClip waveStartSound;
 
-    private int waveNumber = 1;
+    public int waveNumber = 1;
 
     public GameObject[] spawners;
 
@@ -73,6 +73,7 @@ public class RunWaves : MonoBehaviour
             // Wait between waves
             yield return new WaitForSeconds(Random.Range(10, 15 + waveNumber));
             waveNumber++;
+            GetComponent<DayNightCycle>().AdvanceTime();
             waveText.text = "Wave: " + waveNumber;
         }
     }
